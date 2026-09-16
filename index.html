@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TanggalMuda - Formuiir Pengajuan</title>
+    <title>TanggalMuda - Formulir Pengajuan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -354,18 +354,19 @@
                             </div>
                         </div>
 
+                        <!-- Foto KTP & Selfie (Wajib) -->
                         <div class="pt-2 border-t border-slate-100 space-y-3">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib)</p>
+                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib Diunggah) *</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 
                                 <div id="boxKtp" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
-                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli *</label>
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli (Wajib) *</label>
                                     <div class="flex justify-center gap-2 mb-2">
                                         <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
                                     <input type="file" id="fileKtp" accept="image/*" onchange="previewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
-                                    <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP</div>
+                                    <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP (Wajib)</div>
                                     <div id="containerImgKtp" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgKtp" src="" alt="Preview KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
                                         <button type="button" onclick="clearPhoto('ktp')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -373,13 +374,13 @@
                                 </div>
                                 
                                 <div id="boxSelfie" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
-                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Selfie KTP *</label>
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Selfie KTP (Wajib) *</label>
                                     <div class="flex justify-center gap-2 mb-2">
                                         <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
                                     <input type="file" id="fileSelfie" accept="image/*" onchange="previewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
-                                    <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie</div>
+                                    <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie (Wajib)</div>
                                     <div id="containerImgSelfie" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgSelfie" src="" alt="Preview Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
                                         <button type="button" onclick="clearPhoto('selfie')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -508,7 +509,7 @@
         </div>
     </div>
 
-    <!-- EWA Verification Modal (Menggunakan PIN Akses) -->
+    <!-- EWA Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -578,9 +579,9 @@
         </div>
     </div>
 
-    <!-- JavaScript Controller with JSONP Google Sites Support -->
+    <!-- JavaScript Controller with Library URL Support -->
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzH1dGNWRDSK2sQ5PyuAuZg7XspyMFwLmOiRuv0UH09KaxOCqgMSmiVonb2MFO3JQErbA/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/library/d/1rbwZZYvzxyJ8o0IUQNL3LtCtxVaAN_l359U6BjX07g16hUfWz1zkB_ZF/74";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -948,6 +949,13 @@
             
             let ktpBase64 = document.getElementById('previewKtp').dataset.base64 || '';
             let selfieBase64 = document.getElementById('previewSelfie').dataset.base64 || '';
+
+            // Validasi wajib foto KTP dan Selfie
+            if (!ktpBase64 || !selfieBase64) {
+                showBigAlert("Foto KTP Asli dan Foto Selfie KTP wajib diunggah atau diambil via kamera!", "Dokumen Belum Lengkap", false);
+                return;
+            }
+
             let rawSalary = document.getElementById('regSalary').value;
 
             pendingRegistrationPayload = {
@@ -973,8 +981,8 @@
                 selfie_photo: selfieBase64
             };
 
-            let ktpImgHtml = ktpBase64 ? `<img src="${ktpBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada KTP</span>';
-            let selfieImgHtml = selfieBase64 ? `<img src="${selfieBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada Selfie</span>';
+            let ktpImgHtml = `<img src="${ktpBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">`;
+            let selfieImgHtml = `<img src="${selfieBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">`;
 
             document.getElementById('confirmDataSummary').innerHTML = `
                 <div class="grid grid-cols-2 gap-2 border-b pb-2">
@@ -1012,7 +1020,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showBigAlert('Mengirim data pendaftaran ke Google Sheets dan meneruskan email verifikasi terbatas ke PIC Perusahaan...', "Mohon Tunggu", true);
+            showBigAlert('Mengirim data pendaftaran ke Google Sheets dan meneruskan verifikasi ke PIC Perusahaan...', "Mohon Tunggu", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
