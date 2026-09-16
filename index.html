@@ -580,7 +580,7 @@
 
     <!-- JavaScript Controller with JSONP Google Sites Support -->
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzH1dGNWRDSK2sQ5PyuAuZg7XspyMFwLmOiRuv0UH09KaxOCqgMSmiVonb2MFO3JQErbA/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -1012,7 +1012,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showBigAlert('Mengirim data pendaftaran ke tanggalmuda.com dan meneruskan email verifikasi terbatas ke PIC Perusahaan...', "Mohon Tunggu", true);
+            showBigAlert('Mengirim data pendaftaran ke Google Sheets dan meneruskan email verifikasi terbatas ke PIC Perusahaan...', "Mohon Tunggu", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
