@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TanggalMuda - Formulir Pengajuan</title>
+    <title>TanggalMuda - Platform Keuangan & Pembiayaan EWA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -122,19 +122,14 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <!-- Modal Balon Besar (Global Notification & Alert) -->
-        <div id="bigAlertModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
-                <div id="bigAlertIconBox" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
-                    <i id="bigAlertIcon" class="fa-solid fa-circle-check"></i>
+        <!-- Global Alert Notification -->
+        <div id="globalAlert" class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4 transition-all duration-300">
+            <div id="globalAlertBox" class="p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm">
+                <div class="flex items-center space-x-2">
+                    <span id="globalAlertText"></span>
+                    <span id="alertTimerBadge" class="text-[10px] bg-black/10 px-1.5 py-0.5 rounded font-mono">6s</span>
                 </div>
-                <div class="space-y-2">
-                    <h3 id="bigAlertTitle" class="font-bold text-slate-900 font-heading text-lg sm:text-xl">Pemberitahuan</h3>
-                    <p id="bigAlertText" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
-                </div>
-                <div class="pt-2">
-                    <button type="button" onclick="closeBigAlert()" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition cursor-pointer">Mengerti / Tutup</button>
-                </div>
+                <button onclick="closeGlobalAlert()" class="opacity-70 hover:opacity-100 font-bold ml-3 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
 
@@ -209,8 +204,9 @@
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Terdaftar</label>
                                     <div class="relative">
-                                        <input type="email" id="ewaEmail" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input">
+                                        <input type="email" id="ewaEmail" oninput="checkEmailRegistered(this.value)" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input">
                                     </div>
+                                    <div id="emailStatusFeedback" class="mt-1.5 text-xs font-medium hidden"></div>
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pencairan</label>
@@ -353,19 +349,18 @@
                             </div>
                         </div>
 
-                        <!-- Foto KTP & Selfie (Wajib) -->
                         <div class="pt-2 border-t border-slate-100 space-y-3">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib Diunggah) *</p>
+                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib)</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 
                                 <div id="boxKtp" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
-                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli (Wajib) *</label>
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli *</label>
                                     <div class="flex justify-center gap-2 mb-2">
                                         <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
                                     <input type="file" id="fileKtp" accept="image/*" onchange="previewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
-                                    <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP (Wajib)</div>
+                                    <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP</div>
                                     <div id="containerImgKtp" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgKtp" src="" alt="Preview KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
                                         <button type="button" onclick="clearPhoto('ktp')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -373,13 +368,13 @@
                                 </div>
                                 
                                 <div id="boxSelfie" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
-                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Selfie KTP (Wajib) *</label>
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Selfie KTP *</label>
                                     <div class="flex justify-center gap-2 mb-2">
                                         <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
                                     <input type="file" id="fileSelfie" accept="image/*" onchange="previewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
-                                    <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie (Wajib)</div>
+                                    <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie</div>
                                     <div id="containerImgSelfie" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgSelfie" src="" alt="Preview Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
                                         <button type="button" onclick="clearPhoto('selfie')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -486,33 +481,11 @@
 
     </main>
 
-    <!-- Modal Balon Besar: Email Belum Terdaftar -->
-    <div id="emailUnregisteredModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
-            <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div class="space-y-2">
-                <h3 class="font-bold text-slate-900 font-heading text-lg sm:text-xl">Alamat Email Belum Terdaftar!</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Maaf, alamat email <b id="unregisteredEmailText" class="text-rose-600 font-semibold"></b> belum terdaftar di data anggota/perusahaan kami (Gsheet).
-                </p>
-                <p class="text-xs font-medium text-brand-700 bg-brand-50 p-3 rounded-xl border border-brand-200">
-                    💡 Silakan melakukan <b>Pendaftaran Anggota Terlebih Dahulu</b> sebelum mengajukan pencairan gaji (EWA).
-                </p>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
-                <button type="button" onclick="closeUnregisteredModal()" class="w-full sm:w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs sm:text-sm transition cursor-pointer">Koreksi Email</button>
-                <button type="button" onclick="redirectToRegister()" class="w-full sm:w-1/2 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Sekarang</button>
-            </div>
-        </div>
-    </div>
-
     <!-- EWA Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi PIN Akses Gaji</h3>
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi Keamanan Akses Gaji</h3>
                 <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
@@ -523,12 +496,12 @@
                 <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
 
-            <p class="text-xs text-slate-600">Masukkan <b>PIN Akses</b> rahasia yang dikirimkan ke email Anda saat pendaftaran disetujui:</p>
+            <p class="text-xs text-slate-600">Masukkan Nama Ibu Kandung Anda sesuai data terdaftar:</p>
             
             <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses Rahasia</label>
-                    <input type="password" id="verifyAccessPin" maxlength="6" required placeholder="Masukkan PIN Akses" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-center text-lg font-mono font-bold tracking-widest text-slate-900">
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Ibu Kandung</label>
+                    <input type="text" id="verifyMotherName" required placeholder="Nama ibu kandung" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-xs sm:text-sm">
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
@@ -578,20 +551,23 @@
         </div>
     </div>
 
-    <!-- JavaScript Controller -->
+    <!-- JavaScript Controller with JSONP Google Sites Support -->
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjdBANjwTUKYRcU8ek0_ijBbZeqb4GDw2Fml9ys2uRokyM1TsonEbcRxqkJCGr6P7MHw/exec";
+        <!-- const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIO5OyW8GH6x2MinnpoLRlgHW2V66sCvnlsG2mAO2xe5joYyMxk4v8VGLdaGrvhG0TpA/exec"; -->
         
         let listPerusahaanData = [];
         let currentCameraType = null;
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
+        let alertTimeoutTimer = null;
+        let alertCountdownInterval = null;
 
         window.onload = function() {
             fetchCompaniesViaJSONP();
         };
 
+        // JSONP bypass for Google Sites iframe CORS restriction
         function fetchCompaniesViaJSONP() {
             let select = document.getElementById('regCompanySelect');
             select.innerHTML = '<option value="">-- Memuat Perusahaan dari Google Sheets... --</option>';
@@ -654,6 +630,7 @@
                     el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
                 }
             });
+            closeGlobalAlert();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -667,28 +644,70 @@
             }
         }
 
-        function showBigAlert(message, title = "Pemberitahuan", isSuccess = true) {
-            let titleEl = document.getElementById('bigAlertTitle');
-            let textEl = document.getElementById('bigAlertText');
-            let iconBox = document.getElementById('bigAlertIconBox');
-            let iconEl = document.getElementById('bigAlertIcon');
+        function showGlobalAlert(message, isSuccess = true, durationSeconds = 6) {
+            let container = document.getElementById('globalAlert');
+            let box = document.getElementById('globalAlertBox');
+            let text = document.getElementById('globalAlertText');
+            let timerBadge = document.getElementById('alertTimerBadge');
+            
+            text.innerText = message;
+            box.className = `p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm font-medium ${isSuccess ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`;
+            
+            container.classList.remove('hidden');
 
-            titleEl.innerText = title;
-            textEl.innerText = message;
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
 
-            if (isSuccess) {
-                iconBox.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
-                iconEl.className = "fa-solid fa-circle-check";
-            } else {
-                iconBox.className = "w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
-                iconEl.className = "fa-solid fa-triangle-exclamation";
-            }
+            let timeLeft = durationSeconds;
+            timerBadge.innerText = timeLeft + 's';
 
-            document.getElementById('bigAlertModal').classList.remove('hidden');
+            alertCountdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) timerBadge.innerText = timeLeft + 's';
+                else clearInterval(alertCountdownInterval);
+            }, 1000);
+
+            alertTimeoutTimer = setTimeout(() => closeGlobalAlert(), durationSeconds * 1000);
         }
 
-        function closeBigAlert() {
-            document.getElementById('bigAlertModal').classList.add('hidden');
+        function closeGlobalAlert() {
+            document.getElementById('globalAlert').classList.add('hidden');
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+        }
+
+        function checkEmailRegistered(emailVal) {
+            let feedback = document.getElementById('emailStatusFeedback');
+            let cleanEmail = emailVal.trim().toLowerCase();
+            if (!cleanEmail || !cleanEmail.includes('@')) {
+                feedback.classList.add('hidden');
+                return;
+            }
+            feedback.classList.add('hidden');
+        }
+
+        function calculateEwaFeePreview() {
+            let rawAmount = document.getElementById('ewaAmount').value;
+            let amount = parseRawNumber(rawAmount);
+            let previewBox = document.getElementById('ewaFeePreviewBox');
+
+            if (amount <= 0) {
+                previewBox.classList.add('hidden');
+                return;
+            }
+
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
+            let totalRepayment = amount + totalFee;
+
+            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Maks Rp 750k/trx)`;
+            document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
+            document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
+            document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
+            previewBox.classList.remove('hidden');
         }
 
         function handleInitialEwaSubmit(e) {
@@ -701,55 +720,24 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Email...';
 
-            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration")
-                .then(res => res.json())
-                .then(res => {
-                    btn.disabled = false;
-                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+            pendingEwaData = { email: email, amount: amount };
+            document.getElementById('verifyMemberEmail').innerText = email;
+            
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
+            let totalRepayment = amount + totalFee;
 
-                    if (!res.success || !res.data) {
-                        document.getElementById('unregisteredEmailText').innerText = email;
-                        document.getElementById('emailUnregisteredModal').classList.remove('hidden');
-                        return;
-                    }
-
-                    pendingEwaData = { email: email, amount: amount };
-                    document.getElementById('verifyMemberEmail').innerText = email;
-                    
-                    let maxPerTrx = 750000;
-                    let feePerTrx = 50000;
-                    let numTrx = Math.ceil(amount / maxPerTrx);
-                    let totalFee = numTrx * feePerTrx;
-                    let totalRepayment = amount + totalFee;
-
-                    document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
-                    document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
-                    
-                    document.getElementById('verifyAccessPin').value = '';
-                    document.getElementById('ewaVerifyModal').classList.remove('hidden');
-                })
-                .catch(err => {
-                    btn.disabled = false;
-                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                    showBigAlert('Gagal memeriksa email ke server: Pastikan URL Web App benar dan sudah di-Deploy sebagai "Anyone".', "Kesalahan Koneksi", false);
-                });
-        }
-
-        function closeUnregisteredModal() {
-            document.getElementById('emailUnregisteredModal').classList.add('hidden');
-            let emailInput = document.getElementById('ewaEmail');
-            emailInput.focus();
-            emailInput.select();
-        }
-
-        function redirectToRegister() {
-            document.getElementById('emailUnregisteredModal').classList.add('hidden');
-            let emailVal = document.getElementById('ewaEmail').value.trim();
-            switchPage('register');
-            if (emailVal) {
-                document.getElementById('regEmail').value = emailVal;
-            }
+            document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+            document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+            document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
+            document.getElementById('verifyMotherName').value = '';
+            
+            btn.disabled = false;
+            btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+            document.getElementById('ewaVerifyModal').classList.remove('hidden');
         }
 
         function closeEwaVerifyModal() {
@@ -760,37 +748,37 @@
             e.preventDefault();
             closeEwaVerifyModal();
             
-            let accessPin = document.getElementById('verifyAccessPin').value.trim();
+            let motherName = document.getElementById('verifyMotherName').value.trim();
             let payload = {
                 email: pendingEwaData.email,
                 amount: pendingEwaData.amount,
-                accessPin: accessPin
+                motherName: motherName
             };
 
-            showBigAlert('Mengirim verifikasi EWA ke server...', "Mohon Tunggu", true);
+            showGlobalAlert('Mengirim verifikasi EWA ke server...', true, 4);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
+                    'Content-Type': 'text/plain;charset=utf-8', // Crucial to avoid CORS OPTIONS preflight
                 },
-                redirect: 'follow',
+                redirect: 'follow', // Required for Google Apps Script Web Apps
                 body: JSON.stringify({ action: 'verifyAndInitEwa', payload: payload })
             })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showBigAlert(res.message, "Pengajuan Berhasil", true);
+                    showGlobalAlert(res.message, true, 8);
                     switchPage('status');
                     document.getElementById('searchEmail').value = pendingEwaData.email;
                     document.getElementById('checkType').value = 'ewa';
                     checkStatus();
                 } else {
-                    showBigAlert(res.message, "Verifikasi Gagal", false);
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
-                showBigAlert('Gagal menghubungi server: ' + err.message, "Kesalahan Jaringan", false);
+                showGlobalAlert('Gagal menghubungi server: ' + err.message, false, 8);
             });
         }
 
@@ -851,7 +839,7 @@
                     video.play();
                 })
                 .catch(err => {
-                    showBigAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", "Akses Kamera", false);
+                    showGlobalAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", false, 8);
                     closeCameraModal();
                 });
         }
@@ -914,12 +902,6 @@
             
             let ktpBase64 = document.getElementById('previewKtp').dataset.base64 || '';
             let selfieBase64 = document.getElementById('previewSelfie').dataset.base64 || '';
-
-            if (!ktpBase64 || !selfieBase64) {
-                showBigAlert("Foto KTP Asli dan Foto Selfie KTP wajib diunggah atau diambil via kamera!", "Dokumen Belum Lengkap", false);
-                return;
-            }
-
             let rawSalary = document.getElementById('regSalary').value;
 
             pendingRegistrationPayload = {
@@ -945,8 +927,8 @@
                 selfie_photo: selfieBase64
             };
 
-            let ktpImgHtml = `<img src="${ktpBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">`;
-            let selfieImgHtml = `<img src="${selfieBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">`;
+            let ktpImgHtml = ktpBase64 ? `<img src="${ktpBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada KTP</span>';
+            let selfieImgHtml = selfieBase64 ? `<img src="${selfieBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada Selfie</span>';
 
             document.getElementById('confirmDataSummary').innerHTML = `
                 <div class="grid grid-cols-2 gap-2 border-b pb-2">
@@ -984,12 +966,12 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showBigAlert('Mengirim data pendaftaran ke Google Sheets dan meneruskan verifikasi ke PIC Perusahaan...', "Mohon Tunggu", true);
+            showGlobalAlert('Mengirim data pendaftaran ke Google Sheets...', true, 5);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
+                    'Content-Type': 'text/plain;charset=utf-8', // Bypass CORS preflight
                 },
                 redirect: 'follow',
                 body: JSON.stringify({ action: 'registerMember', payload: payload })
@@ -997,7 +979,7 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showBigAlert(res.message, "Pendaftaran Berhasil Dikirim", true);
+                    showGlobalAlert(res.message, true, 8);
                     document.getElementById('formRegister').reset();
                     setTimeout(() => {
                         switchPage('status');
@@ -1006,11 +988,11 @@
                         checkStatus();
                     }, 1500);
                 } else {
-                    showBigAlert(res.message, "Pendaftaran Gagal", false);
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
-                showBigAlert('Gagal mengirim ke server: ' + err.message, "Kesalahan Jaringan", false);
+                showGlobalAlert('Gagal mengirim ke server: ' + err.message, false, 8);
             });
         }
 
@@ -1021,16 +1003,15 @@
             let emptyNotice = document.getElementById('statusEmptyNotice');
 
             if (!emailInput) {
-                showBigAlert('Masukkan alamat email terlebih dahulu!', "Peringatan", false);
+                showGlobalAlert('Masukkan alamat email terlebih dahulu!', false, 5);
                 return;
             }
 
-            showBigAlert('Memeriksa status ke Google Sheets...', "Mohon Tunggu", true);
+            showGlobalAlert('Memeriksa status ke Google Sheets...', true, 3);
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
                 .then(res => res.json())
                 .then(res => {
-                    closeBigAlert();
                     if (res.success && res.data) {
                         let data = res.data;
                         document.getElementById('resRef').innerText = data.refId;
@@ -1045,11 +1026,11 @@
                     } else {
                         resultBox.classList.add('hidden');
                         emptyNotice.classList.remove('hidden');
-                        showBigAlert(res.message || 'Data tidak ditemukan.', "Informasi Status", false);
+                        showGlobalAlert(res.message || 'Data tidak ditemukan.', false, 6);
                     }
                 })
                 .catch(err => {
-                    showBigAlert('Gagal memeriksa status: ' + err.message, "Kesalahan Jaringan", false);
+                    showGlobalAlert('Gagal memeriksa status: ' + err.message, false, 6);
                 });
         }
     </script>
