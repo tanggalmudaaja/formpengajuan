@@ -240,6 +240,7 @@
             </div>
         </section>
 
+        <!-- REGISTER PAGE VIEW -->
         <section id="view-register" class="hidden w-full bg-slate-50 py-4">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -425,6 +426,7 @@
             </div>
         </section>
 
+        <!-- STATUS PAGE VIEW -->
         <section id="view-status" class="hidden w-full bg-slate-50 py-6">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -478,6 +480,28 @@
         </section>
 
     </main>
+
+    <!-- Notifikasi Balon Besar / Modal Peringatan Email Belum Terdaftar -->
+    <div id="emailUnregisteredModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
+            <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="font-bold text-slate-900 font-heading text-lg sm:text-xl">Alamat Email Belum Terdaftar!</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Maaf, alamat email <b id="unregisteredEmailText" class="text-rose-600 font-semibold"></b> belum terdaftar di data anggota/perusahaan kami (Gsheet).
+                </p>
+                <p class="text-xs font-medium text-brand-700 bg-brand-50 p-3 rounded-xl border border-brand-200">
+                    💡 Silakan melakukan <b>Pendaftaran Anggota Terlebih Dahulu</b> sebelum mengajukan pencairan gaji (EWA).
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                <button type="button" onclick="closeUnregisteredModal()" class="w-full sm:w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs sm:text-sm transition cursor-pointer">Koreksi Email</button>
+                <button type="button" onclick="redirectToRegister()" class="w-full sm:w-1/2 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Sekarang</button>
+            </div>
+        </div>
+    </div>
 
     <!-- EWA Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
@@ -549,6 +573,7 @@
         </div>
     </div>
 
+    <!-- JavaScript Controller with JSONP Google Sites Support -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
         
@@ -717,24 +742,58 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Email...';
 
-            pendingEwaData = { email: email, amount: amount };
-            document.getElementById('verifyMemberEmail').innerText = email;
-            
-            let maxPerTrx = 750000;
-            let feePerTrx = 50000;
-            let numTrx = Math.ceil(amount / maxPerTrx);
-            let totalFee = numTrx * feePerTrx;
-            let totalRepayment = amount + totalFee;
+            // Validasi pengecekan email ke Gsheet sebelum lanjut
+            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration")
+                .then(res => res.json())
+                .then(res => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
 
-            document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-            document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
-            document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
-            
-            document.getElementById('verifyMotherName').value = '';
-            
-            btn.disabled = false;
-            btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-            document.getElementById('ewaVerifyModal').classList.remove('hidden');
+                    // Jika email belum terdaftar di Gsheet (berdasarkan respons backend/status)
+                    if (!res.success || !res.data) {
+                        document.getElementById('unregisteredEmailText').innerText = email;
+                        document.getElementById('emailUnregisteredModal').classList.remove('hidden');
+                        return;
+                    }
+
+                    // Jika terdaftar, lanjutkan ke tahap verifikasi EWA
+                    pendingEwaData = { email: email, amount: amount };
+                    document.getElementById('verifyMemberEmail').innerText = email;
+                    
+                    let maxPerTrx = 750000;
+                    let feePerTrx = 50000;
+                    let numTrx = Math.ceil(amount / maxPerTrx);
+                    let totalFee = numTrx * feePerTrx;
+                    let totalRepayment = amount + totalFee;
+
+                    document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+                    document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+                    
+                    document.getElementById('verifyMotherName').value = '';
+                    document.getElementById('ewaVerifyModal').classList.remove('hidden');
+                })
+                .catch(err => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                    showGlobalAlert('Gagal memeriksa email ke server: ' + err.message, false, 8);
+                });
+        }
+
+        function closeUnregisteredModal() {
+            document.getElementById('emailUnregisteredModal').classList.add('hidden');
+            let emailInput = document.getElementById('ewaEmail');
+            emailInput.focus();
+            emailInput.select();
+        }
+
+        function redirectToRegister() {
+            document.getElementById('emailUnregisteredModal').classList.add('hidden');
+            let emailVal = document.getElementById('ewaEmail').value.trim();
+            switchPage('register');
+            if (emailVal) {
+                document.getElementById('regEmail').value = emailVal;
+            }
         }
 
         function closeEwaVerifyModal() {
@@ -757,9 +816,9 @@
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8', 
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
-                redirect: 'follow', 
+                redirect: 'follow',
                 body: JSON.stringify({ action: 'verifyAndInitEwa', payload: payload })
             })
             .then(res => res.json())
@@ -968,7 +1027,7 @@
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8', 
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
                 redirect: 'follow',
                 body: JSON.stringify({ action: 'registerMember', payload: payload })
