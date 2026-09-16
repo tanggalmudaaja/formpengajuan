@@ -211,6 +211,7 @@
                                     <div class="relative">
                                         <input type="email" id="ewaEmail" oninput="checkEmailRegistered(this.value)" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input">
                                     </div>
+                                    <!-- Real-time email validation feedback -->
                                     <div id="emailStatusFeedback" class="mt-1.5 text-xs font-medium hidden"></div>
                                 </div>
                                 <div>
@@ -579,7 +580,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Controller with New URL Support -->
+    <!-- JavaScript Controller with Real-time Email Verification -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjdBANjwTUKYRcU8ek0_ijBbZeqb4GDw2Fml9ys2uRokyM1TsonEbcRxqkJCGr6P7MHw/exec";
         
@@ -588,6 +589,7 @@
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
+        let emailCheckTimer = null;
 
         window.onload = function() {
             fetchCompaniesViaJSONP();
@@ -692,14 +694,38 @@
             document.getElementById('bigAlertModal').classList.add('hidden');
         }
 
+        // Real-time email check saat mengetik (mencegah Failed to fetch & otomatis muncul notif)
         function checkEmailRegistered(emailVal) {
             let feedback = document.getElementById('emailStatusFeedback');
             let cleanEmail = emailVal.trim().toLowerCase();
-            if (!cleanEmail || !cleanEmail.includes('@')) {
+            
+            if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
                 feedback.classList.add('hidden');
                 return;
             }
-            feedback.classList.add('hidden');
+
+            feedback.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Memeriksa status email...';
+            feedback.className = "mt-1.5 text-xs font-medium text-slate-500 block";
+            feedback.classList.remove('hidden');
+
+            clearTimeout(emailCheckTimer);
+            emailCheckTimer = setTimeout(() => {
+                fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(cleanEmail) + "&type=registration")
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.success && res.data) {
+                            feedback.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Email terdaftar (${res.data.name} - Status: ${res.data.status})`;
+                            feedback.className = "mt-1.5 text-xs font-medium text-emerald-600 block";
+                        } else {
+                            feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Email belum terdaftar! Silakan <button type="button" onclick="redirectToRegister()" class="underline font-bold text-rose-700 hover:text-rose-900">Daftar Akun</button>.`;
+                            feedback.className = "mt-1.5 text-xs font-medium text-rose-600 block";
+                        }
+                    })
+                    .catch(err => {
+                        feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Gagal memeriksa koneksi server.`;
+                        feedback.className = "mt-1.5 text-xs font-medium text-amber-600 block";
+                    });
+            }, 500);
         }
 
         function calculateEwaFeePreview() {
@@ -767,7 +793,7 @@
                 .catch(err => {
                     btn.disabled = false;
                     btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                    showBigAlert('Gagal memeriksa email ke server: ' + err.message, "Kesalahan Sistem", false);
+                    showBigAlert('Gagal memeriksa email ke server: Pastikan koneksi internet stabil dan Web App sudah di-deploy dengan benar.', "Kesalahan Koneksi", false);
                 });
         }
 
@@ -950,7 +976,6 @@
             let ktpBase64 = document.getElementById('previewKtp').dataset.base64 || '';
             let selfieBase64 = document.getElementById('previewSelfie').dataset.base64 || '';
 
-            // Validasi wajib foto KTP dan Selfie
             if (!ktpBase64 || !selfieBase64) {
                 showBigAlert("Foto KTP Asli dan Foto Selfie KTP wajib diunggah atau diambil via kamera!", "Dokumen Belum Lengkap", false);
                 return;
