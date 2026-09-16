@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TanggalMuda - Platform Keuangan & Pembiayaan EWA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        },
+                        navy: {
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        orange: {
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        gold: {
+                            600: '#ca8a04',
+                            700: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        .glossy-orange-btn {
+            background: linear-gradient(135deg, #ff8c00 0%, #ff5722 50%, #f4511e 100%);
+            box-shadow: 0 4px 12px -2px rgba(255, 110, 34, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .glossy-orange-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px -2px rgba(255, 110, 34, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+        @keyframes customPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7); }
+            50% { transform: scale(1.02); box-shadow: 0 0 15px 8px rgba(255, 87, 34, 0); }
+        }
+        .animate-pulse-cta {
+            animation: customPulse 2s infinite ease-in-out;
+        }
+        @keyframes bounceHand {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(4px) scale(1.1); }
+        }
+        .animate-hand {
+            display: inline-block;
+            animation: bounceHand 0.8s infinite ease-in-out;
+        }
+        @keyframes colorShiftRed {
+            0%, 100% { color: #d1d5db; }
+            50% { color: #dc2626; }
+        }
+        .animate-color-shift-red {
+            animation: colorShiftRed 2s infinite ease-in-out;
+        }
+        .custom-input {
+            background-color: #f1f5f9;
+            border: 1.5px solid #cbd5e1;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .custom-input:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white flex-grow flex flex-col justify-between">
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm w-full shrink-0">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('landing')">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain">
+            </div>
+            <div></div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
+        
+        <!-- Global Alert Notification -->
+        <div id="globalAlert" class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4 transition-all duration-300">
+            <div id="globalAlertBox" class="p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm">
+                <div class="flex items-center space-x-2">
+                    <span id="globalAlertText"></span>
+                    <span id="alertTimerBadge" class="text-[10px] bg-black/10 px-1.5 py-0.5 rounded font-mono">6s</span>
+                </div>
+                <button onclick="closeGlobalAlert()" class="opacity-70 hover:opacity-100 font-bold ml-3 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+
+        <!-- LANDING PAGE VIEW (2-Column Layout) -->
+        <section id="view-landing" class="block w-full flex-grow flex items-center">
+            <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center w-full">
+                    
+                    <!-- LEFT COLUMN -->
+                    <div class="lg:col-span-7 flex flex-col items-start text-left space-y-3 sm:space-y-4 w-full">
+                        <div class="space-y-3 w-full">
+                            <!-- Headline -->
+                            <h1 class="text-[11px] sm:text-xs font-bold font-heading tracking-tight leading-snug">
+                                <span class="text-navy-700 block">Butuh Dana Mendesak?</span> 
+                                <span class="text-orange-600 block mt-0.5">Jangan ngutang dulu !</span> 
+                                <span class="text-emerald-600 block mt-0.5">Cairkan Aja Gaji Sebelum Waktunya</span>
+                            </h1>
+                            <!-- Woman Illustration on Left & Description text on Right -->
+                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center w-full pt-1 pb-1">
+                                <div class="sm:col-span-5 relative flex flex-col items-center justify-center w-full">
+                                    <div class="absolute inset-0 bg-brand-500/10 rounded-full blur-2xl"></div>
+                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" alt="Professional Woman holding phone" class="relative z-10 w-full max-w-[280px] sm:max-w-[360px] h-auto object-contain filter drop-shadow-md">
+                                </div>
+                                <div class="sm:col-span-7 flex flex-col justify-center">
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        Langkah cerdas mencairkan sebagian gaji sebelum waktunya untuk kebutuhan mendesak, tanpa terjerat pinjol atau utang bank dan pastinya <span class="animate-color-shift-red font-bold" style="font-size: 105%;">TANPA BUNGA (0%)</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- CTA Button placed underneath woman -->
+                            <div class="w-full max-w-[280px] sm:max-w-[340px] pt-1">
+                                <button type="button" onclick="scrollToEwaForm()" class="px-3 py-3.5 rounded-xl glossy-orange-btn text-white font-bold text-xs tracking-tight flex items-center justify-center text-center space-x-2 animate-pulse-cta shadow-md cursor-pointer w-full">
+                                    <span class="uppercase leading-tight">Cairkan Gaji Sekarang</span>
+                                    <span class="text-xs animate-hand inline-block">👉</span>
+                                </button>
+                            </div>
+                            
+                            <div class="pt-1">
+                                <h3 class="font-bold text-xs text-slate-900 font-heading mb-1.5">Kenapa Pilih Kami?</h3>
+                                <ul class="space-y-1 text-xs text-slate-700">
+                                    <li><span class="text-brand-600 font-bold mr-1">✓</span> <b>Mudah & Praktis</b> — Proses pengajuan sederhana dan mudah dipahami.</li>
+                                    <li><span class="text-brand-600 font-bold mr-1">✓</span> <b>Transparan</b> — Biaya layanan disampaikan secara jelas.</li>
+                                    <li><span class="text-brand-600 font-bold mr-1">✓</span> <b>Tanpa Bunga</b> — Tidak menggunakan skema bunga pinjaman.</li>
+                                </ul>
+                            </div>
+                            <div class="pt-1 space-y-1">
+                                <h3 class="font-bold text-xs text-slate-900 font-heading mb-1">Jangan Tunda Kebutuhanmu</h3>
+                                <p class="text-xs text-slate-600">Akses gajimu dengan cara yang lebih praktis dan transparan.</p>
+                            </div>
+
+                            <!-- Contact Information placed below statement -->
+                            <div class="w-full max-w-[280px] sm:max-w-[340px] flex flex-col justify-center space-y-1 text-[11px] text-slate-600 bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-xl border border-slate-200 shadow-sm mt-1">
+                                <p class="font-bold text-slate-700 mb-0.5">Info selengkapnya :</p>
+                                <p>🌐 <a href="https://www.tanggalmuda.com" target="_blank" class="text-emerald-700 font-semibold hover:underline">www.tanggalmuda.com</a></p>
+                                <p>📱 WhatsApp: <a href="https://wa.me/6287790994652" target="_blank" class="text-emerald-700 font-semibold hover:underline">0877-9099-4652</a></p>
+                                <p>📧 Email: <a href="mailto:info@tanggalmuda.com" class="text-emerald-700 font-semibold hover:underline">info@tanggalmuda.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: EWA Application Form -->
+                    <div class="lg:col-span-5 w-full">
+                        <div id="ewaFormContainer" class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4 transition-all duration-300 relative w-full">
+                            
+                            <div class="text-center space-y-0.5">
+                                <h3 class="font-heading font-bold text-base sm:text-lg text-slate-900 leading-tight">FORMULIR PENGAJUAN AKSES GAJI</h3>
+                                <p class="text-xs text-slate-500 pt-1">Jika anda sudah terdaftar, silahkan masukan alamat email dan nominal</p>
+                            </div>
+
+                            <form onsubmit="handleInitialEwaSubmit(event)" class="space-y-3.5 text-xs sm:text-sm">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Terdaftar</label>
+                                    <div class="relative">
+                                        <input type="email" id="ewaEmail" oninput="checkEmailRegistered(this.value)" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input">
+                                    </div>
+                                    <div id="emailStatusFeedback" class="mt-1.5 text-xs font-medium hidden"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pencairan</label>
+                                    <div class="relative flex items-center">
+                                        <input type="text" id="ewaAmount" oninput="formatCurrencyInput(this); calculateEwaFeePreview();" required placeholder="" class="w-full px-4 py-3 rounded-xl custom-input text-xl sm:text-2xl font-bold font-mono tracking-wide text-slate-900 placeholder:text-slate-400">
+                                    </div>
+                                </div>
+                                
+                                <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
+                                    <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
+                                    <p class="flex justify-between"><span>Dana Diterima Bersih (Full):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
+                                    <p class="flex justify-between"><span>Biaya Layanan (Ditagih Repayment):</span> <span id="prevTotalFee">Rp 50.000</span></p>
+                                    <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA + Fee):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                                    <p class="text-[10px] text-slate-500 italic mt-0.5">*Maks Rp 750k/trx. Fee Rp 50k/trx ditagihkan saat repayment.</p>
+                                </div>
+
+                                <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
+                                    <span>Ajukan</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                                
+                                <div class="flex flex-col space-y-1.5 pt-2 border-t border-slate-100 text-[11px]">
+                                    <button type="button" onclick="switchPage('register')" class="text-emerald-700 font-semibold hover:underline text-left cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun Baru</button>
+                                    <button type="button" onclick="switchPage('status')" class="text-emerald-700 font-semibold hover:underline text-left cursor-pointer"><i class="fa-solid fa-magnifying-glass mr-1"></i> Cek Status Pengajuan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="view-register" class="hidden w-full bg-slate-50 py-4">
+            <div class="max-w-xl mx-auto px-4 w-full">
+                <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
+                    
+                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition cursor-pointer" title="Kembali ke Beranda">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
+                        <h2 class="text-base sm:text-lg font-bold font-heading text-slate-900 mt-1">Pendaftaran Akun Baru</h2>
+                        <p class="text-xs text-slate-500">Seluruh isian di bawah ini wajib diisi dengan lengkap.</p>
+                    </div>
+
+                    <form id="formRegister" onsubmit="triggerConfirmationModal(event)" class="space-y-3.5 text-xs sm:text-sm">
+                        <div>
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Karyawan (Sesuai KTP) *</label>
+                            <input type="text" id="regName" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                        </div>
+                        <div>
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Aktif *</label>
+                            <input type="email" id="regEmail" required placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nomor Induk Karyawan (NIK) *</label>
+                                <input type="text" id="regNikKaryawan" required placeholder="NIK Karyawan" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Sesuai KTP (16 Digit) *</label>
+                                <input type="number" id="regNikKtp" required placeholder="16 digit KTP" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Handphone *</label>
+                                <input type="tel" id="regPhone" required placeholder="08123456789" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Lahir *</label>
+                                <input type="date" id="regDob" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Ibu Kandung *</label>
+                                <input type="text" id="regMotherName" required placeholder="Nama Ibu" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Unit Kerja / Departemen *</label>
+                                <input type="text" id="regDepartment" required placeholder="Contoh: Operasional" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Posisi / Jabatan *</label>
+                                <input type="text" id="regPosition" required placeholder="Contoh: Staff" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Lengkap Domisili *</label>
+                            <textarea id="regAddress" rows="2" required placeholder="Alamat tinggal saat ini..." class="w-full px-3.5 py-2.5 rounded-xl custom-input"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Perusahaan Tempat Bekerja *</label>
+                            <select id="regCompanySelect" onchange="displayCompanyDetails()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                <option value="">-- Memuat Perusahaan dari Google Sheets... --</option>
+                            </select>
+                        </div>
+                        
+                        <div id="companyDetailCard" class="hidden bg-brand-50 border border-brand-200 rounded-xl p-3.5 space-y-1 text-brand-900">
+                            <p class="font-bold text-brand-950 text-xs sm:text-sm"><i class="fa-solid fa-building text-brand-600 mr-1"></i> <span id="compNameDisplay">-</span></p>
+                            <p class="text-xs">ID Perusahaan: <span id="compIDDisplay" class="font-semibold">-</span></p>
+                            <p class="text-xs">PIC: <span id="compPicDisplay" class="font-semibold">-</span> | Email: <span id="compEmailDisplay" class="font-semibold">-</span></p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Status Kepegawaian *</label>
+                                <select id="regEmploymentStatus" onchange="toggleContractFields()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                    <option value="Tetap">Tetap (Permanent)</option>
+                                    <option value="Kontrak">Kontrak (Contract)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Gaji Pokok Bulanan (Rp) *</label>
+                                <input type="text" id="regSalary" oninput="formatCurrencyInput(this)" required placeholder="Contoh: 5.000.000" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Mulai Kerja *</label>
+                                <input type="date" id="regStartDate" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                            <div id="containerEndDate" class="hidden">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Akhir Kontrak *</label>
+                                <input type="date" id="regEndDate" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100">
+                            <p class="font-bold text-slate-700 uppercase tracking-wider mb-2 text-xs"><i class="fa-solid fa-wallet text-brand-600 mr-1"></i> Rekening Tujuan Pencairan *</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                <div><input type="text" id="regBankName" placeholder="Nama Bank (BCA)" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
+                                <div><input type="text" id="regBankAccNo" placeholder="No. Rekening" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
+                                <div><input type="text" id="regBankAccName" placeholder="Pemilik Rekening" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 space-y-3">
+                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib)</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                
+                                <div id="boxKtp" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli *</label>
+                                    <div class="flex justify-center gap-2 mb-2">
+                                        <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
+                                        <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
+                                    </div>
+                                    <input type="file" id="fileKtp" accept="image/*" onchange="previewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
+                                    <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP</div>
+                                    <div id="containerImgKtp" class="hidden mt-2 relative inline-block w-full">
+                                        <img id="imgKtp" src="" alt="Preview KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
+                                        <button type="button" onclick="clearPhoto('ktp')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+                                
+                                <div id="boxSelfie" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Selfie KTP *</label>
+                                    <div class="flex justify-center gap-2 mb-2">
+                                        <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
+                                        <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
+                                    </div>
+                                    <input type="file" id="fileSelfie" accept="image/*" onchange="previewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
+                                    <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie</div>
+                                    <div id="containerImgSelfie" class="hidden mt-2 relative inline-block w-full">
+                                        <img id="imgSelfie" src="" alt="Preview Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
+                                        <button type="button" onclick="clearPhoto('selfie')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 7 Point T&C Checkboxes -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                            <p class="font-bold text-slate-900 text-xs uppercase tracking-wider"><i class="fa-solid fa-file-contract text-brand-600 mr-1"></i> Pernyataan dan Persetujuan</p>
+                            
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm1" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya menyatakan bahwa seluruh data dan dokumen yang saya berikan dalam pengajuan akun ini adalah benar, lengkap, dan dapat dipertanggungjawabkan. Saya memberikan persetujuan kepada Tanggalmuda.com untuk melakukan verifikasi data diri dan status kepegawaian kepada pihak terkait/mitra pemberi kerja sesuai kebutuhan proses layanan EWA.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm2" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memberikan persetujuan atas pengumpulan, penggunaan, penyimpanan, dan verifikasi data pribadi yang saya berikan untuk keperluan pendaftaran, verifikasi, administrasi, keamanan, dan penyelenggaraan layanan EWA Tanggalmuda.com sesuai ketentuan yang berlaku.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm3" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa pengajuan akun tidak secara otomatis berarti saya mendapatkan fasilitas pencairan EWA. Persetujuan akun dan pencairan EWA tetap mengikuti hasil verifikasi serta ketentuan yang berlaku.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm4" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa akun hanya dapat digunakan oleh saya sendiri. Saya bertanggung jawab menjaga kerahasiaan password dan tidak memberikan akses akun kepada pihak lain.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm5" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa apabila ditemukan data yang tidak benar, tidak sesuai, atau terdapat indikasi penyalahgunaan, Tanggalmuda.com berhak melakukan peninjauan, menunda, menolak, atau menonaktifkan akses akun sesuai ketentuan yang berlaku.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm6" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa password/login untuk mengakses layanan akan dikirimkan ke alamat email yang saya daftarkan setelah pengajuan akun disetujui.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm7" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya telah membaca, memahami, dan menyetujui Syarat & Ketentuan serta Kebijakan Privasi layanan EWA Tanggalmuda.com.</span>
+                            </label>
+                        </div>
+
+                        <div class="flex space-x-3 pt-1">
+                            <button type="button" onclick="switchPage('landing')" class="w-1/3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-xs sm:text-sm cursor-pointer">Batal</button>
+                            <button type="submit" class="w-2/3 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg transition text-xs sm:text-sm cursor-pointer">Daftar Akun</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-status" class="hidden w-full bg-slate-50 py-6">
+            <div class="max-w-xl mx-auto px-4 w-full">
+                <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
+                    
+                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition cursor-pointer" title="Kembali ke Beranda">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
+                        <h2 class="text-base sm:text-lg font-bold font-heading text-slate-900 mt-1">Cek Status Pengajuan / Pendaftaran</h2>
+                        <p class="text-xs text-slate-500">Masukkan Alamat Email Terdaftar.</p>
+                    </div>
+
+                    <div class="space-y-3.5 mb-5">
+                        <div>
+                            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Pilih Jenis Pengecekan</label>
+                            <select id="checkType" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
+                                <option value="registration">Status Pendaftaran Akun</option>
+                                <option value="ewa">Progress Pengajuan Akses Gaji</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email</label>
+                            <input type="email" id="searchEmail" placeholder="nama@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
+                        </div>
+                        <button type="button" onclick="checkStatus()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-sm cursor-pointer">
+                            <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Cek Status Sekarang
+                        </button>
+                    </div>
+
+                    <div id="statusResultContainer" class="hidden p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 text-xs sm:text-sm">
+                        <div class="flex items-center justify-between pb-2.5 border-b border-slate-200">
+                            <div>
+                                <span class="text-[11px] text-slate-500 block">Nomor Referensi</span>
+                                <span id="resRef" class="font-bold text-slate-900 font-heading">TM-00000</span>
+                            </div>
+                            <span id="resBadge" class="px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-amber-500">Menunggu</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between"><span class="text-slate-500">Nama:</span> <span id="resName" class="font-semibold">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Layanan:</span> <span id="resType" class="font-semibold">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Nominal:</span> <span id="resAmount" class="font-semibold">-</span></div>
+                        </div>
+                        <div id="resNote" class="p-3 bg-brand-50 border border-brand-100 rounded-xl text-xs text-brand-800">-</div>
+                    </div>
+                    
+                    <div id="statusEmptyNotice" class="text-center py-6 text-slate-400 text-xs sm:text-sm">Belum ada data email yang diperiksa.</div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- EWA Verification Modal -->
+    <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi Keamanan Akses Gaji</h3>
+                <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
+                <p>Email Pemohon: <b id="verifyMemberEmail"></b></p>
+                <p>Dana Diterima Bersih (Full): <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
+                <p>Biaya Layanan (Ditagih Repayment): <b id="verifyFee" class="text-rose-600"></b></p>
+                <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
+            </div>
+
+            <p class="text-xs text-slate-600">Masukkan Nama Ibu Kandung Anda sesuai data terdaftar:</p>
+            
+            <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Ibu Kandung</label>
+                    <input type="text" id="verifyMotherName" required placeholder="Nama ibu kandung" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-xs sm:text-sm">
+                </div>
+                <div class="flex space-x-3 pt-1">
+                    <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
+                    <button type="submit" id="btnFinalEwa" class="w-full py-3 bg-brand-600 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md cursor-pointer">Kirim Konfirmasi Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-900 text-emerald-100 py-3 border-t border-emerald-800 shadow-inner shrink-0 w-full text-center text-xs">
+        <p>© 2026 TanggalMuda.com</p>
+    </footer>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 font-heading text-sm"><i class="fa-solid fa-camera text-brand-600 mr-2"></i> Kamera HP</h3>
+                <button type="button" onclick="closeCameraModal()" class="text-slate-400 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="relative bg-black rounded-xl overflow-hidden aspect-video flex items-center justify-center">
+                <video id="cameraVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+                <canvas id="cameraCanvas" class="hidden"></canvas>
+            </div>
+            <div class="flex space-x-3 pt-1">
+                <button type="button" onclick="closeCameraModal()" class="w-1/2 bg-slate-100 py-2.5 rounded-xl font-semibold text-xs cursor-pointer">Batal</button>
+                <button type="button" onclick="captureCameraPhoto()" class="w-1/2 bg-brand-600 text-white py-2.5 rounded-xl font-semibold text-xs cursor-pointer">Ambil Foto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl">
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 font-heading text-base">Pastikan Data Sudah Benar</h3>
+            </div>
+            <div id="confirmDataSummary" class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2 text-xs text-slate-700 max-h-72 overflow-y-auto"></div>
+            <div class="flex space-x-3 pt-2">
+                <button type="button" onclick="closeConfirmModal()" class="w-1/2 bg-slate-100 py-3 rounded-xl font-semibold text-xs cursor-pointer">Periksa Lagi</button>
+                <button type="button" onclick="executeFinalRegister()" class="w-1/2 bg-brand-600 text-white py-3 rounded-xl font-semibold text-xs shadow-md cursor-pointer">Ok Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
+        
+        let listPerusahaanData = [];
+        let currentCameraType = null;
+        let videoStreamInstance = null;
+        let pendingRegistrationPayload = null;
+        let pendingEwaData = null;
+        let alertTimeoutTimer = null;
+        let alertCountdownInterval = null;
+
+        window.onload = function() {
+            fetchCompaniesViaJSONP();
+        };
+
+        // JSONP bypass for Google Sites iframe CORS restriction
+        function fetchCompaniesViaJSONP() {
+            let select = document.getElementById('regCompanySelect');
+            select.innerHTML = '<option value="">-- Memuat Perusahaan dari Google Sheets... --</option>';
+
+            let callbackName = 'jsonp_company_cb_' + Math.round(100000 * Math.random());
+            
+            window[callbackName] = function(data) {
+                delete window[callbackName];
+                let scriptTag = document.getElementById('jsonp_script');
+                if (scriptTag) scriptTag.remove();
+
+                if (data && data.length > 0) {
+                    listPerusahaanData = data;
+                    select.innerHTML = '<option value="">-- Pilih Perusahaan Kerjasama --</option>';
+                    listPerusahaanData.forEach(comp => {
+                        let opt = document.createElement('option');
+                        opt.value = comp.nama_perusahaan;
+                        opt.textContent = comp.nama_perusahaan + " (" + comp.id_perusahaan + ")";
+                        select.appendChild(opt);
+                    });
+                } else {
+                    select.innerHTML = '<option value="">-- Tidak ada Perusahaan terdaftar di Gsheet --</option>';
+                }
+            };
+
+            let script = document.createElement('script');
+            script.id = 'jsonp_script';
+            script.src = GOOGLE_SCRIPT_URL + "?action=getCompanies&callback=" + callbackName;
+            script.onerror = function() {
+                select.innerHTML = '<option value="">-- Gagal memuat dari Google Sheets --</option>';
+            };
+            document.body.appendChild(script);
+        }
+
+        function formatCurrencyInput(input) {
+            let value = input.value.replace(/[^,\d]/g, '');
+            let splitValue = value.split(',');
+            let remainder = splitValue[0].length % 3;
+            let rupiah = splitValue[0].substr(0, remainder);
+            let thousands = splitValue[0].substr(remainder).match(/\d{3}/gi);
+
+            if (thousands) {
+                let separator = remainder ? '.' : '';
+                rupiah += separator + thousands.join('.');
+            }
+
+            rupiah = splitValue[1] !== undefined ? rupiah + ',' + splitValue[1] : rupiah;
+            input.value = rupiah;
+        }
+
+        function parseRawNumber(formattedStr) {
+            if (!formattedStr) return 0;
+            return Number(String(formattedStr).replace(/\./g, '').replace(/,/g, '.')) || 0;
+        }
+
+        function switchPage(pageId) {
+            ['landing', 'register', 'status'].forEach(p => {
+                let el = document.getElementById('view-' + p);
+                if (el) {
+                    el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
+                }
+            });
+            closeGlobalAlert();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToEwaForm() {
+            switchPage('landing');
+            let formSec = document.getElementById('ewaFormContainer');
+            if (formSec) {
+                formSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                let emailInput = document.getElementById('ewaEmail');
+                if (emailInput) emailInput.focus();
+            }
+        }
+
+        function showGlobalAlert(message, isSuccess = true, durationSeconds = 6) {
+            let container = document.getElementById('globalAlert');
+            let box = document.getElementById('globalAlertBox');
+            let text = document.getElementById('globalAlertText');
+            let timerBadge = document.getElementById('alertTimerBadge');
+            
+            text.innerText = message;
+            box.className = `p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm font-medium ${isSuccess ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`;
+            
+            container.classList.remove('hidden');
+
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+
+            let timeLeft = durationSeconds;
+            timerBadge.innerText = timeLeft + 's';
+
+            alertCountdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) timerBadge.innerText = timeLeft + 's';
+                else clearInterval(alertCountdownInterval);
+            }, 1000);
+
+            alertTimeoutTimer = setTimeout(() => closeGlobalAlert(), durationSeconds * 1000);
+        }
+
+        function closeGlobalAlert() {
+            document.getElementById('globalAlert').classList.add('hidden');
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+        }
+
+        function checkEmailRegistered(emailVal) {
+            let feedback = document.getElementById('emailStatusFeedback');
+            let cleanEmail = emailVal.trim().toLowerCase();
+            if (!cleanEmail || !cleanEmail.includes('@')) {
+                feedback.classList.add('hidden');
+                return;
+            }
+            feedback.classList.add('hidden');
+        }
+
+        function calculateEwaFeePreview() {
+            let rawAmount = document.getElementById('ewaAmount').value;
+            let amount = parseRawNumber(rawAmount);
+            let previewBox = document.getElementById('ewaFeePreviewBox');
+
+            if (amount <= 0) {
+                previewBox.classList.add('hidden');
+                return;
+            }
+
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
+            let totalRepayment = amount + totalFee;
+
+            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Maks Rp 750k/trx)`;
+            document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
+            document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
+            document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
+            previewBox.classList.remove('hidden');
+        }
+
+        function handleInitialEwaSubmit(e) {
+            e.preventDefault();
+            let email = document.getElementById('ewaEmail').value.trim();
+            let rawAmount = document.getElementById('ewaAmount').value.trim();
+            let amount = parseRawNumber(rawAmount);
+            
+            let btn = document.getElementById('btnEwaSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Email...';
+
+            pendingEwaData = { email: email, amount: amount };
+            document.getElementById('verifyMemberEmail').innerText = email;
+            
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
+            let totalRepayment = amount + totalFee;
+
+            document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+            document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+            document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
+            document.getElementById('verifyMotherName').value = '';
+            
+            btn.disabled = false;
+            btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+            document.getElementById('ewaVerifyModal').classList.remove('hidden');
+        }
+
+        function closeEwaVerifyModal() {
+            document.getElementById('ewaVerifyModal').classList.add('hidden');
+        }
+
+        function handleFinalEwaSubmit(e) {
+            e.preventDefault();
+            closeEwaVerifyModal();
+            
+            let motherName = document.getElementById('verifyMotherName').value.trim();
+            let payload = {
+                email: pendingEwaData.email,
+                amount: pendingEwaData.amount,
+                motherName: motherName
+            };
+
+            showGlobalAlert('Mengirim verifikasi EWA ke server...', true, 4);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8', 
+                },
+                redirect: 'follow', 
+                body: JSON.stringify({ action: 'verifyAndInitEwa', payload: payload })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    showGlobalAlert(res.message, true, 8);
+                    switchPage('status');
+                    document.getElementById('searchEmail').value = pendingEwaData.email;
+                    document.getElementById('checkType').value = 'ewa';
+                    checkStatus();
+                } else {
+                    showGlobalAlert(res.message, false, 8);
+                }
+            })
+            .catch(err => {
+                showGlobalAlert('Gagal menghubungi server: ' + err.message, false, 8);
+            });
+        }
+
+        function previewFile(inputId, previewId, imgId) {
+            let fileInput = document.getElementById(inputId);
+            let previewDiv = document.getElementById(previewId);
+            let imgElement = document.getElementById(imgId);
+            let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+
+            if (fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    imgElement.src = e.target.result;
+                    previewDiv.classList.add('hidden');
+                    containerImg.classList.remove('hidden');
+                    previewDiv.dataset.base64 = e.target.result;
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        function setCameraPhotoData(type, dataURL) {
+            let previewId = type === 'ktp' ? 'previewKtp' : 'previewSelfie';
+            let imgId = type === 'ktp' ? 'imgKtp' : 'imgSelfie';
+            let previewDiv = document.getElementById(previewId);
+            let imgElement = document.getElementById(imgId);
+            let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+
+            imgElement.src = dataURL;
+            previewDiv.classList.add('hidden');
+            containerImg.classList.remove('hidden');
+            previewDiv.dataset.base64 = dataURL;
+        }
+
+        function clearPhoto(type) {
+            let previewId = type === 'ktp' ? 'previewKtp' : 'previewSelfie';
+            let imgId = type === 'ktp' ? 'imgKtp' : 'imgSelfie';
+            let fileInputId = type === 'ktp' ? 'fileKtp' : 'fileSelfie';
+            
+            let previewDiv = document.getElementById(previewId);
+            let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+            
+            document.getElementById(fileInputId).value = '';
+            previewDiv.classList.remove('hidden');
+            containerImg.classList.add('hidden');
+            previewDiv.dataset.base64 = '';
+        }
+
+        function openCameraModal(type) {
+            currentCameraType = type;
+            document.getElementById('cameraModal').classList.remove('hidden');
+            
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+                .then(stream => {
+                    videoStreamInstance = stream;
+                    let video = document.getElementById('cameraVideo');
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(err => {
+                    showGlobalAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", false, 8);
+                    closeCameraModal();
+                });
+        }
+
+        function captureCameraPhoto() {
+            let video = document.getElementById('cameraVideo');
+            let canvas = document.getElementById('cameraCanvas');
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            let dataURL = canvas.toDataURL('image/jpeg');
+            setCameraPhotoData(currentCameraType, dataURL);
+            closeCameraModal();
+        }
+
+        function closeCameraModal() {
+            document.getElementById('cameraModal').classList.add('hidden');
+            if (videoStreamInstance) {
+                videoStreamInstance.getTracks().forEach(t => t.stop());
+                videoStreamInstance = null;
+            }
+        }
+
+        function displayCompanyDetails() {
+            let selectedName = document.getElementById('regCompanySelect').value;
+            let detailCard = document.getElementById('companyDetailCard');
+            
+            if (!selectedName) {
+                detailCard.classList.add('hidden');
+                return;
+            }
+
+            let found = listPerusahaanData.find(c => c.nama_perusahaan === selectedName);
+            if (found) {
+                document.getElementById('compNameDisplay').innerText = found.nama_perusahaan;
+                document.getElementById('compIDDisplay').innerText = found.id_perusahaan;
+                document.getElementById('compPicDisplay').innerText = found.pic_perusahaan;
+                document.getElementById('compEmailDisplay').innerText = found.email_pic;
+                detailCard.classList.remove('hidden');
+            }
+        }
+
+        function toggleContractFields() {
+            let status = document.getElementById('regEmploymentStatus').value;
+            let containerEndDate = document.getElementById('containerEndDate');
+            let endDateInput = document.getElementById('regEndDate');
+            
+            if (status === 'Kontrak') {
+                containerEndDate.classList.remove('hidden');
+                endDateInput.required = true;
+            } else {
+                containerEndDate.classList.add('hidden');
+                endDateInput.required = false;
+            }
+        }
+
+        function triggerConfirmationModal(e) {
+            e.preventDefault();
+            
+            let ktpBase64 = document.getElementById('previewKtp').dataset.base64 || '';
+            let selfieBase64 = document.getElementById('previewSelfie').dataset.base64 || '';
+            let rawSalary = document.getElementById('regSalary').value;
+
+            pendingRegistrationPayload = {
+                nama_karyawan: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                nik_karyawan: document.getElementById('regNikKaryawan').value,
+                nik_ktp: document.getElementById('regNikKtp').value,
+                nomor_telepon: document.getElementById('regPhone').value,
+                tanggal_lahir: document.getElementById('regDob').value,
+                nama_ibu_kandung: document.getElementById('regMotherName').value,
+                departemen: document.getElementById('regDepartment').value,
+                jabatan: document.getElementById('regPosition').value,
+                alamat: document.getElementById('regAddress').value,
+                nama_perusahaan: document.getElementById('regCompanySelect').value,
+                status_kepegawaian: document.getElementById('regEmploymentStatus').value,
+                gaji_pokok: parseRawNumber(rawSalary),
+                tanggal_mulai_kerja: document.getElementById('regStartDate').value,
+                tanggal_akhir_kontrak: document.getElementById('regEndDate').value || '-',
+                nama_bank: document.getElementById('regBankName').value,
+                no_rekening: document.getElementById('regBankAccNo').value,
+                pemilik_rekening: document.getElementById('regBankAccName').value,
+                ktp_photo: ktpBase64,
+                selfie_photo: selfieBase64
+            };
+
+            let ktpImgHtml = ktpBase64 ? `<img src="${ktpBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada KTP</span>';
+            let selfieImgHtml = selfieBase64 ? `<img src="${selfieBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada Selfie</span>';
+
+            document.getElementById('confirmDataSummary').innerHTML = `
+                <div class="grid grid-cols-2 gap-2 border-b pb-2">
+                    <div><b>Nama:</b> ${pendingRegistrationPayload.nama_karyawan}</div>
+                    <div><b>Email:</b> ${pendingRegistrationPayload.email}</div>
+                    <div><b>NIK Karyawan:</b> ${pendingRegistrationPayload.nik_karyawan}</div>
+                    <div><b>NIK KTP:</b> ${pendingRegistrationPayload.nik_ktp}</div>
+                    <div><b>No HP:</b> ${pendingRegistrationPayload.nomor_telepon}</div>
+                    <div><b>Tgl Lahir:</b> ${pendingRegistrationPayload.tanggal_lahir}</div>
+                    <div><b>Ibu Kandung:</b> ${pendingRegistrationPayload.nama_ibu_kandung}</div>
+                    <div><b>Departemen:</b> ${pendingRegistrationPayload.departemen}</div>
+                    <div><b>Jabatan:</b> ${pendingRegistrationPayload.jabatan}</div>
+                    <div><b>Perusahaan:</b> ${pendingRegistrationPayload.nama_perusahaan}</div>
+                    <div><b>Status Pegawai:</b> ${pendingRegistrationPayload.status_kepegawaian}</div>
+                    <div><b>Gaji Pokok:</b> Rp ${pendingRegistrationPayload.gaji_pokok.toLocaleString('id-ID')}</div>
+                    <div><b>Mulai Kerja:</b> ${pendingRegistrationPayload.tanggal_mulai_kerja}</div>
+                    <div><b>Akhir Kontrak:</b> ${pendingRegistrationPayload.tanggal_akhir_kontrak}</div>
+                    <div class="col-span-2"><b>Alamat:</b> ${pendingRegistrationPayload.alamat}</div>
+                    <div class="col-span-2"><b>Rekening:</b> ${pendingRegistrationPayload.nama_bank} - ${pendingRegistrationPayload.no_rekening} (a/n ${pendingRegistrationPayload.pemilik_rekening})</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-1 text-center">
+                    <div><p class="font-bold">Foto KTP</p>${ktpImgHtml}</div>
+                    <div><p class="font-bold">Foto Selfie</p>${selfieImgHtml}</div>
+                </div>
+            `;
+            
+            document.getElementById('confirmModal').classList.remove('hidden');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
+
+        function executeFinalRegister() {
+            closeConfirmModal();
+            let payload = pendingRegistrationPayload;
+            
+            showGlobalAlert('Mengirim data pendaftaran ke Google Sheets...', true, 5);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8', 
+                },
+                redirect: 'follow',
+                body: JSON.stringify({ action: 'registerMember', payload: payload })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    showGlobalAlert(res.message, true, 8);
+                    document.getElementById('formRegister').reset();
+                    setTimeout(() => {
+                        switchPage('status');
+                        document.getElementById('searchEmail').value = payload.email;
+                        document.getElementById('checkType').value = 'registration';
+                        checkStatus();
+                    }, 1500);
+                } else {
+                    showGlobalAlert(res.message, false, 8);
+                }
+            })
+            .catch(err => {
+                showGlobalAlert('Gagal mengirim ke server: ' + err.message, false, 8);
+            });
+        }
+
+        function checkStatus() {
+            let emailInput = document.getElementById('searchEmail').value.trim().toLowerCase();
+            let checkType = document.getElementById('checkType').value;
+            let resultBox = document.getElementById('statusResultContainer');
+            let emptyNotice = document.getElementById('statusEmptyNotice');
+
+            if (!emailInput) {
+                showGlobalAlert('Masukkan alamat email terlebih dahulu!', false, 5);
+                return;
+            }
+
+            showGlobalAlert('Memeriksa status ke Google Sheets...', true, 3);
+
+            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success && res.data) {
+                        let data = res.data;
+                        document.getElementById('resRef').innerText = data.refId;
+                        document.getElementById('resName').innerText = data.name;
+                        document.getElementById('resType').innerText = data.type;
+                        document.getElementById('resAmount').innerText = data.amount;
+                        document.getElementById('resBadge').innerText = data.status;
+                        document.getElementById('resNote').innerText = data.note;
+                        
+                        resultBox.classList.remove('hidden');
+                        emptyNotice.classList.add('hidden');
+                    } else {
+                        resultBox.classList.add('hidden');
+                        emptyNotice.classList.remove('hidden');
+                        showGlobalAlert(res.message || 'Data tidak ditemukan.', false, 6);
+                    }
+                })
+                .catch(err => {
+                    showGlobalAlert('Gagal memeriksa status: ' + err.message, false, 6);
+                });
+        }
+    </script>
+</body>
+</html>
