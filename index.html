@@ -116,20 +116,27 @@
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('landing')">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain">
             </div>
-            <div></div>
+            <div id="configStatusBadge" class="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-mono">
+                <i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Memuat Konfigurasi Gsheet...
+            </div>
         </div>
     </header>
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <!-- Global Alert Notification -->
-        <div id="globalAlert" class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4 transition-all duration-300">
-            <div id="globalAlertBox" class="p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm">
-                <div class="flex items-center space-x-2">
-                    <span id="globalAlertText"></span>
-                    <span id="alertTimerBadge" class="text-[10px] bg-black/10 px-1.5 py-0.5 rounded font-mono">6s</span>
+        <!-- Modal Balon Besar (Global Notification & Alert) -->
+        <div id="bigAlertModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
+                <div id="bigAlertIconBox" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                    <i id="bigAlertIcon" class="fa-solid fa-circle-check"></i>
                 </div>
-                <button onclick="closeGlobalAlert()" class="opacity-70 hover:opacity-100 font-bold ml-3 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                <div class="space-y-2">
+                    <h3 id="bigAlertTitle" class="font-bold text-slate-900 font-heading text-lg sm:text-xl">Pemberitahuan</h3>
+                    <p id="bigAlertText" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
+                </div>
+                <div class="pt-2">
+                    <button type="button" onclick="closeBigAlert()" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition cursor-pointer">Mengerti / Tutup</button>
+                </div>
             </div>
         </div>
 
@@ -481,11 +488,33 @@
 
     </main>
 
-    <!-- EWA Verification Modal -->
+    <!-- Modal Balon Besar: Email Belum Terdaftar -->
+    <div id="emailUnregisteredModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
+            <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="font-bold text-slate-900 font-heading text-lg sm:text-xl">Alamat Email Belum Terdaftar!</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Maaf, alamat email <b id="unregisteredEmailText" class="text-rose-600 font-semibold"></b> belum terdaftar di data anggota/perusahaan kami (Gsheet).
+                </p>
+                <p class="text-xs font-medium text-brand-700 bg-brand-50 p-3 rounded-xl border border-brand-200">
+                    💡 Silakan melakukan <b>Pendaftaran Anggota Terlebih Dahulu</b> sebelum mengajukan pencairan gaji (EWA).
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                <button type="button" onclick="closeUnregisteredModal()" class="w-full sm:w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs sm:text-sm transition cursor-pointer">Koreksi Email</button>
+                <button type="button" onclick="redirectToRegister()" class="w-full sm:w-1/2 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Sekarang</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EWA Verification Modal (Menggunakan PIN Akses) -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi Keamanan Akses Gaji</h3>
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi PIN Akses Gaji</h3>
                 <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
@@ -496,12 +525,12 @@
                 <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
 
-            <p class="text-xs text-slate-600">Masukkan Nama Ibu Kandung Anda sesuai data terdaftar:</p>
+            <p class="text-xs text-slate-600">Masukkan <b>PIN Akses</b> rahasia yang dikirimkan ke email Anda saat pendaftaran disetujui:</p>
             
             <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Ibu Kandung</label>
-                    <input type="text" id="verifyMotherName" required placeholder="Nama ibu kandung" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-xs sm:text-sm">
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses Rahasia</label>
+                    <input type="password" id="verifyAccessPin" maxlength="6" required placeholder="Masukkan PIN Akses" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-center text-lg font-mono font-bold tracking-widest text-slate-900">
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
@@ -551,23 +580,54 @@
         </div>
     </div>
 
-    <!-- JavaScript Controller with JSONP Google Sites Support -->
+    <!-- JavaScript Controller with Dynamic Config Support from Sheet -->
     <script>
-        <!-- const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIO5OyW8GH6x2MinnpoLRlgHW2V66sCvnlsG2mAO2xe5joYyMxk4v8VGLdaGrvhG0TpA/exec"; -->
+        let GOOGLE_SCRIPT_URL = window.location.href.includes("script.google.com") ? window.location.href.split("?")[0] : "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
-        let alertTimeoutTimer = null;
-        let alertCountdownInterval = null;
 
         window.onload = function() {
-            fetchCompaniesViaJSONP();
+            fetchConfigurationAndCompanies();
         };
 
-        // JSONP bypass for Google Sites iframe CORS restriction
+        function fetchConfigurationAndCompanies() {
+            let badge = document.getElementById('configStatusBadge');
+            badge.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Memuat Konfigurasi Gsheet...';
+
+            let callbackName = 'jsonp_config_cb_' + Math.round(100000 * Math.random());
+            
+            window[callbackName] = function(res) {
+                delete window[callbackName];
+                let scriptTag = document.getElementById('jsonp_config_script');
+                if (scriptTag) scriptTag.remove();
+
+                if (res && res.success && res.value) {
+                    GOOGLE_SCRIPT_URL = res.value;
+                    badge.innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Web URL Terhubung (Gsheet)';
+                    badge.className = "text-[10px] bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full font-mono border border-emerald-200";
+                } else {
+                    badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Menggunakan URL Default';
+                    badge.className = "text-[10px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-mono border border-amber-200";
+                }
+                
+                fetchCompaniesViaJSONP();
+            };
+
+            let script = document.createElement('script');
+            script.id = 'jsonp_config_script';
+            script.src = GOOGLE_SCRIPT_URL + "?action=getConfig&key=WEB_URL&callback=" + callbackName;
+            script.onerror = function() {
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Gagal Memuat Konfigurasi';
+                badge.className = "text-[10px] bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full font-mono border border-rose-200";
+                fetchCompaniesViaJSONP();
+            };
+            document.body.appendChild(script);
+        }
+
         function fetchCompaniesViaJSONP() {
             let select = document.getElementById('regCompanySelect');
             select.innerHTML = '<option value="">-- Memuat Perusahaan dari Google Sheets... --</option>';
@@ -630,7 +690,6 @@
                     el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
                 }
             });
-            closeGlobalAlert();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -644,36 +703,28 @@
             }
         }
 
-        function showGlobalAlert(message, isSuccess = true, durationSeconds = 6) {
-            let container = document.getElementById('globalAlert');
-            let box = document.getElementById('globalAlertBox');
-            let text = document.getElementById('globalAlertText');
-            let timerBadge = document.getElementById('alertTimerBadge');
-            
-            text.innerText = message;
-            box.className = `p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm font-medium ${isSuccess ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`;
-            
-            container.classList.remove('hidden');
+        function showBigAlert(message, title = "Pemberitahuan", isSuccess = true) {
+            let titleEl = document.getElementById('bigAlertTitle');
+            let textEl = document.getElementById('bigAlertText');
+            let iconBox = document.getElementById('bigAlertIconBox');
+            let iconEl = document.getElementById('bigAlertIcon');
 
-            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
-            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+            titleEl.innerText = title;
+            textEl.innerText = message;
 
-            let timeLeft = durationSeconds;
-            timerBadge.innerText = timeLeft + 's';
+            if (isSuccess) {
+                iconBox.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
+                iconEl.className = "fa-solid fa-circle-check";
+            } else {
+                iconBox.className = "w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
+                iconEl.className = "fa-solid fa-triangle-exclamation";
+            }
 
-            alertCountdownInterval = setInterval(() => {
-                timeLeft--;
-                if (timeLeft > 0) timerBadge.innerText = timeLeft + 's';
-                else clearInterval(alertCountdownInterval);
-            }, 1000);
-
-            alertTimeoutTimer = setTimeout(() => closeGlobalAlert(), durationSeconds * 1000);
+            document.getElementById('bigAlertModal').classList.remove('hidden');
         }
 
-        function closeGlobalAlert() {
-            document.getElementById('globalAlert').classList.add('hidden');
-            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
-            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+        function closeBigAlert() {
+            document.getElementById('bigAlertModal').classList.add('hidden');
         }
 
         function checkEmailRegistered(emailVal) {
@@ -720,24 +771,55 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Email...';
 
-            pendingEwaData = { email: email, amount: amount };
-            document.getElementById('verifyMemberEmail').innerText = email;
-            
-            let maxPerTrx = 750000;
-            let feePerTrx = 50000;
-            let numTrx = Math.ceil(amount / maxPerTrx);
-            let totalFee = numTrx * feePerTrx;
-            let totalRepayment = amount + totalFee;
+            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration")
+                .then(res => res.json())
+                .then(res => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
 
-            document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-            document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
-            document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
-            
-            document.getElementById('verifyMotherName').value = '';
-            
-            btn.disabled = false;
-            btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-            document.getElementById('ewaVerifyModal').classList.remove('hidden');
+                    if (!res.success || !res.data) {
+                        document.getElementById('unregisteredEmailText').innerText = email;
+                        document.getElementById('emailUnregisteredModal').classList.remove('hidden');
+                        return;
+                    }
+
+                    pendingEwaData = { email: email, amount: amount };
+                    document.getElementById('verifyMemberEmail').innerText = email;
+                    
+                    let maxPerTrx = 750000;
+                    let feePerTrx = 50000;
+                    let numTrx = Math.ceil(amount / maxPerTrx);
+                    let totalFee = numTrx * feePerTrx;
+                    let totalRepayment = amount + totalFee;
+
+                    document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+                    document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+                    
+                    document.getElementById('verifyAccessPin').value = '';
+                    document.getElementById('ewaVerifyModal').classList.remove('hidden');
+                })
+                .catch(err => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                    showBigAlert('Gagal memeriksa email ke server: ' + err.message, "Kesalahan Sistem", false);
+                });
+        }
+
+        function closeUnregisteredModal() {
+            document.getElementById('emailUnregisteredModal').classList.add('hidden');
+            let emailInput = document.getElementById('ewaEmail');
+            emailInput.focus();
+            emailInput.select();
+        }
+
+        function redirectToRegister() {
+            document.getElementById('emailUnregisteredModal').classList.add('hidden');
+            let emailVal = document.getElementById('ewaEmail').value.trim();
+            switchPage('register');
+            if (emailVal) {
+                document.getElementById('regEmail').value = emailVal;
+            }
         }
 
         function closeEwaVerifyModal() {
@@ -748,37 +830,37 @@
             e.preventDefault();
             closeEwaVerifyModal();
             
-            let motherName = document.getElementById('verifyMotherName').value.trim();
+            let accessPin = document.getElementById('verifyAccessPin').value.trim();
             let payload = {
                 email: pendingEwaData.email,
                 amount: pendingEwaData.amount,
-                motherName: motherName
+                accessPin: accessPin
             };
 
-            showGlobalAlert('Mengirim verifikasi EWA ke server...', true, 4);
+            showBigAlert('Mengirim verifikasi EWA ke server...', "Mohon Tunggu", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8', // Crucial to avoid CORS OPTIONS preflight
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
-                redirect: 'follow', // Required for Google Apps Script Web Apps
+                redirect: 'follow',
                 body: JSON.stringify({ action: 'verifyAndInitEwa', payload: payload })
             })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showGlobalAlert(res.message, true, 8);
+                    showBigAlert(res.message, "Pengajuan Berhasil", true);
                     switchPage('status');
                     document.getElementById('searchEmail').value = pendingEwaData.email;
                     document.getElementById('checkType').value = 'ewa';
                     checkStatus();
                 } else {
-                    showGlobalAlert(res.message, false, 8);
+                    showBigAlert(res.message, "Verifikasi Gagal", false);
                 }
             })
             .catch(err => {
-                showGlobalAlert('Gagal menghubungi server: ' + err.message, false, 8);
+                showBigAlert('Gagal menghubungi server: ' + err.message, "Kesalahan Jaringan", false);
             });
         }
 
@@ -839,7 +921,7 @@
                     video.play();
                 })
                 .catch(err => {
-                    showGlobalAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", false, 8);
+                    showBigAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", "Akses Kamera", false);
                     closeCameraModal();
                 });
         }
@@ -966,12 +1048,12 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showGlobalAlert('Mengirim data pendaftaran ke Google Sheets...', true, 5);
+            showBigAlert('Mengirim data pendaftaran ke Google Sheets dan meneruskan email verifikasi terbatas ke PIC Perusahaan...', "Mohon Tunggu", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8', // Bypass CORS preflight
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
                 redirect: 'follow',
                 body: JSON.stringify({ action: 'registerMember', payload: payload })
@@ -979,7 +1061,7 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showGlobalAlert(res.message, true, 8);
+                    showBigAlert(res.message, "Pendaftaran Berhasil Dikirim", true);
                     document.getElementById('formRegister').reset();
                     setTimeout(() => {
                         switchPage('status');
@@ -988,11 +1070,11 @@
                         checkStatus();
                     }, 1500);
                 } else {
-                    showGlobalAlert(res.message, false, 8);
+                    showBigAlert(res.message, "Pendaftaran Gagal", false);
                 }
             })
             .catch(err => {
-                showGlobalAlert('Gagal mengirim ke server: ' + err.message, false, 8);
+                showBigAlert('Gagal mengirim ke server: ' + err.message, "Kesalahan Jaringan", false);
             });
         }
 
@@ -1003,15 +1085,16 @@
             let emptyNotice = document.getElementById('statusEmptyNotice');
 
             if (!emailInput) {
-                showGlobalAlert('Masukkan alamat email terlebih dahulu!', false, 5);
+                showBigAlert('Masukkan alamat email terlebih dahulu!', "Peringatan", false);
                 return;
             }
 
-            showGlobalAlert('Memeriksa status ke Google Sheets...', true, 3);
+            showBigAlert('Memeriksa status ke Google Sheets...', "Mohon Tunggu", true);
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
                 .then(res => res.json())
                 .then(res => {
+                    closeBigAlert();
                     if (res.success && res.data) {
                         let data = res.data;
                         document.getElementById('resRef').innerText = data.refId;
@@ -1026,11 +1109,11 @@
                     } else {
                         resultBox.classList.add('hidden');
                         emptyNotice.classList.remove('hidden');
-                        showGlobalAlert(res.message || 'Data tidak ditemukan.', false, 6);
+                        showBigAlert(res.message || 'Data tidak ditemukan.', "Informasi Status", false);
                     }
                 })
                 .catch(err => {
-                    showGlobalAlert('Gagal memeriksa status: ' + err.message, false, 6);
+                    showBigAlert('Gagal memeriksa status: ' + err.message, "Kesalahan Jaringan", false);
                 });
         }
     </script>
