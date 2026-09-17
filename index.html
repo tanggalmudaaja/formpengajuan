@@ -579,10 +579,10 @@
             </div>
         </div>
     </div>
-
-    <!-- JavaScript Controller with Dynamic Config Support from Sheet -->
+    <!-- JavaScript Controller with JSONP Google Sites Support -->
     <script>
-        let GOOGLE_SCRIPT_URL = window.location.href.includes("script.google.com") ? window.location.href.split("?")[0] : "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
+        // PASTIKAN URL INI ADALAH URL DEPLOYMENT TERBARU ANDA
+        const GOOGLE_SCRIPT_URL = window.location.href.includes("script.google.com") ? window.location.href.split("?")[0] : "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -600,17 +600,24 @@
 
             let callbackName = 'jsonp_config_cb_' + Math.round(100000 * Math.random());
             
+            // Timeout jika server lambat atau terblokir (lebih dari 10 detik)
+            let timeoutTrigger = setTimeout(() => {
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Gagal Memuat Konfigurasi (Timeout)';
+                badge.className = "text-[10px] bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full font-mono border border-rose-200";
+                fetchCompaniesViaJSONP(); // Tetap paksa lanjut ke fungsi berikutnya
+            }, 10000);
+
             window[callbackName] = function(res) {
+                clearTimeout(timeoutTrigger);
                 delete window[callbackName];
                 let scriptTag = document.getElementById('jsonp_config_script');
                 if (scriptTag) scriptTag.remove();
 
                 if (res && res.success && res.value) {
-                    GOOGLE_SCRIPT_URL = res.value;
-                    badge.innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Web URL Terhubung (Gsheet)';
+                    badge.innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Web URL Terhubung';
                     badge.className = "text-[10px] bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full font-mono border border-emerald-200";
                 } else {
-                    badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Menggunakan URL Default';
+                    badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Gagal Baca Sheet Konfigurasi';
                     badge.className = "text-[10px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-mono border border-amber-200";
                 }
                 
@@ -621,7 +628,8 @@
             script.id = 'jsonp_config_script';
             script.src = GOOGLE_SCRIPT_URL + "?action=getConfig&key=WEB_URL&callback=" + callbackName;
             script.onerror = function() {
-                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Gagal Memuat Konfigurasi';
+                clearTimeout(timeoutTrigger);
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Koneksi ke Server Terputus/CORS Error';
                 badge.className = "text-[10px] bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full font-mono border border-rose-200";
                 fetchCompaniesViaJSONP();
             };
@@ -771,39 +779,48 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Email...';
 
-            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration")
-                .then(res => res.json())
-                .then(res => {
-                    btn.disabled = false;
-                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+            let callbackName = 'jsonp_check_cb_' + Math.round(100000 * Math.random());
+            
+            window[callbackName] = function(res) {
+                delete window[callbackName];
+                let scriptTag = document.getElementById('jsonp_check_script');
+                if (scriptTag) scriptTag.remove();
 
-                    if (!res.success || !res.data) {
-                        document.getElementById('unregisteredEmailText').innerText = email;
-                        document.getElementById('emailUnregisteredModal').classList.remove('hidden');
-                        return;
-                    }
+                btn.disabled = false;
+                btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
 
-                    pendingEwaData = { email: email, amount: amount };
-                    document.getElementById('verifyMemberEmail').innerText = email;
-                    
-                    let maxPerTrx = 750000;
-                    let feePerTrx = 50000;
-                    let numTrx = Math.ceil(amount / maxPerTrx);
-                    let totalFee = numTrx * feePerTrx;
-                    let totalRepayment = amount + totalFee;
+                if (!res || !res.success || !res.data) {
+                    document.getElementById('unregisteredEmailText').innerText = email;
+                    document.getElementById('emailUnregisteredModal').classList.remove('hidden');
+                    return;
+                }
 
-                    document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
-                    document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
-                    
-                    document.getElementById('verifyAccessPin').value = '';
-                    document.getElementById('ewaVerifyModal').classList.remove('hidden');
-                })
-                .catch(err => {
-                    btn.disabled = false;
-                    btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                    showBigAlert('Gagal memeriksa email ke server: ' + err.message, "Kesalahan Sistem", false);
-                });
+                pendingEwaData = { email: email, amount: amount };
+                document.getElementById('verifyMemberEmail').innerText = email;
+                
+                let maxPerTrx = 750000;
+                let feePerTrx = 50000;
+                let numTrx = Math.ceil(amount / maxPerTrx);
+                let totalFee = numTrx * feePerTrx;
+                let totalRepayment = amount + totalFee;
+
+                document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+                document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+                document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+                
+                document.getElementById('verifyAccessPin').value = '';
+                document.getElementById('ewaVerifyModal').classList.remove('hidden');
+            };
+
+            let script = document.createElement('script');
+            script.id = 'jsonp_check_script';
+            script.src = GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration&callback=" + callbackName;
+            script.onerror = function() {
+                btn.disabled = false;
+                btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                showBigAlert('Gagal memeriksa email ke server (Koneksi jaringan terputus).', "Kesalahan Sistem", false);
+            };
+            document.body.appendChild(script);
         }
 
         function closeUnregisteredModal() {
@@ -1091,30 +1108,40 @@
 
             showBigAlert('Memeriksa status ke Google Sheets...', "Mohon Tunggu", true);
 
-            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
-                .then(res => res.json())
-                .then(res => {
-                    closeBigAlert();
-                    if (res.success && res.data) {
-                        let data = res.data;
-                        document.getElementById('resRef').innerText = data.refId;
-                        document.getElementById('resName').innerText = data.name;
-                        document.getElementById('resType').innerText = data.type;
-                        document.getElementById('resAmount').innerText = data.amount;
-                        document.getElementById('resBadge').innerText = data.status;
-                        document.getElementById('resNote').innerText = data.note;
-                        
-                        resultBox.classList.remove('hidden');
-                        emptyNotice.classList.add('hidden');
-                    } else {
-                        resultBox.classList.add('hidden');
-                        emptyNotice.classList.remove('hidden');
-                        showBigAlert(res.message || 'Data tidak ditemukan.', "Informasi Status", false);
-                    }
-                })
-                .catch(err => {
-                    showBigAlert('Gagal memeriksa status: ' + err.message, "Kesalahan Jaringan", false);
-                });
+            let callbackName = 'jsonp_status_cb_' + Math.round(100000 * Math.random());
+            
+            window[callbackName] = function(res) {
+                delete window[callbackName];
+                let scriptTag = document.getElementById('jsonp_status_script');
+                if (scriptTag) scriptTag.remove();
+
+                closeBigAlert();
+                if (res && res.success && res.data) {
+                    let data = res.data;
+                    document.getElementById('resRef').innerText = data.refId;
+                    document.getElementById('resName').innerText = data.name;
+                    document.getElementById('resType').innerText = data.type;
+                    document.getElementById('resAmount').innerText = data.amount;
+                    document.getElementById('resBadge').innerText = data.status;
+                    document.getElementById('resNote').innerText = data.note;
+                    
+                    resultBox.classList.remove('hidden');
+                    emptyNotice.classList.add('hidden');
+                } else {
+                    resultBox.classList.add('hidden');
+                    emptyNotice.classList.remove('hidden');
+                    showBigAlert(res && res.message ? res.message : 'Data tidak ditemukan.', "Informasi Status", false);
+                }
+            };
+
+            let script = document.createElement('script');
+            script.id = 'jsonp_status_script';
+            script.src = GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType) + "&callback=" + callbackName;
+            script.onerror = function() {
+                closeBigAlert();
+                showBigAlert('Gagal memeriksa status ke server.', "Kesalahan Jaringan", false);
+            };
+            document.body.appendChild(script);
         }
     </script>
 </body>
