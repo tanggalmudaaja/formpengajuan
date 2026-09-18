@@ -64,15 +64,6 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
-        .glossy-orange-btn {
-            background: linear-gradient(135deg, #ff8c00 0%, #ff5722 50%, #f4511e 100%);
-            box-shadow: 0 4px 12px -2px rgba(255, 110, 34, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
-        }
-        .glossy-orange-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px -2px rgba(255, 110, 34, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
-        }
         @keyframes customPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7); }
             50% { transform: scale(1.02); box-shadow: 0 0 15px 8px rgba(255, 87, 34, 0); }
@@ -89,6 +80,7 @@
             animation: bounceHand 0.8s infinite ease-in-out;
         }
         
+        /* Animasi Text Abu-abu ke Merah */
         @keyframes textPulseRed {
             0%, 100% { color: #94a3b8; transform: scale(1); text-shadow: none; }
             50% { color: #dc2626; transform: scale(1.08); text-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
@@ -97,6 +89,44 @@
             display: inline-block;
             animation: textPulseRed 2s infinite ease-in-out;
             font-weight: 900;
+            font-size: 120%;
+        }
+
+        /* Animasi Latar Kuning Timbul Hilang Terus Menerus */
+        @keyframes yellowBgPulse {
+            0%, 100% { background-color: rgba(254, 240, 138, 0.3); box-shadow: 0 0 0 rgba(250, 204, 21, 0); }
+            50% { background-color: rgba(250, 204, 21, 0.85); box-shadow: 0 0 12px rgba(250, 204, 21, 0.6); }
+        }
+        .animate-yellow-highlight {
+            display: inline-block;
+            padding: 0.1em 0.4em;
+            border-radius: 6px;
+            animation: yellowBgPulse 2s infinite ease-in-out;
+            font-weight: 800;
+            color: #78350f;
+        }
+
+        /* Animasi Text Abu-abu ke Merah untuk Tombol (Latar Navy) */
+        @keyframes textPulseGrayRedButton {
+            0%, 100% { color: #e2e8f0; }
+            50% { color: #ff6b6b; text-shadow: 0 0 6px rgba(255, 107, 107, 0.5); }
+        }
+        .text-pulse-gray-red-btn {
+            animation: textPulseGrayRedButton 2s infinite ease-in-out;
+            font-weight: 900;
+        }
+
+        /* Smooth Marquee Running Text */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+            display: inline-flex;
+            animation: marquee 28s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
         }
 
         .custom-input {
@@ -111,42 +141,218 @@
             box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
             background-color: #ffffff;
         }
-        /* Peningkatan ukuran huruf pada kolom isian formulir pendaftaran */
-        .register-input-lg {
-            font-size: 1rem !important; /* Ukuran diperbesar */
-            padding-top: 0.7rem;
-            padding-bottom: 0.7rem;
-        }
         .email-input-lg {
             font-size: 1.05rem !important;
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
         }
-        .beta-badge span { color: #14532d; }
+        /* Peningkatan ukuran huruf pada seluruh kolom isian formulir pendaftaran (ukuran 0.95rem - 1rem) */
+        .register-input-lg {
+            font-size: 0.95rem !important;
+            padding-top: 0.7rem;
+            padding-bottom: 0.7rem;
+        }
+
+        /* EWA BETA HERO CUSTOM STYLES */
+        .ewa-beta-hero {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        .ewa-beta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            width: 100%;
+        }
+        .ewa-beta-content {
+            position: relative;
+            z-index: 2;
+        }
+        .beta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 9px 16px;
+            border-radius: 30px;
+            background: #fff4ed;
+            border: 1px solid #f4c5a7;
+            color: #b94f18;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            margin-bottom: 22px;
+        }
+        .beta-badge span {
+            color: #14532d;
+        }
         .ewa-beta-content h1 {
-            margin: 0 0 16px; color: #14532d; font-size: clamp(22px, 2.8vw, 28px); line-height: 1.25; font-weight: 800; font-family: 'Poppins', sans-serif;
+            margin: 0 0 22px;
+            color: #14532d;
+            font-size: clamp(24px, 3vw, 32px);
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+        .ewa-beta-content h1 span {
+            display: block;
+            color: #c65b20;
         }
         .beta-info {
-            display: flex; flex-direction: column; gap: 8px; max-width: 650px; padding: 16px 18px;
-            background: rgba(255,255,255,0.9); border-left: 4px solid #c65b20; border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(18,59,93,0.07); margin-bottom: 18px; font-size: 13px; color: #475569; line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 650px;
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.9);
+            border-left: 4px solid #c65b20;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(18,59,93,0.07);
+            margin-bottom: 20px;
         }
-        .beta-info strong { color: #14532d; }
-        
-        .floating-card {
-            position: relative; z-index: 4; width: 100%; max-width: 340px; padding: 18px;
-            background: rgba(255,255,255,0.98); border: 1px solid rgba(18,59,93,0.12); border-radius: 18px;
-            box-shadow: 0 18px 45px rgba(18,59,93,0.15); backdrop-filter: blur(10px);
+        .beta-info h3 {
+            margin: 0 0 5px;
+            color: #14532d;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.3;
         }
-        .floating-label { color: #b94f18; font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-bottom: 7px; }
-        .price { display: flex; align-items: baseline; gap: 10px; }
-        .price del { color: #8b9298; font-size: 14px; text-decoration: line-through; text-decoration-color: #dc2626; text-decoration-thickness: 2px; }
-        .price strong { color: #14532d; font-size: 26px; font-weight: 900; }
-        .price-note { margin-top: -3px; color: #687782; font-size: 12px; }
-        .price-terms { font-size: 11px; font-weight: 800; color: #1e3a8a; margin-top: 8px; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .beta-info p {
+            margin: 0;
+            color: #566575;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .beta-info strong {
+            color: #14532d;
+        }
+        .form-info {
+            max-width: 650px;
+            color: #5b6875;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+        .form-info strong {
+            color: #14532d;
+        }
+        .feedback-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 650px;
+            padding: 16px 18px;
+            background: #edf8f4;
+            border: 1px solid #c6e9dc;
+            border-radius: 12px;
+        }
+        .feedback-box strong {
+            display: block;
+            color: #176849;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .feedback-box p {
+            margin: 0;
+            color: #50665d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .ewa-beta-visual {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+            gap: 20px;
+        }
+        .visual-glow {
+            position: absolute;
+            top: 15%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(98,198,232,0.25) 0%, rgba(32,168,107,0.13) 45%, rgba(255,255,255,0) 72%);
+            filter: blur(5px);
+            z-index: 1;
+        }
         .woman-image {
-            position: relative; z-index: 2; width: 100%; max-width: 380px; height: 420px; object-fit: cover; border-radius: 28px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 400px;
+            height: 440px;
+            object-fit: cover;
+            border-radius: 32px;
             box-shadow: 0 25px 60px rgba(18,59,93,0.18);
+        }
+        .floating-card {
+            position: relative;
+            z-index: 4;
+            width: 100%;
+            max-width: 320px;
+            padding: 20px;
+            background: rgba(255,255,255,0.96);
+            border: 1px solid rgba(18,59,93,0.1);
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(18,59,93,0.18);
+            backdrop-filter: blur(10px);
+        }
+        .floating-label {
+            color: #b94f18;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+        .price {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .price del {
+            color: #8b9298;
+            font-size: 15px;
+            text-decoration: line-through;
+            text-decoration-color: #ef4444;
+            text-decoration-thickness: 2px;
+        }
+        .price strong {
+            color: #14532d;
+            font-size: 28px;
+            font-weight: 900;
+        }
+        .price-note {
+            margin-top: -3px;
+            color: #687782;
+            font-size: 12px;
+        }
+        .price-terms {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            margin-top: 10px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .price-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            background: #1e3a8a; /* Deep Navy */
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.25);
+        }
+        @media (max-width: 600px) {
+            .ewa-beta-content h1 { font-size: 26px; letter-spacing: -0.5px; }
+            .woman-image { height: 360px; border-radius: 24px; max-width: 320px; }
+            .floating-card { width: 100%; max-width: 280px; padding: 15px; }
+            .price strong { font-size: 24px; }
         }
     </style>
 </head>
@@ -165,6 +371,7 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
+        <!-- Modal Balon Besar (Global Notification & Alert) -->
         <div id="bigAlertModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
                 <div id="bigAlertIconBox" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
@@ -180,104 +387,121 @@
             </div>
         </div>
 
+        <!-- LANDING PAGE VIEW (2-Column Layout) -->
         <section id="view-landing" class="block w-full flex-grow flex items-center">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
                     
-                    <!-- LEFT COLUMN: COPYWRITING & DETAILS -->
-                    <div class="lg:col-span-7 flex flex-col items-start text-left w-full space-y-6">
-                        <section class="ewa-beta-hero w-full">
+                    <!-- LEFT COLUMN: INTEGRATED HERO SECTION -->
+                    <div class="lg:col-span-7 flex flex-col items-start text-left w-full">
+                        <section class="ewa-beta-hero">
                             <div class="ewa-beta-container">
                                 
-                                <div class="ewa-beta-content space-y-4">
+                                <!-- LEFT: TEXT (Top Stack) -->
+                                <div class="ewa-beta-content">
                                     <div class="beta-badge">
-                                        🧪 TANGGALMUDA BETA PROGRAM • 3 BULAN <span class="block text-[10px] text-slate-500 font-normal mt-0.5">Beta Release 202609.01</span>
+                                        🧪 Tanggalmuda Beta Program <span>• 3 BULAN</span>
                                     </div>
                                     
-                                    <h1>Cairkan Gaji Sebelum Tanggal Gajian</h1>
+                                    <h1>
+                                        Cairkan Gaji Sebelum Tanggal Gajian
+                                    </h1>
                                     
-                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                        <strong>Earned Wage Access (EWA)</strong> adalah layanan yang memungkinkan karyawan mengakses sebagian gaji yang sudah diperoleh sebelum tanggal gajian — praktis, transparan, dan tanpa bunga.
+                                    <div class="beta-info">
+                                        <div>
+                                            <p>
+                                                Earned Wage Access (EWA) adalah layanan yang memungkinkan karyawan mengakses sebagian gaji yang sudah diperoleh sebelum tanggal gajian — praktis, transparan, dan <span class="animate-yellow-highlight text-sm sm:text-base">TANPA BUNGA (0%)</span>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="form-info">
+                                        Untuk sementara, pengajuan dilakukan melalui formulir pengajuan yang telah disediakan. Meskipun dalam tahap Beta, keamanan, transparansi, dan ketelitian proses tetap menjadi prioritas kami. Setiap pengajuan tetap melalui proses verifikasi sesuai prosedur yang berlaku.
                                     </p>
                                     
-                                    <div class="beta-info space-y-1.5">
-                                        <p>Selama 3 bulan masa Beta, kami sedang menyempurnakan pengalaman Tanggalmuda agar semakin mudah, cepat, aman, dan nyaman digunakan.</p>
-                                        <p>Untuk sementara, pengajuan dilakukan melalui formulir pengajuan yang telah disediakan.</p>
-                                        <p>Meskipun dalam tahap Beta, keamanan, transparansi, dan ketelitian proses tetap menjadi prioritas kami. Setiap pengajuan tetap melalui proses verifikasi sesuai prosedur yang berlaku.</p>
+                                    <div class="feedback-box">
+                                        <div>
+                                            <strong>💬 Masukan Anda Berarti</strong>
+                                            <p>
+                                                Selama masa Beta, kami mengundang Anda untuk berbagi pengalaman, saran, maupun kendala yang ditemukan. Setiap masukan membantu kami menyempurnakan Tanggalmuda agar semakin mudah, aman, dan nyaman digunakan.
+                                            </p>
+                                        </div>
                                     </div>
 
-                                    <!-- FLOATING PROMO CARD -->
-                                    <div class="floating-card my-4">
-                                        <div class="floating-label">💰 BIAYA LAYANAN KHUSUS MASA BETA</div>
+                                    <!-- CTA Button for Mobile Layout -->
+                                    <div class="w-full max-w-[340px] mt-6 block lg:hidden">
+                                        <button type="button" onclick="scrollToEwaForm()" class="px-3 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs tracking-tight flex items-center justify-center text-center space-x-2 animate-pulse-cta shadow-md cursor-pointer w-full">
+                                            <span class="uppercase leading-tight">[ AJUKAN SEKARANG ]</span>
+                                            <span class="text-xs animate-hand inline-block">👉</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- RIGHT/BOTTOM: VISUALS -->
+                                <div class="ewa-beta-visual">
+                                    <div class="visual-glow"></div>
+                                    
+                                    <!-- Floating Card (Moved Above Image) -->
+                                    <div class="floating-card">
+                                        <div class="floating-label">BIAYA LAYANAN KHUSUS MASA BETA</div>
                                         <div class="price">
                                             <del>Rp75.000</del>
                                             <strong>Rp50.000</strong>
                                         </div>
-                                        <div class="price-note">/ transaksi</div>
-                                        <div class="price-terms">FLAT • TANPA TIER • <span class="text-pulse-red">0% BUNGA</span></div>
-                                    </div>
-
-                                    <!-- KETENTUAN BETA -->
-                                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-900 space-y-1.5">
-                                        <p class="font-bold font-heading text-amber-950"><i class="fa-solid fa-circle-exclamation mr-1"></i> 📌 KETENTUAN BETA</p>
-                                        <p>• Maksimal Rp500.000 per transaksi.</p>
-                                        <p>• Pengajuan di atas Rp500.000 dihitung berdasarkan kelipatan transaksi (Contoh: pengajuan Rp1.000.000 = 2 transaksi).</p>
-                                        <p>• Plafon EWA maksimal 25% dari gaji.</p>
-                                    </div>
-
-                                    <!-- CARA PENGAJUAN -->
-                                    <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-700">
-                                        <p class="font-bold font-heading text-slate-900"><i class="fa-solid fa-list-check text-brand-600 mr-1"></i> 📝 CARA PENGAJUAN</p>
-                                        <p class="text-slate-600 italic">Selama masa Beta, pengajuan pencairan dilakukan dengan mudah melalui formulir yang telah disediakan.</p>
-                                        <ol class="list-decimal list-inside space-y-1 pt-1">
-                                            <li><b>Isi Formulir:</b> Masukkan PIN Akses EWA dan nominal gaji yang ingin dicairkan.</li>
-                                            <li><b>Konfirmasi Pengajuan:</b> Periksa detail pengajuan, lalu konfirmasi melalui email yang terdaftar.</li>
-                                            <li><b>Verifikasi:</b> Pengajuan diverifikasi oleh HRD/PIC perusahaan tempat Anda bekerja dan Admin Tanggalmuda.</li>
-                                            <li><b>Pencairan:</b> Setelah disetujui, pencairan diproses sesuai ketentuan yang berlaku.</li>
-                                        </ol>
-                                    </div>
-
-                                    <!-- MASUKAN ANDA BERARTI -->
-                                    <div class="feedback-box p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 space-y-2">
-                                        <p class="font-bold font-heading text-emerald-950">💬 MASUKAN ANDA BERARTI</p>
-                                        <p class="leading-relaxed">Selama masa Beta, kami mengundang Anda untuk berbagi pengalaman, saran, maupun kendala yang ditemukan. Setiap masukan membantu kami menyempurnakan Tanggalmuda agar semakin mudah, aman, dan nyaman digunakan.</p>
-                                        <div>
-                                            <button type="button" onclick="scrollToEwaForm()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-xs shadow transition cursor-pointer">
-                                                [ BERIKAN MASUKAN ]
-                                            </button>
+                                        <div class="price-note">/ pencairan</div>
+                                        <div class="price-terms">FLAT &nbsp;•&nbsp; TANPA TIER</div>
+                                        <div class="price-tag">
+                                            <span class="text-pulse-gray-red-btn">0% BUNGA</span>
                                         </div>
                                     </div>
 
-                                    <!-- IMAGE VISUAL -->
-                                    <div class="py-3 flex justify-center">
-                                        <img 
-                                            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" 
-                                            alt="Pengguna Tanggalmuda EWA menggunakan smartphone" 
-                                            class="woman-image"
-                                        >
-                                    </div>
+                                    <!-- Image Block -->
+                                    <img 
+                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" 
+                                        alt="Pengguna Tanggalmuda EWA menggunakan smartphone" 
+                                        class="woman-image"
+                                    >
 
-                                    <!-- MENGAPA TANGGALMUDA -->
-                                    <div class="pt-2">
-                                        <h3 class="font-bold text-[15px] text-slate-900 font-heading mb-3">✨ MENGAPA TANGGALMUDA?</h3>
-                                        <ul class="space-y-2 text-[13px] text-slate-700">
-                                            <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Mudah & Praktis</b> — Proses pengajuan sederhana dan mudah dipahami.</li>
-                                            <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Transparan</b> — Biaya layanan disampaikan secara jelas sejak awal.</li>
-                                            <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Tanpa Bunga</b> — Tidak menggunakan skema bunga pinjaman.</li>
-                                        </ul>
-                                    </div>
+                                    <!-- New Text Sections (Below Image) -->
+                                    <div class="w-full max-w-[420px] text-left mt-2 relative z-10 space-y-4">
+                                        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-900 space-y-1.5">
+                                            <p class="font-bold font-heading text-amber-950"><i class="fa-solid fa-circle-exclamation mr-1"></i> 📌 KETENTUAN BETA</p>
+                                            <p>• Maksimal Rp500.000 per transaksi.</p>
+                                            <p>• Pengajuan di atas Rp500.000 dihitung berdasarkan kelipatan transaksi (Contoh: pengajuan Rp1.000.000 = 2 transaksi).</p>
+                                            <p>• Plafon EWA maksimal 25% dari gaji.</p>
+                                        </div>
 
-                                    <div class="pt-4 space-y-1.5">
-                                        <h3 class="font-bold text-[15px] text-slate-900 font-heading mb-1">Saat Kebutuhan Datang, Tak Harus Menunggu Gajian</h3>
-                                        <p class="text-[13px] text-slate-600 leading-relaxed">Akses sebagian gaji yang sudah kamu peroleh dengan cara yang praktis, transparan, dan tanpa bunga.</p>
-                                    </div>
-                    
-                                    <!-- Contact Information Box -->
-                                    <div class="w-full flex flex-col justify-center space-y-2 text-[12px] text-slate-600 bg-white/95 backdrop-blur-md px-5 py-4 rounded-xl border border-slate-200 shadow-sm mt-4">
-                                        <p class="font-bold text-slate-800 text-[13px] mb-1 font-heading">Info Selengkapnya</p>
-                                        <p class="flex items-center"><span class="w-6">🌐</span> <a href="https://www.tanggalmuda.com" target="_blank" class="text-emerald-700 font-semibold hover:underline">www.tanggalmuda.com</a></p>
-                                        <p class="flex items-center"><span class="w-6">📱</span> <a href="https://wa.me/6287790994652" target="_blank" class="text-emerald-700 font-semibold hover:underline">WhatsApp: 0877-9099-4652</a></p>
-                                        <p class="flex items-center"><span class="w-6">📧</span> <a href="mailto:info@tanggalmuda.com" class="text-emerald-700 font-semibold hover:underline">Email: info@tanggalmuda.com</a></p>
+                                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-700">
+                                            <p class="font-bold font-heading text-slate-900"><i class="fa-solid fa-list-check text-brand-600 mr-1"></i> 📝 CARA PENGAJUAN</p>
+                                            <p class="text-slate-600 italic">Selama masa Beta, pengajuan pencairan dilakukan dengan mudah melalui formulir yang telah disediakan.</p>
+                                            <ol class="list-decimal list-inside space-y-1 pt-1">
+                                                <li><b>Isi Formulir:</b> Masukkan PIN Akses EWA dan nominal gaji yang ingin dicairkan.</li>
+                                                <li><b>Konfirmasi Pengajuan:</b> Periksa detail pengajuan, lalu konfirmasi melalui email yang terdaftar.</li>
+                                                <li><b>Verifikasi:</b> Pengajuan diverifikasi oleh HRD/PIC perusahaan tempat Anda bekerja dan Admin Tanggalmuda.</li>
+                                                <li><b>Pencairan:</b> Setelah disetujui, pencairan diproses sesuai ketentuan yang berlaku.</li>
+                                            </ol>
+                                        </div>
+
+                                        <div class="pt-2">
+                                            <h3 class="font-bold text-[15px] sm:text-[16px] text-slate-900 font-heading mb-3">✨ MENGAPA TANGGALMUDA?</h3>
+                                            <ul class="space-y-2 text-[13px] sm:text-[14px] text-slate-700">
+                                                <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Mudah & Praktis</b> — Proses pengajuan sederhana dan mudah dipahami.</li>
+                                                <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Transparan</b> — Biaya layanan disampaikan secara jelas sejak awal.</li>
+                                                <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Tanpa Bunga</b> — Tidak menggunakan skema bunga pinjaman. (<span class="animate-yellow-highlight text-xs font-bold">0% BUNGA</span>)</li>
+                                            </ul>
+                                        </div>
+                                        <div class="pt-4 space-y-1.5">
+                                            <h3 class="font-bold text-[15px] sm:text-[16px] text-slate-900 font-heading mb-1">Saat Kebutuhan Datang, Tak Harus Menunggu Gajian</h3>
+                                            <p class="text-[13px] sm:text-[14px] text-slate-600 leading-relaxed">Akses sebagian gaji yang sudah kamu peroleh dengan cara yang praktis, transparan, dan <span class="animate-yellow-highlight text-xs font-bold">tanpa bunga</span>.</p>
+                                        </div>
+                        
+                                        <!-- Contact Information Box -->
+                                        <div class="w-full flex flex-col justify-center space-y-2 text-[12px] sm:text-[13px] text-slate-600 bg-white/95 backdrop-blur-md px-5 py-4 rounded-xl border border-slate-200 shadow-sm mt-6">
+                                            <p class="font-bold text-slate-800 text-[13px] sm:text-[14px] mb-1 font-heading">Info Selengkapnya</p>
+                                            <p class="flex items-center"><span class="w-6">🌐</span> <a href="https://www.tanggalmuda.com" target="_blank" class="text-emerald-700 font-semibold hover:underline">www.tanggalmuda.com</a></p>
+                                            <p class="flex items-center"><span class="w-6">📱</span> <a href="https://wa.me/6287790994652" target="_blank" class="text-emerald-700 font-semibold hover:underline">WhatsApp: 0877-9099-4652</a></p>
+                                            <p class="flex items-center"><span class="w-6">📧</span> <a href="mailto:info@tanggalmuda.com" class="text-emerald-700 font-semibold hover:underline">Email: info@tanggalmuda.com</a></p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -298,7 +522,7 @@
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Terdaftar</label>
                                     <div class="relative">
-                                        <input type="email" id="ewaEmail" oninput="checkEmailRegistered(this.value)" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input">
+                                        <input type="email" id="ewaEmail" oninput="checkEmailRegistered(this.value)" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input email-input-lg">
                                     </div>
                                     <div id="emailStatusFeedback" class="mt-1.5 text-xs font-medium hidden"></div>
                                 </div>
@@ -334,7 +558,7 @@
             </div>
         </section>
 
-        <!-- REGISTER PAGE VIEW -->
+        <!-- REGISTER PAGE VIEW (Cleaned up: No Duplicated Fields) -->
         <section id="view-register" class="hidden w-full bg-slate-50 py-4">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -367,7 +591,7 @@
                                 <input type="number" id="regNikKtp" required placeholder="16 digit KTP" class="w-full px-4 rounded-xl custom-input register-input-lg">
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Handphone *</label>
                                 <input type="tel" id="regPhone" required placeholder="08123456789" class="w-full px-4 rounded-xl custom-input register-input-lg">
@@ -375,10 +599,6 @@
                             <div>
                                 <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Lahir *</label>
                                 <input type="date" id="regDob" required class="w-full px-4 rounded-xl custom-input register-input-lg">
-                            </div>
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Ibu Kandung *</label>
-                                <input type="text" id="regMotherName" required placeholder="Nama Ibu" class="w-full px-4 rounded-xl custom-input register-input-lg">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -440,77 +660,6 @@
                                 <div><input type="text" id="regBankName" placeholder="Nama Bank (BCA)" required class="w-full px-3 py-3 rounded-xl custom-input register-input-lg"></div>
                                 <div><input type="text" id="regBankAccNo" placeholder="No. Rekening" required class="w-full px-3 py-3 rounded-xl custom-input register-input-lg"></div>
                                 <div><input type="text" id="regBankAccName" placeholder="Pemilik Rekening" required class="w-full px-3 py-3 rounded-xl custom-input register-input-lg"></div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Handphone *</label>
-                                <input type="tel" id="regPhone" required placeholder="08123456789" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Lahir *</label>
-                                <input type="date" id="regDob" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Unit Kerja / Departemen *</label>
-                                <input type="text" id="regDepartment" required placeholder="Contoh: Operasional" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Posisi / Jabatan *</label>
-                                <input type="text" id="regPosition" required placeholder="Contoh: Staff" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Lengkap Domisili *</label>
-                            <textarea id="regAddress" rows="2" required placeholder="Alamat tinggal saat ini..." class="w-full px-3.5 py-2.5 rounded-xl custom-input"></textarea>
-                        </div>
-                        
-                        <div>
-                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Perusahaan Tempat Bekerja *</label>
-                            <select id="regCompanySelect" onchange="displayCompanyDetails()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                                <option value="">-- Memuat Perusahaan dari Google Sheets... --</option>
-                            </select>
-                        </div>
-                        
-                        <div id="companyDetailCard" class="hidden bg-brand-50 border border-brand-200 rounded-xl p-3.5 space-y-1 text-brand-900">
-                            <p class="font-bold text-brand-950 text-xs sm:text-sm"><i class="fa-solid fa-building text-brand-600 mr-1"></i> <span id="compNameDisplay">-</span></p>
-                            <p class="text-xs">ID Perusahaan: <span id="compIDDisplay" class="font-semibold">-</span></p>
-                            <p class="text-xs">PIC: <span id="compPicDisplay" class="font-semibold">-</span> | Email: <span id="compEmailDisplay" class="font-semibold">-</span></p>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Status Kepegawaian *</label>
-                                <select id="regEmploymentStatus" onchange="toggleContractFields()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                                    <option value="Tetap">Tetap (Permanent)</option>
-                                    <option value="Kontrak">Kontrak (Contract)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Gaji Pokok Bulanan (Rp) *</label>
-                                <input type="text" id="regSalary" oninput="formatCurrencyInput(this)" required placeholder="Contoh: 5.000.000" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Mulai Kerja *</label>
-                                <input type="date" id="regStartDate" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                            <div id="containerEndDate" class="hidden">
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Akhir Kontrak *</label>
-                                <input type="date" id="regEndDate" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
-                            </div>
-                        </div>
-
-                        <div class="pt-2 border-t border-slate-100">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider mb-2 text-xs"><i class="fa-solid fa-wallet text-brand-600 mr-1"></i> Rekening Tujuan Pencairan *</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                <div><input type="text" id="regBankName" placeholder="Nama Bank (BCA)" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
-                                <div><input type="text" id="regBankAccNo" placeholder="No. Rekening" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
-                                <div><input type="text" id="regBankAccName" placeholder="Pemilik Rekening" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
                             </div>
                         </div>
 
@@ -658,7 +807,7 @@
                     Maaf, alamat email <b id="unregisteredEmailText" class="text-rose-600 font-semibold"></b> belum terdaftar di data anggota/perusahaan kami (Gsheet).
                 </p>
                 <p class="text-xs font-medium text-brand-700 bg-brand-50 p-3 rounded-xl border border-brand-200">
-                    💡 Silakan melakukan <b>Pendaftaran Akun Terlebih Dahulu</b> sebelum mengajukan pencairan gaji (EWA).
+                    💡 Silakan melakukan <b>Pendaftaran Anggota Terlebih Dahulu</b> sebelum mengajukan pencairan gaji (EWA).
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
@@ -683,7 +832,7 @@
                 <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
 
-            <p class="text-xs text-slate-600">Masukkan <b>PIN Akses EWA</b> rahasia yang dikirimkan ke email Anda saat pendaftaran disetujui:</p>
+            <p class="text-xs text-slate-600">Masukkan <b>PIN Akses</b> rahasia yang dikirimkan ke email Anda saat pendaftaran disetujui:</p>
             
             <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
                 <div>
@@ -698,9 +847,25 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-emerald-900 text-emerald-100 py-3 border-t border-emerald-800 shadow-inner shrink-0 w-full text-center text-xs">
-        <p>© 2026 TanggalMuda.com</p>
+    <!-- Footer dengan Copyright Statis dan Marquee Running Text -->
+    <footer class="bg-emerald-950 text-emerald-100 py-3.5 px-4 sm:px-8 border-t border-emerald-900 shadow-inner shrink-0 w-full text-xs overflow-hidden">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+            <!-- Copyright Statis -->
+            <div class="whitespace-nowrap font-bold text-emerald-200 tracking-wide shrink-0">
+                © 2026 tanggalmuda.com
+            </div>
+            <!-- Running Text / Marquee -->
+            <div class="w-full md:w-auto flex-1 overflow-hidden relative max-w-4xl py-1">
+                <div class="marquee-track flex whitespace-nowrap">
+                    <span class="marquee-content inline-block text-emerald-300 font-medium px-4 text-xs tracking-wide">
+                        Cairkan Gaji Sebelum Tanggal Gajian &bull; Tanpa Bunga &bull; Transparan &bull; Aman &bull; Praktis &bull; Beta Program 3 Bulan &bull; Terus Bertumbuh Bersama Anda
+                    </span>
+                    <span class="marquee-content inline-block text-emerald-300 font-medium px-4 text-xs tracking-wide" aria-hidden="true">
+                        Cairkan Gaji Sebelum Tanggal Gajian &bull; Tanpa Bunga &bull; Transparan &bull; Aman &bull; Praktis &bull; Beta Program 3 Bulan &bull; Terus Bertumbuh Bersama Anda
+                    </span>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <!-- Camera Modal -->
