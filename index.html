@@ -89,6 +89,7 @@
             animation: bounceHand 0.8s infinite ease-in-out;
         }
         
+        /* Animasi Text Abu-abu ke Merah */
         @keyframes textPulseRed {
             0%, 100% { color: #94a3b8; transform: scale(1); text-shadow: none; }
             50% { color: #dc2626; transform: scale(1.08); text-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
@@ -96,6 +97,31 @@
         .text-pulse-red {
             display: inline-block;
             animation: textPulseRed 2s infinite ease-in-out;
+            font-weight: 900;
+            font-size: 120%;
+        }
+
+        /* Animasi Latar Kuning Timbul Hilang Terus Menerus */
+        @keyframes yellowBgPulse {
+            0%, 100% { background-color: rgba(254, 240, 138, 0.3); box-shadow: 0 0 0 rgba(250, 204, 21, 0); }
+            50% { background-color: rgba(250, 204, 21, 0.85); box-shadow: 0 0 12px rgba(250, 204, 21, 0.6); }
+        }
+        .animate-yellow-highlight {
+            display: inline-block;
+            padding: 0.1em 0.4em;
+            border-radius: 6px;
+            animation: yellowBgPulse 2s infinite ease-in-out;
+            font-weight: 800;
+            color: #78350f; /* Amber-900 untuk kontras tinggi */
+        }
+
+        /* Animasi Text Abu-abu ke Merah untuk Tombol (Latar Navy) */
+        @keyframes textPulseGrayRedButton {
+            0%, 100% { color: #e2e8f0; }
+            50% { color: #ff6b6b; text-shadow: 0 0 6px rgba(255, 107, 107, 0.5); }
+        }
+        .text-pulse-gray-red-btn {
+            animation: textPulseGrayRedButton 2s infinite ease-in-out;
             font-weight: 900;
         }
 
@@ -194,7 +220,7 @@
                                     <h1>Cairkan Gaji Sebelum Tanggal Gajian</h1>
                                     
                                     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                        <strong>Earned Wage Access (EWA)</strong> adalah layanan yang memungkinkan karyawan mengakses sebagian gaji yang sudah diperoleh sebelum tanggal gajian — praktis, transparan, dan tanpa bunga.
+                                        <strong>Earned Wage Access (EWA)</strong> adalah layanan yang memungkinkan karyawan mengakses sebagian gaji yang sudah diperoleh sebelum tanggal gajian — praktis, transparan, dan <span class="animate-yellow-highlight text-sm sm:text-base">TANPA BUNGA (0%)</span>.
                                     </p>
                                     
                                     <div class="beta-info space-y-1.5">
@@ -204,7 +230,7 @@
 
                                     <!-- AJUKAN SEKARANG BUTTON -->
                                     <div>
-                                        <button type="button" onclick="scrollToEwaForm()" class="px-5 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-xs shadow-md transition cursor-pointer flex items-center space-x-2">
+                                        <button type="button" onclick="scrollToEwaForm()" class="px-5 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-xs shadow-md transition cursor-pointer flex items-center space-x-2 animate-pulse-cta">
                                             <span>[ AJUKAN SEKARANG ]</span>
                                         </button>
                                     </div>
@@ -261,13 +287,13 @@
                                         <ul class="space-y-2 text-[13px] text-slate-700">
                                             <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Mudah & Praktis</b> — Proses pengajuan sederhana dan mudah dipahami.</li>
                                             <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Transparan</b> — Biaya layanan disampaikan secara jelas sejak awal.</li>
-                                            <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Tanpa Bunga</b> — Tidak menggunakan skema bunga pinjaman.</li>
+                                            <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>TANPA BUNGA (0%)</b> — Tidak menggunakan skema bunga pinjaman.</li>
                                         </ul>
                                     </div>
 
                                     <div class="pt-4 space-y-1.5">
                                         <h3 class="font-bold text-[15px] text-slate-900 font-heading mb-1">Saat Kebutuhan Datang, Tak Harus Menunggu Gajian</h3>
-                                        <p class="text-[13px] text-slate-600 leading-relaxed">Akses sebagian gaji yang sudah kamu peroleh dengan cara yang praktis, transparan, dan tanpa bunga.</p>
+                                        <p class="text-[13px] text-slate-600 leading-relaxed">Akses sebagian gaji yang sudah kamu peroleh dengan cara yang praktis, transparan, dan <span class="animate-yellow-highlight text-xs sm:text-sm">TANPA BUNGA (0%)</span>.</p>
                                     </div>
                     
                                     <!-- Contact Information Box -->
