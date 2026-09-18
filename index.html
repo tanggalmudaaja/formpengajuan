@@ -88,12 +88,15 @@
             display: inline-block;
             animation: bounceHand 0.8s infinite ease-in-out;
         }
-        @keyframes colorShiftRed {
-            0%, 100% { color: #d1d5db; }
-            50% { color: #dc2626; }
+        @keyframes textPulseRed {
+            0%, 100% { color: #94a3b8; transform: scale(1); text-shadow: none; }
+            50% { color: #dc2626; transform: scale(1.08); text-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
         }
-        .animate-color-shift-red {
-            animation: colorShiftRed 2s infinite ease-in-out;
+        .text-pulse-red {
+            display: inline-block;
+            animation: textPulseRed 2s infinite ease-in-out;
+            font-weight: 900;
+            font-size: 120%;
         }
         .custom-input {
             background-color: #f1f5f9;
@@ -107,6 +110,210 @@
             box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
             background-color: #ffffff;
         }
+
+        /* ================================
+           EWA BETA HERO CUSTOM STYLES
+        ================================ */
+        .ewa-beta-hero {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        .ewa-beta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            width: 100%;
+        }
+        .ewa-beta-content {
+            position: relative;
+            z-index: 2;
+        }
+        .beta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 9px 16px;
+            border-radius: 30px;
+            background: #fff4ed;
+            border: 1px solid #f4c5a7;
+            color: #b94f18;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            margin-bottom: 22px;
+        }
+        .beta-badge span {
+            color: #14532d;
+        }
+        .ewa-beta-content h1 {
+            margin: 0 0 22px;
+            color: #14532d; /* Hijau Tua */
+            font-size: clamp(24px, 3vw, 32px); /* Seukuran logo header */
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+        .ewa-beta-content h1 span {
+            display: block;
+            color: #c65b20;
+        }
+        .ewa-intro {
+            max-width: 680px;
+            margin: 0 0 28px;
+            color: #425466;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        .ewa-intro strong {
+            color: #14532d;
+        }
+        .beta-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 650px;
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.9);
+            border-left: 4px solid #c65b20;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(18,59,93,0.07);
+            margin-bottom: 20px;
+        }
+        .beta-info h3 {
+            margin: 0 0 5px;
+            color: #14532d; /* Hijau Tua */
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+        .beta-info p {
+            margin: 0;
+            color: #566575;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .beta-info strong {
+            color: #14532d;
+        }
+        .form-info {
+            max-width: 650px;
+            color: #5b6875;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+        .form-info strong {
+            color: #14532d;
+        }
+        .feedback-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 650px;
+            padding: 16px 18px;
+            background: #edf8f4;
+            border: 1px solid #c6e9dc;
+            border-radius: 12px;
+        }
+        .feedback-box strong {
+            display: block;
+            color: #176849;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .feedback-box p {
+            margin: 0;
+            color: #50665d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .ewa-beta-visual {
+            position: relative;
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .visual-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(98,198,232,0.25) 0%, rgba(32,168,107,0.13) 45%, rgba(255,255,255,0) 72%);
+            filter: blur(5px);
+        }
+        .woman-image {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 400px;
+            height: 440px;
+            object-fit: cover;
+            border-radius: 32px;
+            box-shadow: 0 25px 60px rgba(18,59,93,0.18);
+        }
+        .floating-card {
+            position: absolute;
+            z-index: 4;
+            left: 0;
+            bottom: 20px;
+            width: 260px; /* Diperlebar sedikit untuk teks 0% bunga */
+            padding: 20px;
+            background: rgba(255,255,255,0.96);
+            border: 1px solid rgba(18,59,93,0.1);
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(18,59,93,0.18);
+            backdrop-filter: blur(10px);
+        }
+        .floating-label {
+            color: #b94f18;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+        .price {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .price del {
+            color: #8b9298;
+            font-size: 15px;
+        }
+        .price strong {
+            color: #14532d;
+            font-size: 28px;
+            font-weight: 900;
+        }
+        .price-note {
+            margin-top: -3px;
+            color: #687782;
+            font-size: 12px;
+        }
+        .price-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 10px;
+            background: #14532d;
+            color: #ffffff;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 600px) {
+            .ewa-beta-content h1 { font-size: 26px; letter-spacing: -0.5px; }
+            .ewa-intro { font-size: 15px; }
+            .beta-badge { font-size: 11px; }
+            .ewa-beta-visual { min-height: 320px; }
+            .woman-image { height: 360px; border-radius: 24px; max-width: 320px; }
+            .floating-card { width: 230px; padding: 15px; left: -10px; }
+            .price strong { font-size: 24px; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white flex-grow flex flex-col justify-between">
@@ -116,8 +323,8 @@
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('landing')">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain">
             </div>
-            <div id="configStatusBadge" class="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-mono">
-                <i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Memuat Konfigurasi Gsheet...
+            <div id="configStatusBadge" class="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-mono hidden">
+                <i class="fa-solid fa-circle-notch fa-spin mr-1"></i>
             </div>
         </div>
     </header>
@@ -143,64 +350,82 @@
         <!-- LANDING PAGE VIEW (2-Column Layout) -->
         <section id="view-landing" class="block w-full flex-grow flex items-center">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
                     
-                    <!-- LEFT COLUMN -->
-                    <div class="lg:col-span-7 flex flex-col items-start text-left space-y-3 sm:space-y-4 w-full">
-                        <div class="space-y-3 w-full">
-                            <!-- Headline -->
-                            <h1 class="text-[11px] sm:text-xs font-bold font-heading tracking-tight leading-snug">
-                                <span class="text-navy-700 block">Butuh Dana Mendesak?</span> 
-                                <span class="text-orange-600 block mt-0.5">Jangan ngutang dulu !</span> 
-                                <span class="text-emerald-600 block mt-0.5">Cairkan Aja Gaji Sebelum Waktunya</span>
-                            </h1>
-                            <!-- Woman Illustration on Left & Description text on Right -->
-                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center w-full pt-1 pb-1">
-                                <div class="sm:col-span-5 relative flex flex-col items-center justify-center w-full">
-                                    <div class="absolute inset-0 bg-brand-500/10 rounded-full blur-2xl"></div>
-                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" alt="Professional Woman holding phone" class="relative z-10 w-full max-w-[280px] sm:max-w-[360px] h-auto object-contain filter drop-shadow-md">
-                                </div>
-                                <div class="sm:col-span-7 flex flex-col justify-center">
-                                    <p class="text-xs text-slate-600 leading-relaxed">
-                                        Langkah cerdas mencairkan sebagian gaji sebelum waktunya untuk kebutuhan mendesak, tanpa terjerat pinjol atau utang bank dan pastinya <span class="animate-color-shift-red font-bold" style="font-size: 105%;">TANPA BUNGA (0%)</span>
+                    <!-- LEFT COLUMN: INTEGRATED HERO SECTION -->
+                    <div class="lg:col-span-7 flex flex-col items-start text-left w-full">
+                        <section class="ewa-beta-hero">
+                            <div class="ewa-beta-container">
+                                
+                                <!-- LEFT: TEXT (Top Stack) -->
+                                <div class="ewa-beta-content">
+                                    <div class="beta-badge">
+                                        🧪 Tanggalmuda Beta Program <span>• 3 BULAN</span>
+                                    </div>
+                                    
+                                    <h1>
+                                        Saat ini aplikasi Tanggalmuda sedang dalam
+                                        <span>tahap pengembangan.</span>
+                                    </h1>
+                                    
+                                    <div class="beta-info">
+                                        <div>
+                                            <h3>Layanan Tetap Tanpa Bunga & Biaya Transaksi Yang Transparan</h3>
+                                            <p>
+                                                Selama masa Beta, layanan Tanggalmuda tetap memberikan komitmen <strong>TANPA DIKENAKAN <span class="text-pulse-red">BUNGA (0%)</span></strong> untuk setiap pencairan gaji Anda. Nikmati kemudahan akses gaji dengan biaya yang transparan.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="form-info">
+                                        Selama masa penyempurnaan sistem, pengajuan sementara dilakukan melalui <strong>formulir pengajuan yang telah disediakan</strong>. Meskipun masih dalam tahap Beta, keamanan, transparansi, dan ketelitian proses tetap menjadi prioritas kami. Setiap pengajuan tetap melalui proses verifikasi sesuai prosedur yang berlaku.
                                     </p>
+                                    
+                                    <div class="feedback-box">
+                                        <div>
+                                            <strong>Masukan Anda sangat berarti</strong>
+                                            <p>
+                                                Selama masa Beta, kami mengundang Anda untuk menyampaikan pengalaman, saran, maupun kendala yang ditemukan. Setiap masukan membantu kami menyempurnakan aplikasi Tanggalmuda agar semakin baik.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- CTA Button for Mobile Layout -->
+                                    <div class="w-full max-w-[340px] mt-6 block lg:hidden">
+                                        <button type="button" onclick="scrollToEwaForm()" class="px-3 py-3.5 rounded-xl glossy-orange-btn text-white font-bold text-xs tracking-tight flex items-center justify-center text-center space-x-2 animate-pulse-cta shadow-md cursor-pointer w-full">
+                                            <span class="uppercase leading-tight">Isi Formulir EWA Sekarang</span>
+                                            <span class="text-xs animate-hand inline-block">👉</span>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- CTA Button placed underneath woman -->
-                            <div class="w-full max-w-[280px] sm:max-w-[340px] pt-1">
-                                <button type="button" onclick="scrollToEwaForm()" class="px-3 py-3.5 rounded-xl glossy-orange-btn text-white font-bold text-xs tracking-tight flex items-center justify-center text-center space-x-2 animate-pulse-cta shadow-md cursor-pointer w-full">
-                                    <span class="uppercase leading-tight">Cairkan Gaji Sekarang</span>
-                                    <span class="text-xs animate-hand inline-block">👉</span>
-                                </button>
-                            </div>
-                            
-                            <div class="pt-1">
-                                <h3 class="font-bold text-xs text-slate-900 font-heading mb-1.5">Kenapa Pilih Kami?</h3>
-                                <ul class="space-y-1 text-xs text-slate-700">
-                                    <li><span class="text-brand-600 font-bold mr-1">✓</span> <b>Mudah & Praktis</b> — Proses pengajuan sederhana dan mudah dipahami.</li>
-                                    <li><span class="text-brand-600 font-bold mr-1">✓</span> <b>Transparan</b> — Biaya layanan disampaikan secara jelas.</li>
-                                    <li><span class="text-brand-600 font-bold mr-1">✓</span> <b>Tanpa Bunga</b> — Tidak menggunakan skema bunga pinjaman.</li>
-                                </ul>
-                            </div>
-                            <div class="pt-1 space-y-1">
-                                <h3 class="font-bold text-xs text-slate-900 font-heading mb-1">Jangan Tunda Kebutuhanmu</h3>
-                                <p class="text-xs text-slate-600">Akses gajimu dengan cara yang lebih praktis dan transparan.</p>
-                            </div>
+                                <!-- RIGHT: IMAGE (Bottom Stack) -->
+                                <div class="ewa-beta-visual">
+                                    <div class="visual-glow"></div>
+                                    <img 
+                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" 
+                                        alt="Pengguna Tanggalmuda EWA menggunakan smartphone" 
+                                        class="woman-image"
+                                    >
+                                    <!-- Floating Card -->
+                                    <div class="floating-card">
+                                        <div class="floating-label">BIAYA LAYANAN KHUSUS MASA BETA</div>
+                                        <div class="price">
+                                            <del>Rp75.000</del>
+                                            <strong>Rp50.000</strong>
+                                        </div>
+                                        <div class="price-note">/ transaksi</div>
+                                        <div class="price-tag">0% BUNGA &nbsp;•&nbsp; FLAT &nbsp;•&nbsp; TANPA TIER</div>
+                                    </div>
+                                </div>
 
-                            <!-- Contact Information placed below statement -->
-                            <div class="w-full max-w-[280px] sm:max-w-[340px] flex flex-col justify-center space-y-1 text-[11px] text-slate-600 bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-xl border border-slate-200 shadow-sm mt-1">
-                                <p class="font-bold text-slate-700 mb-0.5">Info selengkapnya :</p>
-                                <p>🌐 <a href="https://www.tanggalmuda.com" target="_blank" class="text-emerald-700 font-semibold hover:underline">www.tanggalmuda.com</a></p>
-                                <p>📱 WhatsApp: <a href="https://wa.me/6287790994652" target="_blank" class="text-emerald-700 font-semibold hover:underline">0877-9099-4652</a></p>
-                                <p>📧 Email: <a href="mailto:info@tanggalmuda.com" class="text-emerald-700 font-semibold hover:underline">info@tanggalmuda.com</a></p>
                             </div>
-                        </div>
+                        </section>
                     </div>
 
-                    <!-- RIGHT COLUMN: EWA Application Form -->
+                    <!-- RIGHT COLUMN: EWA Application Form (100% UNTOUCHED) -->
                     <div class="lg:col-span-5 w-full">
-                        <div id="ewaFormContainer" class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4 transition-all duration-300 relative w-full">
+                        <div id="ewaFormContainer" class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4 transition-all duration-300 relative w-full lg:sticky lg:top-24">
                             
                             <div class="text-center space-y-0.5">
                                 <h3 class="font-heading font-bold text-base sm:text-lg text-slate-900 leading-tight">FORMULIR PENGAJUAN AKSES GAJI</h3>
@@ -408,7 +633,7 @@
                             </label>
                             <label class="flex items-start space-x-2.5 cursor-pointer">
                                 <input type="checkbox" id="regTerm4" required class="mt-0.5 rounded text-brand-600 shrink-0">
-                                <span class="text-[11px] text-slate-700">Saya memahami bahwa akun hanya dapat digunakan oleh saya sendiri. Saya bertanggung jawab menjaga kerahasiaan password dan tidak memberikan akses akun kepada pihak lain.</span>
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa akun hanya dapat digunakan oleh saya sendiri. Saya bertanggung menjaga kerahasiaan password dan tidak memberikan akses akun kepada pihak lain.</span>
                             </label>
                             <label class="flex items-start space-x-2.5 cursor-pointer">
                                 <input type="checkbox" id="regTerm5" required class="mt-0.5 rounded text-brand-600 shrink-0">
@@ -579,10 +804,10 @@
             </div>
         </div>
     </div>
+
     <!-- JavaScript Controller with JSONP Google Sites Support -->
     <script>
-        // PASTIKAN URL INI ADALAH URL DEPLOYMENT TERBARU ANDA
-        const GOOGLE_SCRIPT_URL = window.location.href.includes("script.google.com") ? window.location.href.split("?")[0] : "https://script.google.com/macros/s/AKfycbxjjKzIXtGsSKIt7p-bzkH1kw9opdBRXrEPk856sTvQiKZMR25gMuSbL2TLLHL3C2Dd/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjjKzIXtGsSKIt7p-bzkH1kw9opdBRXrEPk856sTvQiKZMR25gMuSbL2TLLHL3C2Dd/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -591,50 +816,8 @@
         let pendingEwaData = null;
 
         window.onload = function() {
-            fetchConfigurationAndCompanies();
+            fetchCompaniesViaJSONP();
         };
-
-        function fetchConfigurationAndCompanies() {
-            let badge = document.getElementById('configStatusBadge');
-            badge.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Memuat Konfigurasi Gsheet...';
-
-            let callbackName = 'jsonp_config_cb_' + Math.round(100000 * Math.random());
-            
-            // Timeout jika server lambat atau terblokir (lebih dari 10 detik)
-            let timeoutTrigger = setTimeout(() => {
-                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Gagal Memuat Konfigurasi (Timeout)';
-                badge.className = "text-[10px] bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full font-mono border border-rose-200";
-                fetchCompaniesViaJSONP(); // Tetap paksa lanjut ke fungsi berikutnya
-            }, 10000);
-
-            window[callbackName] = function(res) {
-                clearTimeout(timeoutTrigger);
-                delete window[callbackName];
-                let scriptTag = document.getElementById('jsonp_config_script');
-                if (scriptTag) scriptTag.remove();
-
-                if (res && res.success && res.value) {
-                    badge.innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Web URL Terhubung';
-                    badge.className = "text-[10px] bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full font-mono border border-emerald-200";
-                } else {
-                    badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Gagal Baca Sheet Konfigurasi';
-                    badge.className = "text-[10px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-mono border border-amber-200";
-                }
-                
-                fetchCompaniesViaJSONP();
-            };
-
-            let script = document.createElement('script');
-            script.id = 'jsonp_config_script';
-            script.src = GOOGLE_SCRIPT_URL + "?action=getConfig&key=WEB_URL&callback=" + callbackName;
-            script.onerror = function() {
-                clearTimeout(timeoutTrigger);
-                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Koneksi ke Server Terputus/CORS Error';
-                badge.className = "text-[10px] bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full font-mono border border-rose-200";
-                fetchCompaniesViaJSONP();
-            };
-            document.body.appendChild(script);
-        }
 
         function fetchCompaniesViaJSONP() {
             let select = document.getElementById('regCompanySelect');
