@@ -141,14 +141,12 @@
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
         }
-        /* Peningkatan ukuran huruf pada seluruh kolom isian formulir pendaftaran */
         .register-input-lg {
             font-size: 1rem !important;
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
         }
 
-        /* EWA BETA HERO CUSTOM STYLES */
         .ewa-beta-hero {
             position: relative;
             overflow: hidden;
@@ -200,9 +198,6 @@
             color: #425466;
             font-size: 15px;
             line-height: 1.7;
-        }
-        .ewa-intro strong {
-            color: #14532d;
         }
         .beta-info {
             max-width: 650px;
@@ -315,7 +310,7 @@
             align-items: center;
             justify-content: center;
             padding: 8px 16px;
-            background: #1e3a8a; /* Deep Navy */
+            background: #1e3a8a;
             border-radius: 20px;
             font-size: 12px;
             letter-spacing: 0.5px;
@@ -334,8 +329,14 @@
 
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm w-full shrink-0">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('landing')">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain">
+            <div class="flex items-center space-x-3">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain cursor-pointer" onclick="switchPage('landing')">
+                
+                <!-- SERVER CONNECTION STATUS BADGE -->
+                <div id="serverConnectionBadge" class="hidden sm:flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>Memeriksa Server...</span>
+                </div>
             </div>
             <div id="configStatusBadge" class="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-mono hidden">
                 <i class="fa-solid fa-circle-notch fa-spin mr-1"></i>
@@ -345,6 +346,29 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
+        <!-- Persistent Admin Contact Notice (Muncul jika gagal koneksi berulang kali) -->
+        <div id="persistentAdminNotice" class="hidden w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm text-xs sm:text-sm text-rose-900">
+                <div class="flex items-start space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 text-base font-bold">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold font-heading text-rose-950 text-sm sm:base">Koneksi ke Server Terkendala (Gagal Berulang)</p>
+                        <p class="text-rose-700 mt-0.5">Jika Anda sudah melakukan refresh beberapa kali namun status jaringan server tetap merah/gagal, silakan hubungi Administrator Tanggalmuda untuk bantuan teknis:</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <a href="https://wa.me/6287790994652?text=Halo%20Admin%20Tanggalmuda,%20saya%20mengalami%20kendala%20koneksi%20server%20pada%20aplikasi." target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs flex items-center space-x-1.5 shadow transition">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> <span>Hubungi WhatsApp</span>
+                    </a>
+                    <a href="mailto:info@tanggalmuda.com" class="px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold rounded-xl text-xs flex items-center space-x-1.5 shadow-sm transition">
+                        <i class="fa-solid fa-envelope text-xs"></i> <span>Kirim Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal Balon Besar (Global Notification & Alert) -->
         <div id="bigAlertModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center transform transition-all scale-100">
@@ -366,7 +390,7 @@
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
                     
-                    <!-- LEFT COLUMN: INTEGRATED HERO SECTION -->
+                    <!-- LEFT COLUMN -->
                     <div class="lg:col-span-7 flex flex-col items-start text-left w-full">
                         <section class="ewa-beta-hero">
                             <div class="ewa-beta-container">
@@ -395,7 +419,7 @@
                                     </div>
                                 </div>
 
-                                <!-- RIGHT/BOTTOM: VISUALS -->
+                                <!-- VISUALS -->
                                 <div class="ewa-beta-visual">
                                     <div class="visual-glow"></div>
                                     
@@ -420,7 +444,7 @@
                                         class="woman-image"
                                     >
 
-                                    <!-- New Text Sections (Below Image) -->
+                                    <!-- Text Sections Below Image -->
                                     <div class="w-full max-w-[420px] text-left mt-2 relative z-10 space-y-4">
                                         
                                         <!-- PLAFON -->
@@ -794,7 +818,7 @@
         </div>
     </div>
 
-    <!-- EWA Verification Modal (Menggunakan PIN Akses) -->
+    <!-- EWA Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -880,7 +904,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Controller with JSONP Google Sites Support -->
+    <!-- JavaScript Controller with Live Connection Status & JSONP Support -->
     <script>
         // GANTI URL DI BAWAH INI DENGAN URL DEPLOYMENT ANDA YANG BARU!!
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/GANTI_DENGAN_URL_DEPLOY_ANDA_YANG_BARU/exec";
@@ -890,10 +914,56 @@
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
+        let consecutiveFailures = 0;
 
         window.onload = function() {
+            checkServerConnection();
             fetchCompaniesViaJSONP();
         };
+
+        function updateConnectionStatus(status, message = "") {
+            let badge = document.getElementById('serverConnectionBadge');
+            if (!badge) return;
+            badge.classList.remove('hidden');
+
+            if (status === 'online') {
+                consecutiveFailures = 0;
+                document.getElementById('persistentAdminNotice').classList.add('hidden');
+                badge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm";
+                badge.innerHTML = `<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span><span><i class="fa-solid fa-signal mr-1"></i> Terhubung ke Server</span>`;
+            } else if (status === 'checking') {
+                badge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200";
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span><span>Memeriksa Server...</span>`;
+            } else {
+                consecutiveFailures++;
+                badge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200 shadow-sm";
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span><span><i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal Terkoneksi</span>`;
+
+                if (consecutiveFailures >= 2) {
+                    document.getElementById('persistentAdminNotice').classList.remove('hidden');
+                }
+            }
+        }
+
+        function checkServerConnection() {
+            updateConnectionStatus('checking');
+            let callbackName = 'jsonp_ping_cb_' + Math.round(100000 * Math.random());
+            
+            window[callbackName] = function(res) {
+                delete window[callbackName];
+                let tag = document.getElementById('jsonp_ping_script');
+                if (tag) tag.remove();
+                updateConnectionStatus('online');
+            };
+
+            let script = document.createElement('script');
+            script.id = 'jsonp_ping_script';
+            script.src = GOOGLE_SCRIPT_URL + "?action=getCompanies&callback=" + callbackName;
+            script.onerror = function() {
+                updateConnectionStatus('offline');
+            };
+            document.body.appendChild(script);
+        }
 
         function fetchCompaniesViaJSONP() {
             let select = document.getElementById('regCompanySelect');
@@ -905,6 +975,8 @@
                 delete window[callbackName];
                 let scriptTag = document.getElementById('jsonp_script');
                 if (scriptTag) scriptTag.remove();
+
+                updateConnectionStatus('online');
 
                 if (data && data.length > 0) {
                     listPerusahaanData = data;
@@ -924,7 +996,8 @@
             script.id = 'jsonp_script';
             script.src = GOOGLE_SCRIPT_URL + "?action=getCompanies&callback=" + callbackName;
             script.onerror = function() {
-                select.innerHTML = '<option value="">-- Gagal memuat dari Google Sheets --</option>';
+                updateConnectionStatus('offline');
+                select.innerHTML = '<option value="">-- Gagal memuat dari Google Sheets (Periksa URL / Deployment) --</option>';
             };
             document.body.appendChild(script);
         }
@@ -1045,6 +1118,7 @@
                 let scriptTag = document.getElementById('jsonp_check_script');
                 if (scriptTag) scriptTag.remove();
 
+                updateConnectionStatus('online');
                 btn.disabled = false;
                 btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
 
@@ -1075,9 +1149,10 @@
             script.id = 'jsonp_check_script';
             script.src = GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration&callback=" + callbackName;
             script.onerror = function() {
+                updateConnectionStatus('offline');
                 btn.disabled = false;
                 btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                showBigAlert('Gagal memeriksa email ke server (Koneksi jaringan terputus).', "Kesalahan Sistem", false);
+                showBigAlert('Gagal memeriksa email ke server. Pastikan URL deployment benar dan akses diset ke "Anyone".', "Kesalahan Sistem", false);
             };
             document.body.appendChild(script);
         }
@@ -1125,6 +1200,7 @@
             })
             .then(res => res.json())
             .then(res => {
+                updateConnectionStatus('online');
                 if (res.success) {
                     showBigAlert(res.message, "Pengajuan Berhasil", true);
                     switchPage('status');
@@ -1136,7 +1212,8 @@
                 }
             })
             .catch(err => {
-                showBigAlert('Gagal menghubungi server: ' + err.message, "Kesalahan Jaringan", false);
+                updateConnectionStatus('offline');
+                showBigAlert('Gagal menghubungi server: ' + err.message + '. Silakan hubungi admin.', "Kesalahan Jaringan", false);
             });
         }
 
@@ -1322,7 +1399,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showBigAlert('Mengirim data pendaftaran ke Google Sheets dan meneruskan email verifikasi terbatas ke PIC Perusahaan...', "Mohon Tunggu", true);
+            showBigAlert('Mengirim data pendaftaran ke Google Sheets...', "Mohon Tunggu", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1334,6 +1411,7 @@
             })
             .then(res => res.json())
             .then(res => {
+                updateConnectionStatus('online');
                 if (res.success) {
                     showBigAlert(res.message, "Pendaftaran Berhasil Dikirim", true);
                     document.getElementById('formRegister').reset();
@@ -1348,7 +1426,8 @@
                 }
             })
             .catch(err => {
-                showBigAlert('Gagal mengirim ke server: ' + err.message, "Kesalahan Jaringan", false);
+                updateConnectionStatus('offline');
+                showBigAlert('Gagal mengirim ke server: ' + err.message + '. Silakan hubungi admin.', "Kesalahan Jaringan", false);
             });
         }
 
@@ -1372,6 +1451,7 @@
                 let scriptTag = document.getElementById('jsonp_status_script');
                 if (scriptTag) scriptTag.remove();
 
+                updateConnectionStatus('online');
                 closeBigAlert();
                 if (res && res.success && res.data) {
                     let data = res.data;
@@ -1395,6 +1475,7 @@
             script.id = 'jsonp_status_script';
             script.src = GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType) + "&callback=" + callbackName;
             script.onerror = function() {
+                updateConnectionStatus('offline');
                 closeBigAlert();
                 showBigAlert('Gagal memeriksa status ke server.', "Kesalahan Jaringan", false);
             };
