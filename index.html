@@ -88,6 +88,8 @@
             display: inline-block;
             animation: bounceHand 0.8s infinite ease-in-out;
         }
+        
+        /* Animasi Text Abu-abu ke Merah */
         @keyframes textPulseRed {
             0%, 100% { color: #94a3b8; transform: scale(1); text-shadow: none; }
             50% { color: #dc2626; transform: scale(1.08); text-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
@@ -98,6 +100,17 @@
             font-weight: 900;
             font-size: 120%;
         }
+
+        /* Animasi Text Abu-abu ke Merah untuk Tombol (Latar Navy) */
+        @keyframes textPulseGrayRedButton {
+            0%, 100% { color: #e2e8f0; } /* Light Slate Gray */
+            50% { color: #ff6b6b; text-shadow: 0 0 6px rgba(255, 107, 107, 0.5); } /* Soft Bright Red */
+        }
+        .text-pulse-gray-red-btn {
+            animation: textPulseGrayRedButton 2s infinite ease-in-out;
+            font-weight: 900;
+        }
+
         .custom-input {
             background-color: #f1f5f9;
             border: 1.5px solid #cbd5e1;
@@ -231,19 +244,22 @@
         }
         .ewa-beta-visual {
             position: relative;
-            min-height: 380px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             margin-top: 10px;
+            gap: 20px;
         }
         .visual-glow {
             position: absolute;
+            top: 15%;
             width: 350px;
             height: 350px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(98,198,232,0.25) 0%, rgba(32,168,107,0.13) 45%, rgba(255,255,255,0) 72%);
             filter: blur(5px);
+            z-index: 1;
         }
         .woman-image {
             position: relative;
@@ -256,11 +272,10 @@
             box-shadow: 0 25px 60px rgba(18,59,93,0.18);
         }
         .floating-card {
-            position: absolute;
+            position: relative;
             z-index: 4;
-            left: 0;
-            bottom: 20px;
-            width: 260px; /* Diperlebar sedikit untuk teks 0% bunga */
+            width: 100%;
+            max-width: 320px;
             padding: 20px;
             background: rgba(255,255,255,0.96);
             border: 1px solid rgba(18,59,93,0.1);
@@ -283,6 +298,9 @@
         .price del {
             color: #8b9298;
             font-size: 15px;
+            text-decoration: line-through;
+            text-decoration-color: #ef4444; /* Garis coret warna merah */
+            text-decoration-thickness: 2px;
         }
         .price strong {
             color: #14532d;
@@ -294,24 +312,31 @@
             color: #687782;
             font-size: 12px;
         }
-        .price-tag {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 10px;
-            background: #14532d;
-            color: #ffffff;
-            border-radius: 20px;
-            font-size: 10px;
+        .price-terms {
+            font-size: 11px;
             font-weight: 800;
+            color: #64748b;
+            margin-top: 10px;
+            margin-bottom: 8px;
             letter-spacing: 0.5px;
+        }
+        .price-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            background: #2563eb; /* Navy Cerah */
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
         }
         @media (max-width: 600px) {
             .ewa-beta-content h1 { font-size: 26px; letter-spacing: -0.5px; }
             .ewa-intro { font-size: 15px; }
             .beta-badge { font-size: 11px; }
-            .ewa-beta-visual { min-height: 320px; }
             .woman-image { height: 360px; border-radius: 24px; max-width: 320px; }
-            .floating-card { width: 230px; padding: 15px; left: -10px; }
+            .floating-card { width: 100%; max-width: 280px; padding: 15px; }
             .price strong { font-size: 24px; }
         }
     </style>
@@ -372,7 +397,7 @@
                                         <div>
                                             <h3>Layanan Tetap Tanpa Bunga & Biaya Transaksi Yang Transparan</h3>
                                             <p>
-                                                Selama masa Beta, layanan Tanggalmuda tetap memberikan komitmen <strong>TANPA DIKENAKAN <span class="text-pulse-red">BUNGA (0%)</span></strong> untuk setiap pencairan gaji Anda. Nikmati kemudahan akses gaji dengan biaya yang transparan.
+                                                Selama masa Beta, layanan Tanggalmuda tetap memberikan komitmen <span class="text-pulse-red">TANPA DIKENAKAN BUNGA (0%)</span> untuk setiap pencairan gaji Anda. Nikmati kemudahan akses gaji dengan biaya yang transparan.
                                             </p>
                                         </div>
                                     </div>
@@ -399,15 +424,11 @@
                                     </div>
                                 </div>
 
-                                <!-- RIGHT: IMAGE (Bottom Stack) -->
+                                <!-- RIGHT/BOTTOM: VISUALS -->
                                 <div class="ewa-beta-visual">
                                     <div class="visual-glow"></div>
-                                    <img 
-                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" 
-                                        alt="Pengguna Tanggalmuda EWA menggunakan smartphone" 
-                                        class="woman-image"
-                                    >
-                                    <!-- Floating Card -->
+                                    
+                                    <!-- Floating Card (Moved Above Image) -->
                                     <div class="floating-card">
                                         <div class="floating-label">BIAYA LAYANAN KHUSUS MASA BETA</div>
                                         <div class="price">
@@ -415,7 +436,41 @@
                                             <strong>Rp50.000</strong>
                                         </div>
                                         <div class="price-note">/ transaksi</div>
-                                        <div class="price-tag">0% BUNGA &nbsp;•&nbsp; FLAT &nbsp;•&nbsp; TANPA TIER</div>
+                                        <div class="price-terms">FLAT &nbsp;•&nbsp; TANPA TIER</div>
+                                        <div class="price-tag">
+                                            <span class="text-pulse-gray-red-btn">0% BUNGA</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Image Block -->
+                                    <img 
+                                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgp81gmOgaQkGn7Ev97RLV_P8YzjL3GMG4es239G2DSH4tVtNteYzUfoWbJZteZzBZdgJAVLc6uu235a3So7N3Xc0lK32W_krieOjPC9xPac9naN9e-8RHZvgO78VtW15_syWKCbrYOYiaxZii-_l0JcgDjvRthna79U1tPzTOnaQzYbVxTWeFNzkkEY8I/s1374/ChatGPT%20Image%20Sep%2015,%202026,%2001_01_33%20AM.png" 
+                                        alt="Pengguna Tanggalmuda EWA menggunakan smartphone" 
+                                        class="woman-image"
+                                    >
+
+                                    <!-- New Text Sections (Below Image) -->
+                                    <div class="w-full max-w-[420px] text-left mt-2 relative z-10">
+                                        <div class="pt-2">
+                                            <h3 class="font-bold text-[15px] sm:text-[16px] text-slate-900 font-heading mb-3">Jadi Kenapa Pilih Tanggalmuda?</h3>
+                                            <ul class="space-y-2 text-[13px] sm:text-[14px] text-slate-700">
+                                                <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Mudah & Praktis</b> — Proses pengajuan sederhana dan mudah dipahami.</li>
+                                                <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Transparan</b> — Biaya layanan disampaikan secara jelas.</li>
+                                                <li><span class="text-brand-600 font-bold mr-1.5">✓</span> <b>Tanpa Bunga</b> — Tidak menggunakan skema bunga pinjaman.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="pt-6 space-y-1.5">
+                                            <h3 class="font-bold text-[15px] sm:text-[16px] text-slate-900 font-heading mb-1">Jangan Tunda Kebutuhanmu</h3>
+                                            <p class="text-[13px] sm:text-[14px] text-slate-600 leading-relaxed">Akses gajimu dengan cara yang lebih praktis dan transparan.</p>
+                                        </div>
+                        
+                                        <!-- Contact Information Box -->
+                                        <div class="w-full flex flex-col justify-center space-y-2 text-[12px] sm:text-[13px] text-slate-600 bg-white/95 backdrop-blur-md px-5 py-4 rounded-xl border border-slate-200 shadow-sm mt-6">
+                                            <p class="font-bold text-slate-800 text-[13px] sm:text-[14px] mb-1 font-heading">Info selengkapnya :</p>
+                                            <p class="flex items-center"><span class="w-6">🌐</span> <a href="https://www.tanggalmuda.com" target="_blank" class="text-emerald-700 font-semibold hover:underline">www.tanggalmuda.com</a></p>
+                                            <p class="flex items-center"><span class="w-6">📱</span> <a href="https://wa.me/6287790994652" target="_blank" class="text-emerald-700 font-semibold hover:underline">WhatsApp: 0877-9099-4652</a></p>
+                                            <p class="flex items-center"><span class="w-6">📧</span> <a href="mailto:info@tanggalmuda.com" class="text-emerald-700 font-semibold hover:underline">Email: info@tanggalmuda.com</a></p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -423,7 +478,7 @@
                         </section>
                     </div>
 
-                    <!-- RIGHT COLUMN: EWA Application Form (100% UNTOUCHED) -->
+                    <!-- RIGHT COLUMN: EWA Application Form -->
                     <div class="lg:col-span-5 w-full">
                         <div id="ewaFormContainer" class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4 transition-all duration-300 relative w-full lg:sticky lg:top-24">
                             
@@ -633,7 +688,7 @@
                             </label>
                             <label class="flex items-start space-x-2.5 cursor-pointer">
                                 <input type="checkbox" id="regTerm4" required class="mt-0.5 rounded text-brand-600 shrink-0">
-                                <span class="text-[11px] text-slate-700">Saya memahami bahwa akun hanya dapat digunakan oleh saya sendiri. Saya bertanggung menjaga kerahasiaan password dan tidak memberikan akses akun kepada pihak lain.</span>
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa akun hanya dapat digunakan oleh saya sendiri. Saya bertanggung jawab menjaga kerahasiaan password dan tidak memberikan akses akun kepada pihak lain.</span>
                             </label>
                             <label class="flex items-start space-x-2.5 cursor-pointer">
                                 <input type="checkbox" id="regTerm5" required class="mt-0.5 rounded text-brand-600 shrink-0">
@@ -1329,3 +1384,4 @@
     </script>
 </body>
 </html>
+```eof
