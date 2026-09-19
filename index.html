@@ -29,6 +29,14 @@
                             700: '#1d4ed8',
                             800: '#1e40af',
                             900: '#1e3a8a',
+                        },
+                        orange: {
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        gold: {
+                            600: '#ca8a04',
+                            700: '#b45309',
                         }
                     }
                 }
@@ -42,7 +50,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #fdfbf7; /* Warna latar belakang lembut seperti referensi */
+            background-color: #f8fafc;
             color: #1e293b;
             overflow-x: hidden;
             display: flex;
@@ -56,177 +64,176 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
-        #splashScreen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+        .glossy-orange-btn {
+            background: linear-gradient(135deg, #ff8c00 0%, #ff5722 50%, #f4511e 100%);
+            box-shadow: 0 4px 12px -2px rgba(255, 110, 34, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
         }
-        .splash-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        @keyframes signalPulse {
-            0% { transform: scale(0.85); opacity: 0.4; color: #cbd5e1; }
-            50% { transform: scale(1.15); opacity: 1; color: #16a34a; }
-            100% { transform: scale(0.85); opacity: 0.4; color: #cbd5e1; }
+        .glossy-orange-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px -2px rgba(255, 110, 34, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
-        .animate-db-signal { animation: signalPulse 1.2s infinite ease-in-out; }
+        @keyframes customPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7); }
+            50% { transform: scale(1.02); box-shadow: 0 0 15px 8px rgba(255, 87, 34, 0); }
+        }
+        .animate-pulse-cta {
+            animation: customPulse 2s infinite ease-in-out;
+        }
+        @keyframes bounceHand {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(4px) scale(1.1); }
+        }
+        .animate-hand {
+            display: inline-block;
+            animation: bounceHand 0.8s infinite ease-in-out;
+        }
+        @keyframes colorShiftRed {
+            0%, 100% { color: #d1d5db; }
+            50% { color: #dc2626; }
+        }
+        .animate-color-shift-red {
+            animation: colorShiftRed 2s infinite ease-in-out;
+        }
         .custom-input {
-            background-color: #ffffff; border: 1.5px solid #e2e8f0; transition: all 0.2s ease; width: 100%;
+            background-color: #f1f5f9;
+            border: 1.5px solid #cbd5e1;
+            transition: all 0.2s ease;
+            width: 100%;
         }
         .custom-input:focus {
-            outline: none; border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15); background-color: #ffffff;
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+            background-color: #ffffff;
         }
-        .email-input-lg, .register-input-lg { font-size: 1rem !important; padding-top: 0.75rem; padding-bottom: 0.75rem; }
-        .beta-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 14px; border-radius: 20px; background: #fff4ed; border: 1px solid #f4c5a7;
-            color: #b94f18; font-size: 12px; font-weight: 700; margin-bottom: 20px;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-        .marquee-track { display: inline-flex; animation: marquee 25s linear infinite; }
-        .marquee-track:hover { animation-play-state: paused; }
     </style>
 </head>
-<body class="bg-[#fdfbf7] text-slate-800 antialiased selection:bg-brand-500 selection:text-white flex-grow flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white flex-grow flex flex-col justify-between">
 
-    <div id="splashScreen">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjImFhvw11nUnkCHoSffXS2iU4EmdzOv_r9ZDPjECXQ0yDfSsCeSVjyFMNTRCKF4BPzf2hpqZ2soEGINKKwxfHiRXP49ZKV3CiKN0YM3YYuz_TR0f_98ETF2uji6F4hKzIPpsEPqJzAfbkT2MIydPD0un6Osf3bA6nQU0AKDU4kLHwpJqFnObhEJRVuYoo/s500/Logo%201%20(2).png" alt="TanggalMuda Logo" class="w-64 sm:w-80 h-auto object-contain mb-6 animate-pulse drop-shadow-2xl">
-        <div class="flex items-center space-x-3 text-slate-700 font-semibold font-heading bg-white px-6 py-3.5 rounded-2xl border border-slate-200 shadow-xl">
-            <i class="fa-solid fa-server text-2xl animate-db-signal text-brand-600"></i>
-            <span class="text-sm tracking-wide">Menghubungkan ke Database...</span>
+    <div id="startupSplash" class="fixed inset-0 z-50 bg-[#f0fdf4] backdrop-blur-md flex flex-col items-center justify-center p-4 transition-opacity duration-500">
+        <div class="mb-6 flex items-center justify-center">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjImFhvw11nUnkCHoSffXS2iU4EmdzOv_r9ZDPjECXQ0yDfSsCeSVjyFMNTRCKF4BPzf2hpqZ2soEGINKKwxfHiRXP49ZKV3CiKN0YM3YYuz_TR0f_98ETF2uji6F4hKzIPpsEPqJzAfbkT2MIydPD0un6Osf3bA6nQU0AKDU4kLHwpJqFnObhEJRVuYoo/s320/Logo%201%20(2).png" alt="Loading Logo" class="w-auto h-auto object-contain animate-pulse">
+        </div>
+        <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-5 border border-emerald-100">
+            <div class="space-y-1.5">
+                <h3 class="font-heading font-bold text-base sm:text-lg text-slate-900">Menghubungkan ke Database...</h3>
+                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Sheets & Apps Script</p>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="splashProgressBar" class="bg-brand-600 h-full w-1/3 animate-pulse transition-all duration-300"></div>
+            </div>
         </div>
     </div>
 
-    <header class="sticky top-0 z-50 bg-[#fdfbf7]/95 backdrop-blur-md border-b border-slate-200/60 shadow-xs w-full shrink-0">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm w-full shrink-0">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain cursor-pointer" onclick="switchPage('landing')">
-                <div id="serverConnectionBadge" class="flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                    <span class="hidden sm:inline">Menghubungkan Database...</span>
-                    <span class="sm:hidden">Koneksi</span>
-                </div>
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('landing')">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain">
             </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="switchPage('status')" class="text-xs sm:text-sm font-semibold text-slate-700 hover:text-brand-600 transition cursor-pointer">Cek Status</button>
-                <button onclick="switchPage('register')" class="bg-slate-900 hover:bg-slate-800 text-white font-medium px-4 py-2 rounded-full text-xs sm:text-sm shadow-sm transition cursor-pointer">Daftar Anggota</button>
+            <div id="connectionStatusBadge" class="flex items-center space-x-2 bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></span>
+                <span id="connectionBadgeText">Menghubungkan...</span>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow w-full flex flex-col justify-center py-6 sm:py-10">
+    <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <div id="persistentAdminNotice" class="hidden w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm text-xs sm:text-sm text-rose-900">
-                <div class="flex items-start space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 text-base font-bold">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold font-heading text-rose-950 text-sm">Koneksi ke Database Terkendala</p>
-                        <p class="text-rose-700 mt-0.5">Jika kendala berlanjut, silakan hubungi Administrator Tanggalmuda:</p>
-                    </div>
+        <div id="globalAlert" class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4 transition-all duration-300">
+            <div id="globalAlertBox" class="p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm">
+                <div class="flex items-center space-x-2">
+                    <span id="globalAlertText"></span>
+                    <span id="alertTimerBadge" class="text-[10px] bg-black/10 px-1.5 py-0.5 rounded font-mono">6s</span>
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
-                    <a href="https://wa.me/6287790994652?text=Halo%20Admin%20Tanggalmuda,%20saya%20mengalami%20kendala%20koneksi%20database." target="_blank" class="px-4 py-2 bg-[#25D366] text-white font-semibold rounded-xl text-xs flex items-center space-x-1.5 shadow transition">
-                        <i class="fa-brands fa-whatsapp text-sm"></i> <span>WhatsApp</span>
-                    </a>
-                    <a href="mailto:info@tanggalmuda.com" class="px-4 py-2 bg-white text-slate-700 border border-slate-300 font-semibold rounded-xl text-xs flex items-center space-x-1.5 shadow-sm transition">
-                        <i class="fa-solid fa-envelope text-xs"></i> <span>Email</span>
-                    </a>
-                </div>
+                <button onclick="closeGlobalAlert()" class="opacity-70 hover:opacity-100 font-bold ml-3 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
 
-        <div id="bigAlertModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center">
-                <div id="bigAlertIconBox" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
-                    <i id="bigAlertIcon" class="fa-solid fa-circle-check"></i>
-                </div>
-                <div class="space-y-2">
-                    <h3 id="bigAlertTitle" class="font-bold text-slate-900 font-heading text-lg">Pemberitahuan</h3>
-                    <p id="bigAlertText" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
-                </div>
-                <button type="button" onclick="closeBigAlert()" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition cursor-pointer">Mengerti / Tutup</button>
-            </div>
-        </div>
-
-        <!-- VIEW LANDING SEPERTI GAMBAR REFERENSI -->
         <section id="view-landing" class="block w-full flex-grow flex items-center">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center w-full">
                     
-                    <div class="lg:col-span-7 flex flex-col items-start text-left w-full space-y-5">
-                        <div class="beta-badge">
-                            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                            <span>Pre-launch • Beta tertutup Q3 2026</span>
-                        </div>
-                        
-                        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 font-heading tracking-tight leading-[1.15]">
-                            Cairkan Gaji Sebelum Tanggal Gajian
-                        </h1>
-                        
-                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
-                            Ajukan pencairan dengan mudah melalui formulir pengajuan yang telah disediakan.[cite: 1]
-                        </p>
+                    <div class="lg:col-span-7 flex flex-col items-start text-left space-y-3 sm:space-y-4 w-full">
+                        <div class="space-y-3 w-full">
+                            <h1 class="font-bold font-heading tracking-tight leading-snug space-y-1">
+                                <span class="text-navy-800 block text-base sm:text-lg lg:text-xl">Saat Ada yang Harus <span class="text-rose-600">Dibayar Sekarang</span></span> 
+                            </h1>
+                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center w-full pt-1 pb-1">
+                                <div class="sm:col-span-5 relative flex flex-col items-center justify-center w-full">
+                                    <div class="absolute inset-0 bg-brand-500/10 rounded-full blur-2xl"></div>
+                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimrasN21gRxRoGfec7ujju5N54JJ41hcxlHEXKw5jeUNyv1-i0a_CTeryDuPDeNwdcLxUFQuOCUzgaEW2IkoWEnJ6MGasButJ-rnMN-pdmgqt7IyNAT3lzxZQdsBmMy7SPQz46TUpEiUBwC3Tb1Vb21SeQleF7CDVXg6YkTF1HwQ56cfhWQTA0k_zqj_g/s1254/ChatGPT%20Image%20Sep%2019,%202026,%2002_16_43%20PM.png" alt="Professional Woman holding phone" class="relative z-10 w-full max-w-[280px] sm:max-w-[360px] h-auto object-contain filter drop-shadow-md">
+                                </div>
+                                <div class="sm:col-span-7 flex flex-col justify-center space-y-2.5">
+                                    <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed font-medium">
+                                        Berobat, sekolah, servis kendaraan, tagihan listrik & air, hingga kebutuhan lainnya. Akses sebagian gaji yang sudah kamu peroleh saat kamu membutuhkannya — tanpa harus menunggu tanggal gajian.
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 font-bold text-[10px] sm:text-[11px]">
+                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-md shadow-sm"><i class="fa-solid fa-check text-emerald-500 mr-1"></i> Praktis</span>
+                                        <span class="bg-sky-50 text-sky-700 border border-sky-200 px-2 py-1 rounded-md shadow-sm"><i class="fa-solid fa-check text-sky-500 mr-1"></i> Transparan</span>
+                                        <span class="bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded-md shadow-sm animate-color-shift-red"><i class="fa-solid fa-check text-rose-500 mr-1"></i> Tanpa Bunga (0%)</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- Form Input Email Sederhana seperti Referensi -->
-                        <div class="w-full max-w-lg pt-2">
-                            <form onsubmit="handleQuickEmailSubmit(event)" class="flex flex-col sm:flex-row gap-3">
-                                <input type="email" id="quickEmail" required placeholder="emailkamu@email.com" class="flex-grow px-4 py-3.5 rounded-full custom-input text-sm shadow-xs">
-                                <button type="submit" class="px-6 py-3.5 bg-[#eab308] hover:bg-amber-500 text-slate-950 font-bold rounded-full text-sm shadow-md transition flex items-center justify-center space-x-2 cursor-pointer shrink-0">
-                                    <span>Ajukan Sekarang</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                            <div class="w-full max-w-[280px] sm:max-w-[340px] pt-1">
+                                <button type="button" onclick="scrollToEwaForm()" class="px-3 py-3.5 rounded-xl glossy-orange-btn text-white font-bold text-xs tracking-tight flex items-center justify-center text-center space-x-2 animate-pulse-cta shadow-md cursor-pointer w-full">
+                                    <span class="uppercase leading-tight">Cairkan Gaji Sekarang</span>
+                                    <span class="text-xs animate-hand inline-block">👉</span>
                                 </button>
-                            </form>
-                        </div>
-
-                        <!-- Fitur Pendukung / Footer kecil di bawah teks -->
-                        <div class="flex flex-wrap items-center gap-6 pt-4 text-xs text-slate-500 font-medium border-t border-slate-200/60 w-full max-w-xl">
-                            <div class="flex items-center space-x-1.5"><i class="fa-solid fa-shield-halved text-brand-600"></i> <span>Aman & Terverifikasi</span></div>
-                            <div class="flex items-center space-x-1.5"><i class="fa-solid fa-bolt text-amber-500"></i> <span>Pencairan Cepat</span></div>
-                            <div class="flex items-center space-x-1.5"><i class="fa-solid fa-percent text-brand-600"></i> <span>0% Bunga (Program Beta)</span></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-5 w-full flex justify-center">
-                        <div class="relative w-full max-w-md">
-                            <div class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-amber-400 rounded-3xl blur-lg opacity-25"></div>
-                            <div class="relative glass-card rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200 space-y-5">
-                                <div class="text-center space-y-1">
-                                    <h3 class="font-heading font-bold text-lg text-slate-900">FORMULIR PENGAJUAN EWA</h3>
-                                    <p class="text-xs text-slate-500">Masukkan detail pencairan gaji Anda</p>
-                                </div>
-                                <form onsubmit="handleInitialEwaSubmit(event)" class="space-y-4 text-xs sm:text-sm">
-                                    <div>
-                                        <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Terdaftar</label>
-                                        <input type="email" id="ewaEmail" required placeholder="nama@email.com" class="w-full px-4 rounded-xl custom-input email-input-lg">
+                    <div class="lg:col-span-5 w-full">
+                        <div id="ewaFormContainer" class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4 transition-all duration-300 relative w-full">
+                            
+                            <div class="text-center space-y-0.5">
+                                <h3 class="font-heading font-bold text-base sm:text-lg text-slate-900 leading-tight">FORMULIR PENGAJUAN AKSES GAJI</h3>
+                                <p class="text-xs text-slate-500 pt-1">Jika anda sudah terdaftar, silahkan masukan alamat email dan PIN Akses</p>
+                            </div>
+
+                            <form onsubmit="handleInitialEwaSubmit(event)" class="space-y-3.5 text-xs sm:text-sm">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Terdaftar</label>
+                                    <div class="relative">
+                                        <input type="email" id="ewaEmail" oninput="checkEmailRegistered(this.value)" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl custom-input">
                                     </div>
+                                    <div id="emailStatusFeedback" class="mt-1.5 text-xs font-medium hidden"></div>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pencairan</label>
-                                        <input type="text" id="ewaAmount" oninput="formatCurrencyInput(this); calculateEwaFeePreview();" required placeholder="0" class="w-full px-4 py-3 rounded-xl custom-input text-xl sm:text-2xl font-bold font-mono tracking-wide text-slate-900">
+                                        <div class="relative flex items-center">
+                                            <input type="text" id="ewaAmount" oninput="formatCurrencyInput(this); calculateEwaFeePreview();" required placeholder="" class="w-full px-4 py-3 rounded-xl custom-input text-lg font-bold font-mono tracking-wide text-slate-900 placeholder:text-slate-400">
+                                        </div>
                                     </div>
-                                    <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
-                                        <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
-                                        <p class="flex justify-between"><span>Dana Diterima:</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
-                                        <p class="flex justify-between"><span>Biaya Layanan:</span> <span id="prevTotalFee">Rp 50.000</span></p>
-                                        <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment:</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                                    <div>
+                                        <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses (Dari Email)</label>
+                                        <div class="relative flex items-center">
+                                            <input type="password" id="ewaPin" required placeholder="6-Digit PIN" maxlength="6" class="w-full px-4 py-3 rounded-xl custom-input text-lg tracking-widest text-center font-bold font-mono text-slate-900">
+                                        </div>
                                     </div>
-                                    <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-2 cursor-pointer">
-                                        <span>Proses Pengajuan</span> <i class="fa-solid fa-arrow-right text-xs"></i>
-                                    </button>
-                                    <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px]">
-                                        <button type="button" onclick="switchPage('register')" class="text-emerald-700 font-semibold hover:underline cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun Baru</button>
-                                        <button type="button" onclick="switchPage('status')" class="text-emerald-700 font-semibold hover:underline cursor-pointer"><i class="fa-solid fa-magnifying-glass mr-1"></i> Cek Status</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                
+                                <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
+                                    <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
+                                    <p class="flex justify-between"><span>Dana Diterima Bersih (Full):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
+                                    <p class="flex justify-between"><span>Biaya Layanan (Ditagih Repayment):</span> <span id="prevTotalFee">Rp 50.000</span></p>
+                                    <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA + Fee):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                                    <p class="text-[10px] text-slate-500 italic mt-0.5">*Maks Rp 750k/trx. Fee Rp 50k/trx ditagihkan saat repayment.</p>
+                                </div>
+
+                                <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
+                                    <span>Ajukan</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                                
+                                <div class="flex flex-col space-y-1.5 pt-2 border-t border-slate-100 text-[11px]">
+                                    <button type="button" onclick="switchPage('register')" class="text-emerald-700 font-semibold hover:underline text-left cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun Baru</button>
+                                    <button type="button" onclick="switchPage('status')" class="text-emerald-700 font-semibold hover:underline text-left cursor-pointer"><i class="fa-solid fa-magnifying-glass mr-1"></i> Cek Status Pengajuan</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -234,41 +241,43 @@
             </div>
         </section>
 
-        <!-- VIEW REGISTER -->
-        <section id="view-register" class="hidden w-full bg-[#fdfbf7] py-4">
+        <section id="view-register" class="hidden w-full bg-slate-50 py-4">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
-                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 transition cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition cursor-pointer" title="Kembali ke Beranda">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                     <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
                         <h2 class="text-base sm:text-lg font-bold font-heading text-slate-900 mt-1">Pendaftaran Akun Baru</h2>
-                        <p class="text-xs text-slate-500">Lengkapi seluruh isian di bawah ini dengan benar.</p>
+                        <p class="text-xs text-slate-500">Seluruh isian di bawah ini wajib diisi dengan lengkap.</p>
                     </div>
+
                     <form id="formRegister" onsubmit="triggerConfirmationModal(event)" class="space-y-3.5 text-xs sm:text-sm">
                         <div>
                             <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Karyawan (Sesuai KTP) *</label>
-                            <input type="text" id="regName" required placeholder="Contoh: Budi Santoso" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                            <input type="text" id="regName" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                         </div>
                         <div>
                             <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Aktif *</label>
-                            <input type="email" id="regEmail" required placeholder="nama@email.com" class="w-full px-4 rounded-xl custom-input email-input-lg">
+                            <input type="email" id="regEmail" required placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Karyawan *</label>
-                                <input type="text" id="regNikKaryawan" required placeholder="NIK" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nomor Induk Karyawan (NIK) *</label>
+                                <input type="text" id="regNikKaryawan" required placeholder="NIK Karyawan" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK KTP (16 Digit) *</label>
-                                <input type="number" id="regNikKtp" required placeholder="16 digit KTP" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Sesuai KTP (16 Digit) *</label>
+                                <input type="number" id="regNikKtp" required placeholder="16 digit KTP" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">No. HP *</label>
-                                <input type="tel" id="regPhone" required placeholder="08123..." class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Handphone *</label>
+                                <input type="tel" id="regPhone" required placeholder="08123456789" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tgl Lahir *</label>
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Lahir *</label>
                                 <input type="date" id="regDob" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                             <div>
@@ -278,91 +287,123 @@
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Departemen *</label>
-                                <input type="text" id="regDepartment" required placeholder="Departemen" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Unit Kerja / Departemen *</label>
+                                <input type="text" id="regDepartment" required placeholder="Contoh: Operasional" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Jabatan *</label>
-                                <input type="text" id="regPosition" required placeholder="Jabatan" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Posisi / Jabatan *</label>
+                                <input type="text" id="regPosition" required placeholder="Contoh: Staff" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                         </div>
                         <div>
-                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Domisili *</label>
-                            <textarea id="regAddress" rows="2" required placeholder="Alamat lengkap..." class="w-full px-4 rounded-xl custom-input register-input-lg"></textarea>
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Lengkap Domisili *</label>
+                            <textarea id="regAddress" rows="2" required placeholder="Alamat tinggal saat ini..." class="w-full px-3.5 py-2.5 rounded-xl custom-input"></textarea>
                         </div>
                         <div>
-                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Perusahaan Tempat Bekerja *</label>
-                            <select id="regCompanySelect" onchange="displayCompanyDetails()" required class="w-full px-4 rounded-xl custom-input register-input-lg">
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Perusahaan Tempat Bekerja *</label>
+                            <select id="regCompanySelect" onchange="displayCompanyDetails()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                                 <option value="">-- Memuat Perusahaan dari Google Sheets... --</option>
                             </select>
                         </div>
                         <div id="companyDetailCard" class="hidden bg-brand-50 border border-brand-200 rounded-xl p-3.5 space-y-1 text-brand-900">
-                            <p class="font-bold text-xs"><i class="fa-solid fa-building text-brand-600 mr-1"></i> <span id="compNameDisplay">-</span></p>
+                            <p class="font-bold text-brand-950 text-xs sm:text-sm"><i class="fa-solid fa-building text-brand-600 mr-1"></i> <span id="compNameDisplay">-</span></p>
+                            <p class="text-xs">ID Perusahaan: <span id="compIDDisplay" class="font-semibold">-</span></p>
                             <p class="text-xs">PIC: <span id="compPicDisplay" class="font-semibold">-</span> | Email: <span id="compEmailDisplay" class="font-semibold">-</span></p>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Status Kepegawaian *</label>
-                                <select id="regEmploymentStatus" onchange="toggleContractFields()" required class="w-full px-4 rounded-xl custom-input register-input-lg">
-                                    <option value="Tetap">Tetap</option>
-                                    <option value="Kontrak">Kontrak</option>
+                                <select id="regEmploymentStatus" onchange="toggleContractFields()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                    <option value="Tetap">Tetap (Permanent)</option>
+                                    <option value="Kontrak">Kontrak (Contract)</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Gaji Pokok (Rp) *</label>
-                                <input type="text" id="regSalary" oninput="formatCurrencyInput(this)" required placeholder="5.000.000" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Gaji Pokok Bulanan (Rp) *</label>
+                                <input type="text" id="regSalary" oninput="formatCurrencyInput(this)" required placeholder="Contoh: 5.000.000" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Mulai Kerja *</label>
-                                <input type="date" id="regStartDate" required class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Mulai Kerja *</label>
+                                <input type="date" id="regStartDate" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                             <div id="containerEndDate" class="hidden">
-                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Akhir Kontrak *</label>
-                                <input type="date" id="regEndDate" class="w-full px-4 rounded-xl custom-input register-input-lg">
+                                <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Tanggal Akhir Kontrak *</label>
+                                <input type="date" id="regEndDate" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                         </div>
                         <div class="pt-2 border-t border-slate-100">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider mb-2 text-xs"><i class="fa-solid fa-wallet text-brand-600 mr-1"></i> Rekening Pencairan *</p>
+                            <p class="font-bold text-slate-700 uppercase tracking-wider mb-2 text-xs"><i class="fa-solid fa-wallet text-brand-600 mr-1"></i> Rekening Tujuan Pencairan *</p>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                <div><input type="text" id="regBankName" placeholder="Bank (BCA)" required class="w-full px-4 rounded-xl custom-input register-input-lg"></div>
-                                <div><input type="text" id="regBankAccNo" placeholder="No. Rekening" required class="w-full px-4 rounded-xl custom-input register-input-lg"></div>
-                                <div><input type="text" id="regBankAccName" placeholder="Pemilik" required class="w-full px-4 rounded-xl custom-input register-input-lg"></div>
+                                <div><input type="text" id="regBankName" placeholder="Nama Bank (BCA)" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
+                                <div><input type="text" id="regBankAccNo" placeholder="No. Rekening" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
+                                <div><input type="text" id="regBankAccName" placeholder="Pemilik Rekening" required class="w-full px-3 py-2 rounded-xl custom-input"></div>
                             </div>
                         </div>
                         <div class="pt-2 border-t border-slate-100 space-y-3">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi KTP & Selfie *</p>
+                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib)</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative">
-                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP *</label>
+                                <div id="boxKtp" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
+                                    <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli *</label>
                                     <div class="flex justify-center gap-2 mb-2">
-                                        <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer">Galeri</button>
-                                        <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer">Kamera</button>
+                                        <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
+                                        <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
                                     <input type="file" id="fileKtp" accept="image/*" onchange="previewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
                                     <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP</div>
                                     <div id="containerImgKtp" class="hidden mt-2 relative inline-block w-full">
-                                        <img id="imgKtp" src="" alt="KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
-                                        <button type="button" onclick="clearPhoto('ktp')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                                        <img id="imgKtp" src="" alt="Preview KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
+                                        <button type="button" onclick="clearPhoto('ktp')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                                     </div>
                                 </div>
-                                <div class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative">
+                                <div id="boxSelfie" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
                                     <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Selfie KTP *</label>
                                     <div class="flex justify-center gap-2 mb-2">
-                                        <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer">Galeri</button>
-                                        <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer">Kamera</button>
+                                        <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
+                                        <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
                                     <input type="file" id="fileSelfie" accept="image/*" onchange="previewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
                                     <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie</div>
                                     <div id="containerImgSelfie" class="hidden mt-2 relative inline-block w-full">
-                                        <img id="imgSelfie" src="" alt="Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
-                                        <button type="button" onclick="clearPhoto('selfie')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                                        <img id="imgSelfie" src="" alt="Preview Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
+                                        <button type="button" onclick="clearPhoto('selfie')" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex space-x-3 pt-2">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                            <p class="font-bold text-slate-900 text-xs uppercase tracking-wider"><i class="fa-solid fa-file-contract text-brand-600 mr-1"></i> Pernyataan dan Persetujuan</p>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm1" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya menyatakan bahwa seluruh data dan dokumen yang saya berikan adalah benar dan dapat dipertanggungjawabkan.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm2" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memberikan persetujuan atas pengumpulan, penggunaan, dan verifikasi data pribadi saya sesuai ketentuan yang berlaku.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm3" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa pengajuan akun tidak otomatis langsung mendapatkan fasilitas pencairan EWA sebelum diverifikasi.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm4" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa akun hanya digunakan oleh saya sendiri dan menjaga kerahasiaan PIN Akses.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm5" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa data tidak benar akan mengakibatkan penolakan atau penonaktifan akses akun.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm6" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa PIN Akses dikirimkan ke email terdaftar setelah pengajuan disetujui.</span>
+                            </label>
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" id="regTerm7" required class="mt-0.5 rounded text-brand-600 shrink-0">
+                                <span class="text-[11px] text-slate-700">Saya telah membaca, memahami, dan menyetujui Syarat & Ketentuan layanan EWA Tanggalmuda.com.</span>
+                            </label>
+                        </div>
+                        <div class="flex space-x-3 pt-1">
                             <button type="button" onclick="switchPage('landing')" class="w-1/3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-xs sm:text-sm cursor-pointer">Batal</button>
                             <button type="submit" class="w-2/3 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg transition text-xs sm:text-sm cursor-pointer">Daftar Akun</button>
                         </div>
@@ -371,26 +412,27 @@
             </div>
         </section>
 
-        <!-- VIEW STATUS -->
-        <section id="view-status" class="hidden w-full bg-[#fdfbf7] py-6">
+        <section id="view-status" class="hidden w-full bg-slate-50 py-6">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
-                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 transition cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition cursor-pointer" title="Kembali ke Beranda">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                     <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
-                        <h2 class="text-base sm:text-lg font-bold font-heading text-slate-900 mt-1">Cek Status Pengajuan</h2>
+                        <h2 class="text-base sm:text-lg font-bold font-heading text-slate-900 mt-1">Cek Status Pengajuan / Pendaftaran</h2>
                         <p class="text-xs text-slate-500">Masukkan Alamat Email Terdaftar.</p>
                     </div>
                     <div class="space-y-3.5 mb-5">
                         <div>
-                            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Jenis Pengecekan</label>
-                            <select id="checkType" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm">
+                            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Pilih Jenis Pengecekan</label>
+                            <select id="checkType" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
                                 <option value="registration">Status Pendaftaran Akun</option>
-                                <option value="ewa">Progress Pengajuan EWA</option>
+                                <option value="ewa">Progress Pengajuan Akses Gaji</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email</label>
-                            <input type="email" id="searchEmail" placeholder="nama@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm">
+                            <input type="email" id="searchEmail" placeholder="nama@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
                         </div>
                         <button type="button" onclick="checkStatus()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-sm cursor-pointer">
                             <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Cek Status Sekarang
@@ -418,48 +460,36 @@
 
     </main>
 
-    <!-- Modal Email Belum Terdaftar -->
-    <div id="emailUnregisteredModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl text-center">
-            <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div class="space-y-2">
-                <h3 class="font-bold text-slate-900 font-heading text-lg">Alamat Email Belum Terdaftar!</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Maaf, email <b id="unregisteredEmailText" class="text-rose-600 font-semibold"></b> belum terdaftar di database.</p>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
-                <button type="button" onclick="closeUnregisteredModal()" class="w-full sm:w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs cursor-pointer">Koreksi Email</button>
-                <button type="button" onclick="redirectToRegister()" class="w-full sm:w-1/2 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs shadow-md cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Sekarang</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Verifikasi EWA & PIN -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi PIN Akses Gaji</h3>
-                <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi Keamanan Akses Gaji</h3>
+                <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
                 <p>Email Pemohon: <b id="verifyMemberEmail"></b></p>
-                <p>Dana Diterima: <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
-                <p>Biaya Layanan: <b id="verifyFee" class="text-rose-600"></b></p>
-                <p>Total Repayment: <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
+                <p>Dana Diterima Bersih (Full): <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
+                <p>Biaya Layanan (Ditagih Repayment): <b id="verifyFee" class="text-rose-600"></b></p>
+                <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
-            <p class="text-xs text-slate-600">Masukkan <b>PIN Akses</b> rahasia Anda:</p>
+            <p class="text-xs text-slate-600">Kode OTP 6-digit telah dikirim ke email Anda. Masukkan kode tersebut di bawah ini (berlaku 5 menit):</p>
             <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
-                <input type="password" id="verifyAccessPin" maxlength="6" required placeholder="PIN 6 Digit" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-center text-lg font-mono font-bold tracking-widest text-slate-900">
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Kode OTP</label>
+                    <input type="text" id="verifyOtp" required placeholder="Cth: 123456" maxlength="6" pattern="\d{6}" class="w-full px-4 py-3 rounded-xl custom-input text-lg tracking-[0.5em] text-center font-mono font-bold sm:text-xl">
+                </div>
                 <div class="flex space-x-3 pt-1">
-                    <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 py-3 rounded-xl font-semibold text-xs cursor-pointer">Batal</button>
-                    <button type="submit" class="w-1/2 py-3 bg-brand-600 text-white font-semibold rounded-xl text-xs shadow-md cursor-pointer">Kirim Konfirmasi</button>
+                    <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
+                    <button type="submit" id="btnFinalEwa" class="w-full py-3 bg-brand-600 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md cursor-pointer">Kirim Konfirmasi Email</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Kamera -->
+    <footer class="bg-emerald-900 text-emerald-100 py-3 border-t border-emerald-800 shadow-inner shrink-0 w-full text-center text-xs">
+        <p>© 2026 TanggalMuda.com</p>
+    </footer>
+
     <div id="cameraModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -477,11 +507,12 @@
         </div>
     </div>
 
-    <!-- Modal Konfirmasi Pendaftaran -->
     <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl">
             <div class="text-center space-y-1">
-                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl mb-2"><i class="fa-solid fa-circle-question"></i></div>
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
                 <h3 class="font-bold text-slate-900 font-heading text-base">Pastikan Data Sudah Benar</h3>
             </div>
             <div id="confirmDataSummary" class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2 text-xs text-slate-700 max-h-72 overflow-y-auto"></div>
@@ -492,113 +523,98 @@
         </div>
     </div>
 
-    <footer class="bg-emerald-950 text-emerald-100 py-3.5 px-4 sm:px-8 border-t border-emerald-900 shadow-inner shrink-0 w-full text-xs overflow-hidden">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-            <div class="whitespace-nowrap font-bold text-emerald-200 tracking-wide shrink-0">© 2026 tanggalmuda.com</div>
-            <div class="w-full md:w-auto flex-1 overflow-hidden relative py-1 flex items-center">
-                <div class="marquee-track flex whitespace-nowrap">
-                    <span class="marquee-content inline-block text-emerald-300 font-medium px-4 text-xs tracking-wide">Cairkan Gaji Sebelum Tanggal Gajian &bull; Tanpa Bunga &bull; Transparan &bull; Aman &bull; Praktis &bull; Beta Program 3 Bulan</span>
-                    <span class="marquee-content inline-block text-emerald-300 font-medium px-4 text-xs tracking-wide" aria-hidden="true">Cairkan Gaji Sebelum Tanggal Gajian &bull; Tanpa Bunga &bull; Transparan &bull; Aman &bull; Praktis &bull; Beta Program 3 Bulan</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjjKzIXtGsSKIt7p-bzkH1kw9opdBRXrEPk856sTvQiKZMR25gMuSbL2TLLHL3C2Dd/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
-        let consecutiveFailures = 0;
+        let alertTimeoutTimer = null;
+        let alertCountdownInterval = null;
 
         window.onload = function() {
-            checkServerConnection();
-            fetchCompaniesViaJSONP();
+            initDatabaseConnectionCheck();
         };
 
-        function hideSplashScreen() {
-            let splash = document.getElementById('splashScreen');
-            if(splash) {
-                splash.classList.add('splash-hidden');
-                setTimeout(() => splash.remove(), 600);
-            }
-        }
+        function initDatabaseConnectionCheck() {
+            let splash = document.getElementById('startupSplash');
+            let statusBadge = document.getElementById('connectionStatusBadge');
+            let badgeText = document.getElementById('connectionBadgeText');
+            let splashText = document.getElementById('splashStatusText');
+            let progressBar = document.getElementById('splashProgressBar');
 
-        function updateConnectionStatus(status) {
-            let badge = document.getElementById('serverConnectionBadge');
-            if (!badge) return;
-            if (status === 'online') {
-                consecutiveFailures = 0;
-                let notice = document.getElementById('persistentAdminNotice');
-                if (notice) notice.classList.add('hidden');
-                badge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm";
-                badge.innerHTML = `<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span><span class="hidden sm:inline">Database Terhubung</span><span class="sm:hidden">Online</span>`;
-                hideSplashScreen();
-            } else if (status === 'checking') {
-                badge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200";
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span><span class="hidden sm:inline">Menghubungkan...</span><span class="sm:hidden">Koneksi</span>`;
-            } else {
-                consecutiveFailures++;
-                badge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200 shadow-sm";
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span><span class="hidden sm:inline">Koneksi Gagal</span><span class="sm:hidden">Gagal</span>`;
-                hideSplashScreen();
-                if (consecutiveFailures >= 2) {
-                    let notice = document.getElementById('persistentAdminNotice');
-                    if (notice) notice.classList.remove('hidden');
-                }
-            }
-        }
+            splashText.innerText = "Menghubungkan ke Google Sheets...";
+            progressBar.style.width = "70%";
 
-        function checkServerConnection() {
-            updateConnectionStatus('checking');
-            let callbackName = 'jsonp_ping_cb_' + Math.round(100000 * Math.random());
-            window[callbackName] = function(res) {
-                delete window[callbackName];
-                let tag = document.getElementById('jsonp_ping_script');
-                if (tag) tag.remove();
-                updateConnectionStatus('online');
-            };
-            let script = document.createElement('script');
-            script.id = 'jsonp_ping_script';
-            script.src = GOOGLE_SCRIPT_URL + "?action=getCompanies&t=" + Date.now() + "&callback=" + callbackName;
-            script.onerror = function() { updateConnectionStatus('offline'); };
-            document.body.appendChild(script);
-        }
+            let callbackName = 'jsonp_startup_cb_' + Math.round(100000 * Math.random());
+            
+            let connectionTimeout = setTimeout(() => {
+                handleConnectionFailure("Koneksi ke database timeout (terlalu lama).");
+            }, 10000);
 
-        function fetchCompaniesViaJSONP() {
-            let select = document.getElementById('regCompanySelect');
-            if (!select) return;
-            select.innerHTML = '<option value="">-- Memuat Perusahaan dari Google Sheets... --</option>';
-            let callbackName = 'jsonp_company_cb_' + Math.round(100000 * Math.random());
             window[callbackName] = function(data) {
+                clearTimeout(connectionTimeout);
                 delete window[callbackName];
-                let scriptTag = document.getElementById('jsonp_script');
+                let scriptTag = document.getElementById('jsonp_startup_script');
                 if (scriptTag) scriptTag.remove();
-                updateConnectionStatus('online');
+
+                progressBar.style.width = "100%";
+                
+                statusBadge.className = "flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all";
+                badgeText.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Terhubung ke Database';
+                
                 if (data && data.length > 0) {
                     listPerusahaanData = data;
-                    select.innerHTML = '<option value="">-- Pilih Perusahaan Kerjasama --</option>';
-                    listPerusahaanData.forEach(comp => {
-                        let opt = document.createElement('option');
-                        opt.value = comp.nama_perusahaan;
-                        opt.textContent = comp.nama_perusahaan + " (" + comp.id_perusahaan + ")";
-                        select.appendChild(opt);
-                    });
-                } else {
-                    select.innerHTML = '<option value="">-- Tidak ada Perusahaan terdaftar --</option>';
+                    populateCompanyDropdown();
                 }
+
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 500);
+                }, 600);
             };
+
             let script = document.createElement('script');
-            script.id = 'jsonp_script';
-            script.src = GOOGLE_SCRIPT_URL + "?action=getCompanies&t=" + Date.now() + "&callback=" + callbackName;
+            script.id = 'jsonp_startup_script';
+            script.src = GOOGLE_SCRIPT_URL + "?action=getCompanies&callback=" + callbackName;
             script.onerror = function() {
-                updateConnectionStatus('offline');
-                select.innerHTML = '<option value="">-- Gagal memuat dari Google Sheets --</option>';
+                clearTimeout(connectionTimeout);
+                handleConnectionFailure("Gagal terhubung ke Google Apps Script.");
             };
             document.body.appendChild(script);
+        }
+
+        function handleConnectionFailure(errorMsg) {
+            let splash = document.getElementById('startupSplash');
+            let statusBadge = document.getElementById('connectionStatusBadge');
+            let badgeText = document.getElementById('connectionBadgeText');
+            
+            splash.style.opacity = '0';
+            setTimeout(() => splash.remove(), 500);
+
+            statusBadge.className = "flex items-center space-x-2 bg-rose-50 border border-rose-200 text-rose-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all animate-pulse";
+            badgeText.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Koneksi Gagal';
+
+            let waLink = "https://wa.me/6287790994652?text=Halo%20Admin%20TanggalMuda,%20saya%20mengalami%20kendala%20koneksi%20gagal%20ke%20database%20saat%20membuka%20website.";
+            
+            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Jika tetap gagal, silakan hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
+            
+            let select = document.getElementById('regCompanySelect');
+            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh / Hubungi WA) --</option>';
+        }
+
+        function populateCompanyDropdown() {
+            let select = document.getElementById('regCompanySelect');
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Pilih Perusahaan Kerjasama --</option>';
+            listPerusahaanData.forEach(comp => {
+                let opt = document.createElement('option');
+                opt.value = comp.nama_perusahaan;
+                opt.textContent = comp.nama_perusahaan + " (" + comp.id_perusahaan + ")";
+                select.appendChild(opt);
+            });
         }
 
         function formatCurrencyInput(input) {
@@ -607,10 +623,12 @@
             let remainder = splitValue[0].length % 3;
             let rupiah = splitValue[0].substr(0, remainder);
             let thousands = splitValue[0].substr(remainder).match(/\d{3}/gi);
+
             if (thousands) {
                 let separator = remainder ? '.' : '';
                 rupiah += separator + thousands.join('.');
             }
+
             rupiah = splitValue[1] !== undefined ? rupiah + ',' + splitValue[1] : rupiah;
             input.value = rupiah;
         }
@@ -623,148 +641,178 @@
         function switchPage(pageId) {
             ['landing', 'register', 'status'].forEach(p => {
                 let el = document.getElementById('view-' + p);
-                if (el) el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
+                if (el) {
+                    el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
+                }
             });
+            closeGlobalAlert();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function handleQuickEmailSubmit(e) {
-            e.preventDefault();
-            let emailVal = document.getElementById('quickEmail').value.trim();
-            if (emailVal) {
-                document.getElementById('ewaEmail').value = emailVal;
-            }
-            let formSec = document.getElementById('ewaEmail');
+        function scrollToEwaForm() {
+            switchPage('landing');
+            let formSec = document.getElementById('ewaFormContainer');
             if (formSec) {
                 formSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                formSec.focus();
+                let emailInput = document.getElementById('ewaEmail');
+                if (emailInput) emailInput.focus();
             }
         }
 
-        function showBigAlert(message, title = "Pemberitahuan", isSuccess = true) {
-            document.getElementById('bigAlertTitle').innerText = title;
-            document.getElementById('bigAlertText').innerText = message;
-            let iconBox = document.getElementById('bigAlertIconBox');
-            let iconEl = document.getElementById('bigAlertIcon');
-            if (isSuccess) {
-                iconBox.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
-                iconEl.className = "fa-solid fa-circle-check";
-            } else {
-                iconBox.className = "w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
-                iconEl.className = "fa-solid fa-triangle-exclamation";
-            }
-            document.getElementById('bigAlertModal').classList.remove('hidden');
+        function showGlobalAlert(message, isSuccess = true, durationSeconds = 6) {
+            let container = document.getElementById('globalAlert');
+            let box = document.getElementById('globalAlertBox');
+            let text = document.getElementById('globalAlertText');
+            let timerBadge = document.getElementById('alertTimerBadge');
+            
+            text.innerHTML = message;
+            box.className = `p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm font-medium ${isSuccess ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`;
+            
+            container.classList.remove('hidden');
+
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+
+            let timeLeft = durationSeconds;
+            timerBadge.innerText = timeLeft + 's';
+
+            alertCountdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) timerBadge.innerText = timeLeft + 's';
+                else clearInterval(alertCountdownInterval);
+            }, 1000);
+
+            alertTimeoutTimer = setTimeout(() => closeGlobalAlert(), durationSeconds * 1000);
         }
 
-        function closeBigAlert() { document.getElementById('bigAlertModal').classList.add('hidden'); }
+        function closeGlobalAlert() {
+            document.getElementById('globalAlert').classList.add('hidden');
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+        }
+
+        function checkEmailRegistered(emailVal) {
+            let feedback = document.getElementById('emailStatusFeedback');
+            let cleanEmail = emailVal.trim().toLowerCase();
+            if (!cleanEmail || !cleanEmail.includes('@')) {
+                feedback.classList.add('hidden');
+                return;
+            }
+            feedback.classList.add('hidden');
+        }
 
         function calculateEwaFeePreview() {
             let rawAmount = document.getElementById('ewaAmount').value;
             let amount = parseRawNumber(rawAmount);
             let previewBox = document.getElementById('ewaFeePreviewBox');
-            if (amount <= 0) { previewBox.classList.add('hidden'); return; }
-            let maxPerTrx = 500000;
+
+            if (amount <= 0) {
+                previewBox.classList.add('hidden');
+                return;
+            }
+
+            let maxPerTrx = 750000;
             let feePerTrx = 50000;
             let numTrx = Math.ceil(amount / maxPerTrx);
             let totalFee = numTrx * feePerTrx;
             let totalRepayment = amount + totalFee;
-            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx`;
+
+            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Maks Rp 750k/trx)`;
             document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
             document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
             document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
             previewBox.classList.remove('hidden');
         }
 
         function handleInitialEwaSubmit(e) {
             e.preventDefault();
             let email = document.getElementById('ewaEmail').value.trim();
-            let amount = parseRawNumber(document.getElementById('ewaAmount').value);
+            let rawAmount = document.getElementById('ewaAmount').value.trim();
+            let pinAkses = document.getElementById('ewaPin').value.trim();
+            let amount = parseRawNumber(rawAmount);
+            
             let btn = document.getElementById('btnEwaSubmit');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Database...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengirim OTP...';
 
-            let callbackName = 'jsonp_check_cb_' + Math.round(100000 * Math.random());
-            window[callbackName] = function(res) {
-                delete window[callbackName];
-                let scriptTag = document.getElementById('jsonp_check_script');
-                if (scriptTag) scriptTag.remove();
-                updateConnectionStatus('online');
+            pendingEwaData = { email: email, amount: amount, pin: pinAkses };
+            document.getElementById('verifyMemberEmail').innerText = email;
+            
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
+            let totalRepayment = amount + totalFee;
+
+            document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+            document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+            document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
+            document.getElementById('verifyOtp').value = '';
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                redirect: 'follow', 
+                body: JSON.stringify({ action: 'requestOtpEwa', payload: { email: email, amount: amount, pin: pinAkses } })
+            })
+            .then(res => res.json())
+            .then(res => {
                 btn.disabled = false;
-                btn.innerHTML = 'Proses Pengajuan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-
-                if (!res || !res.success || !res.data) {
-                    document.getElementById('unregisteredEmailText').innerText = email;
-                    document.getElementById('emailUnregisteredModal').classList.remove('hidden');
-                    return;
+                btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                
+                if (res.success) {
+                    showGlobalAlert('Kode OTP berhasil dikirim ke ' + email, true, 5);
+                    document.getElementById('ewaVerifyModal').classList.remove('hidden');
+                } else {
+                    showGlobalAlert(res.message, false, 8);
                 }
-
-                pendingEwaData = { email: email, amount: amount };
-                document.getElementById('verifyMemberEmail').innerText = email;
-                let maxPerTrx = 500000;
-                let numTrx = Math.ceil(amount / maxPerTrx);
-                let totalFee = numTrx * 50000;
-                document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID');
-                document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
-                document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + (amount + totalFee).toLocaleString('id-ID');
-                document.getElementById('verifyAccessPin').value = '';
-                document.getElementById('ewaVerifyModal').classList.remove('hidden');
-            };
-
-            let script = document.createElement('script');
-            script.id = 'jsonp_check_script';
-            script.src = GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=registration&callback=" + callbackName;
-            script.onerror = function() {
-                updateConnectionStatus('offline');
+            })
+            .catch(err => {
                 btn.disabled = false;
-                btn.innerHTML = 'Proses Pengajuan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                showBigAlert('Gagal memeriksa database.', "Kesalahan Koneksi", false);
-            };
-            document.body.appendChild(script);
+                btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                showGlobalAlert('Gagal mengirim permintaan OTP: ' + err.message, false, 8);
+            });
         }
 
-        function closeUnregisteredModal() {
-            document.getElementById('emailUnregisteredModal').classList.add('hidden');
-            document.getElementById('ewaEmail').focus();
+        function closeEwaVerifyModal() {
+            document.getElementById('ewaVerifyModal').classList.add('hidden');
         }
-
-        function redirectToRegister() {
-            document.getElementById('emailUnregisteredModal').classList.add('hidden');
-            let emailVal = document.getElementById('ewaEmail').value.trim();
-            switchPage('register');
-            if (emailVal) document.getElementById('regEmail').value = emailVal;
-        }
-
-        function closeEwaVerifyModal() { document.getElementById('ewaVerifyModal').classList.add('hidden'); }
 
         function handleFinalEwaSubmit(e) {
             e.preventDefault();
             closeEwaVerifyModal();
-            let accessPin = document.getElementById('verifyAccessPin').value.trim();
-            let payload = { email: pendingEwaData.email, amount: pendingEwaData.amount, accessPin: accessPin, idempotencyKey: 'trx_' + Date.now() };
+            
+            let otpCode = document.getElementById('verifyOtp').value.trim();
+            let payload = {
+                email: pendingEwaData.email,
+                amount: pendingEwaData.amount,
+                otp: otpCode
+            };
 
-            showBigAlert('Mengirim verifikasi EWA ke database...', "Mohon Tunggu", true);
+            showGlobalAlert('Memverifikasi OTP dan memproses EWA...', true, 4);
+
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                redirect: 'follow',
+                redirect: 'follow', 
                 body: JSON.stringify({ action: 'verifyAndInitEwa', payload: payload })
             })
             .then(res => res.json())
             .then(res => {
-                updateConnectionStatus('online');
                 if (res.success) {
-                    showBigAlert(res.message, "Pengajuan Berhasil", true);
+                    showGlobalAlert(res.message, true, 8);
                     switchPage('status');
                     document.getElementById('searchEmail').value = pendingEwaData.email;
                     document.getElementById('checkType').value = 'ewa';
                     checkStatus();
                 } else {
-                    showBigAlert(res.message, "Verifikasi Gagal", false);
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
-                updateConnectionStatus('offline');
-                showBigAlert('Gagal menghubungi database.', "Kesalahan Jaringan", false);
+                showGlobalAlert('Gagal menghubungi server: ' + err.message, false, 8);
             });
         }
 
@@ -773,6 +821,7 @@
             let previewDiv = document.getElementById(previewId);
             let imgElement = document.getElementById(imgId);
             let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+
             if (fileInput.files && fileInput.files[0]) {
                 let reader = new FileReader();
                 reader.onload = function(e) {
@@ -780,7 +829,7 @@
                     previewDiv.classList.add('hidden');
                     containerImg.classList.remove('hidden');
                     previewDiv.dataset.base64 = e.target.result;
-                };
+                }
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
@@ -788,25 +837,34 @@
         function setCameraPhotoData(type, dataURL) {
             let previewId = type === 'ktp' ? 'previewKtp' : 'previewSelfie';
             let imgId = type === 'ktp' ? 'imgKtp' : 'imgSelfie';
-            document.getElementById(previewId).classList.add('hidden');
+            let previewDiv = document.getElementById(previewId);
+            let imgElement = document.getElementById(imgId);
             let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+
+            imgElement.src = dataURL;
+            previewDiv.classList.add('hidden');
             containerImg.classList.remove('hidden');
-            document.getElementById(imgId).src = dataURL;
-            document.getElementById(previewId).dataset.base64 = dataURL;
+            previewDiv.dataset.base64 = dataURL;
         }
 
         function clearPhoto(type) {
             let previewId = type === 'ktp' ? 'previewKtp' : 'previewSelfie';
             let imgId = type === 'ktp' ? 'imgKtp' : 'imgSelfie';
-            document.getElementById(type === 'ktp' ? 'fileKtp' : 'fileSelfie').value = '';
-            document.getElementById(previewId).classList.remove('hidden');
-            document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1)).classList.add('hidden');
-            document.getElementById(previewId).dataset.base64 = '';
+            let fileInputId = type === 'ktp' ? 'fileKtp' : 'fileSelfie';
+            
+            let previewDiv = document.getElementById(previewId);
+            let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+            
+            document.getElementById(fileInputId).value = '';
+            previewDiv.classList.remove('hidden');
+            containerImg.classList.add('hidden');
+            previewDiv.dataset.base64 = '';
         }
 
         function openCameraModal(type) {
             currentCameraType = type;
             document.getElementById('cameraModal').classList.remove('hidden');
+            
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
                 .then(stream => {
                     videoStreamInstance = stream;
@@ -815,7 +873,7 @@
                     video.play();
                 })
                 .catch(err => {
-                    showBigAlert("Kamera tidak tersedia. Gunakan tombol Galeri.", "Akses Kamera", false);
+                    showGlobalAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", false, 8);
                     closeCameraModal();
                 });
         }
@@ -826,7 +884,9 @@
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            setCameraPhotoData(currentCameraType, canvas.toDataURL('image/jpeg'));
+            
+            let dataURL = canvas.toDataURL('image/jpeg');
+            setCameraPhotoData(currentCameraType, dataURL);
             closeCameraModal();
         }
 
@@ -841,10 +901,16 @@
         function displayCompanyDetails() {
             let selectedName = document.getElementById('regCompanySelect').value;
             let detailCard = document.getElementById('companyDetailCard');
-            if (!selectedName) { detailCard.classList.add('hidden'); return; }
+            
+            if (!selectedName) {
+                detailCard.classList.add('hidden');
+                return;
+            }
+
             let found = listPerusahaanData.find(c => c.nama_perusahaan === selectedName);
             if (found) {
                 document.getElementById('compNameDisplay').innerText = found.nama_perusahaan;
+                document.getElementById('compIDDisplay').innerText = found.id_perusahaan;
                 document.getElementById('compPicDisplay').innerText = found.pic_perusahaan;
                 document.getElementById('compEmailDisplay').innerText = found.email_pic;
                 detailCard.classList.remove('hidden');
@@ -855,6 +921,7 @@
             let status = document.getElementById('regEmploymentStatus').value;
             let containerEndDate = document.getElementById('containerEndDate');
             let endDateInput = document.getElementById('regEndDate');
+            
             if (status === 'Kontrak') {
                 containerEndDate.classList.remove('hidden');
                 endDateInput.required = true;
@@ -866,8 +933,11 @@
 
         function triggerConfirmationModal(e) {
             e.preventDefault();
+            
             let ktpBase64 = document.getElementById('previewKtp').dataset.base64 || '';
             let selfieBase64 = document.getElementById('previewSelfie').dataset.base64 || '';
+            let rawSalary = document.getElementById('regSalary').value;
+
             pendingRegistrationPayload = {
                 nama_karyawan: document.getElementById('regName').value,
                 email: document.getElementById('regEmail').value,
@@ -881,7 +951,7 @@
                 alamat: document.getElementById('regAddress').value,
                 nama_perusahaan: document.getElementById('regCompanySelect').value,
                 status_kepegawaian: document.getElementById('regEmploymentStatus').value,
-                gaji_pokok: parseRawNumber(document.getElementById('regSalary').value),
+                gaji_pokok: parseRawNumber(rawSalary),
                 tanggal_mulai_kerja: document.getElementById('regStartDate').value,
                 tanggal_akhir_kontrak: document.getElementById('regEndDate').value || '-',
                 nama_bank: document.getElementById('regBankName').value,
@@ -890,88 +960,111 @@
                 ktp_photo: ktpBase64,
                 selfie_photo: selfieBase64
             };
+
+            let ktpImgHtml = ktpBase64 ? `<img src="${ktpBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada KTP</span>';
+            let selfieImgHtml = selfieBase64 ? `<img src="${selfieBase64}" class="max-h-24 rounded border object-contain mx-auto mt-1">` : '<span class="text-rose-500">Belum ada Selfie</span>';
+
             document.getElementById('confirmDataSummary').innerHTML = `
                 <div class="grid grid-cols-2 gap-2 border-b pb-2">
                     <div><b>Nama:</b> ${pendingRegistrationPayload.nama_karyawan}</div>
                     <div><b>Email:</b> ${pendingRegistrationPayload.email}</div>
+                    <div><b>NIK Karyawan:</b> ${pendingRegistrationPayload.nik_karyawan}</div>
+                    <div><b>NIK KTP:</b> ${pendingRegistrationPayload.nik_ktp}</div>
+                    <div><b>No HP:</b> ${pendingRegistrationPayload.nomor_telepon}</div>
+                    <div><b>Tgl Lahir:</b> ${pendingRegistrationPayload.tanggal_lahir}</div>
+                    <div><b>Ibu Kandung:</b> ${pendingRegistrationPayload.nama_ibu_kandung}</div>
+                    <div><b>Departemen:</b> ${pendingRegistrationPayload.departemen}</div>
+                    <div><b>Jabatan:</b> ${pendingRegistrationPayload.jabatan}</div>
                     <div><b>Perusahaan:</b> ${pendingRegistrationPayload.nama_perusahaan}</div>
-                    <div><b>Gaji:</b> Rp ${pendingRegistrationPayload.gaji_pokok.toLocaleString('id-ID')}</div>
+                    <div><b>Status Pegawai:</b> ${pendingRegistrationPayload.status_kepegawaian}</div>
+                    <div><b>Gaji Pokok:</b> Rp ${pendingRegistrationPayload.gaji_pokok.toLocaleString('id-ID')}</div>
+                    <div><b>Mulai Kerja:</b> ${pendingRegistrationPayload.tanggal_mulai_kerja}</div>
+                    <div><b>Akhir Kontrak:</b> ${pendingRegistrationPayload.tanggal_akhir_kontrak}</div>
+                    <div class="col-span-2"><b>Alamat:</b> ${pendingRegistrationPayload.alamat}</div>
+                    <div class="col-span-2"><b>Rekening:</b> ${pendingRegistrationPayload.nama_bank} - ${pendingRegistrationPayload.no_rekening} (a/n ${pendingRegistrationPayload.pemilik_rekening})</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-1 text-center">
+                    <div><p class="font-bold">Foto KTP</p>${ktpImgHtml}</div>
+                    <div><p class="font-bold">Foto Selfie</p>${selfieImgHtml}</div>
                 </div>
             `;
+            
             document.getElementById('confirmModal').classList.remove('hidden');
         }
 
-        function closeConfirmModal() { document.getElementById('confirmModal').classList.add('hidden'); }
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
 
         function executeFinalRegister() {
             closeConfirmModal();
-            showBigAlert('Mengirim data pendaftaran ke database...', "Mohon Tunggu", true);
+            let payload = pendingRegistrationPayload;
+            
+            showGlobalAlert('Mengirim data pendaftaran ke Google Sheets...', true, 5);
+
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 redirect: 'follow',
-                body: JSON.stringify({ action: 'registerMember', payload: pendingRegistrationPayload })
+                body: JSON.stringify({ action: 'registerMember', payload: payload })
             })
             .then(res => res.json())
             .then(res => {
-                updateConnectionStatus('online');
                 if (res.success) {
-                    showBigAlert(res.message, "Pendaftaran Berhasil", true);
+                    showGlobalAlert(res.message, true, 8);
                     document.getElementById('formRegister').reset();
                     setTimeout(() => {
                         switchPage('status');
-                        document.getElementById('searchEmail').value = pendingRegistrationPayload.email;
+                        document.getElementById('searchEmail').value = payload.email;
                         document.getElementById('checkType').value = 'registration';
                         checkStatus();
                     }, 1500);
                 } else {
-                    showBigAlert(res.message, "Pendaftaran Gagal", false);
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
-                updateConnectionStatus('offline');
-                showBigAlert('Gagal mengirim ke database.', "Kesalahan Jaringan", false);
+                showGlobalAlert('Gagal mengirim ke server: ' + err.message, false, 8);
             });
         }
 
         function checkStatus() {
             let emailInput = document.getElementById('searchEmail').value.trim().toLowerCase();
-            let checkType = document.getElementById('checkType').value;
-            if (!emailInput) { showBigAlert('Masukkan alamat email terlebih dahulu!', "Peringatan", false); return; }
+            let checkType = document.getElementById('checkType' +
+                '').value;
+            let resultBox = document.getElementById('statusResultContainer');
+            let emptyNotice = document.getElementById('statusEmptyNotice');
 
-            showBigAlert('Memeriksa status ke database...', "Mohon Tunggu", true);
-            let callbackName = 'jsonp_status_cb_' + Math.round(100000 * Math.random());
-            window[callbackName] = function(res) {
-                delete window[callbackName];
-                let scriptTag = document.getElementById('jsonp_status_script');
-                if (scriptTag) scriptTag.remove();
-                updateConnectionStatus('online');
-                closeBigAlert();
-                if (res && res.success && res.data) {
-                    let data = res.data;
-                    document.getElementById('resRef').innerText = data.refId;
-                    document.getElementById('resName').innerText = data.name;
-                    document.getElementById('resType').innerText = data.type;
-                    document.getElementById('resAmount').innerText = data.amount;
-                    document.getElementById('resBadge').innerText = data.status;
-                    document.getElementById('resNote').innerText = data.note;
-                    document.getElementById('statusResultContainer').classList.remove('hidden');
-                    document.getElementById('statusEmptyNotice').classList.add('hidden');
-                } else {
-                    document.getElementById('statusResultContainer').classList.add('hidden');
-                    document.getElementById('statusEmptyNotice').classList.remove('hidden');
-                    showBigAlert(res && res.message ? res.message : 'Data tidak ditemukan.', "Informasi Status", false);
-                }
-            };
-            let script = document.createElement('script');
-            script.id = 'jsonp_status_script';
-            script.src = GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType) + "&callback=" + callbackName;
-            script.onerror = function() {
-                updateConnectionStatus('offline');
-                closeBigAlert();
-                showBigAlert('Gagal memeriksa status.', "Kesalahan Jaringan", false);
-            };
-            document.body.appendChild(script);
+            if (!emailInput) {
+                showGlobalAlert('Masukkan alamat email terlebih dahulu!', false, 5);
+                return;
+            }
+
+            showGlobalAlert('Memeriksa status ke Google Sheets...', true, 3);
+
+            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success && res.data) {
+                        let data = res.data;
+                        document.getElementById('resRef').innerText = data.refId;
+                        document.getElementById('resName').innerText = data.name;
+                        document.getElementById('resType').innerText = data.type;
+                        document.getElementById('resAmount').innerText = data.amount;
+                        document.getElementById('resBadge').innerText = data.status;
+                        document.getElementById('resNote').innerText = data.note;
+                        
+                        resultBox.classList.remove('hidden');
+                        emptyNotice.classList.add('hidden');
+                    } else {
+                        resultBox.classList.add('hidden');
+                        emptyNotice.classList.remove('hidden');
+                        showGlobalAlert(res.message || 'Data tidak ditemukan.', false, 6);
+                    }
+                })
+                .catch(err => {
+                    showGlobalAlert('Gagal memeriksa status: ' + err.message, false, 6);
+                });
         }
     </script>
 </body>
