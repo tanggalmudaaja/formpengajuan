@@ -366,7 +366,7 @@
                                         <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
-                                    <input type="file" id="fileKtp" accept="image/*" onchange="previewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
+                                    <input type="file" id="fileKtp" accept="image/*" onchange="handleImageCompression('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
                                     <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP</div>
                                     <div id="containerImgKtp" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgKtp" src="" alt="Preview KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
@@ -379,7 +379,7 @@
                                         <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
-                                    <input type="file" id="fileSelfie" accept="image/*" onchange="previewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
+                                    <input type="file" id="fileSelfie" accept="image/*" onchange="handleImageCompression('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
                                     <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie</div>
                                     <div id="containerImgSelfie" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgSelfie" src="" alt="Preview Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
@@ -618,7 +618,6 @@
             badgeText.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Koneksi Gagal';
 
             let waLink = "https://wa.me/6287790994652?text=Halo%20Admin%20TanggalMuda,%20saya%20mengalami%20kendala%20koneksi%20gagal%20ke%20database%20saat%20membuka%20website.";
-            
             showBigModal("Koneksi Gagal!", `Silakan refresh halaman atau hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp Admin 0877-9099-4652</a>`, false);
         }
 
@@ -825,7 +824,7 @@
             });
         }
 
-        function previewFile(inputId, previewId, imgId) {
+        function handleImageCompression(inputId, previewId, imgId) {
             let fileInput = document.getElementById(inputId);
             let previewDiv = document.getElementById(previewId);
             let imgElement = document.getElementById(imgId);
@@ -834,10 +833,39 @@
             if (fileInput.files && fileInput.files[0]) {
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                    imgElement.src = e.target.result;
-                    previewDiv.classList.add('hidden');
-                    containerImg.classList.remove('hidden');
-                    previewDiv.dataset.base64 = e.target.result;
+                    let img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        let canvas = document.createElement('canvas');
+                        let ctx = canvas.getContext('2d');
+                        
+                        let maxWidth = 800;
+                        let maxHeight = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > maxWidth) {
+                                height *= maxWidth / width;
+                                width = maxWidth;
+                            }
+                        } else {
+                            if (height > maxHeight) {
+                                width *= maxHeight / height;
+                                height = maxHeight;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        let compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        imgElement.src = compressedDataUrl;
+                        previewDiv.classList.add('hidden');
+                        containerImg.classList.remove('hidden');
+                        previewDiv.dataset.base64 = compressedDataUrl;
+                    }
                 }
                 reader.readAsDataURL(fileInput.files[0]);
             }
@@ -894,7 +922,7 @@
             canvas.height = video.videoHeight || 480;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             
-            let dataURL = canvas.toDataURL('image/jpeg');
+            let dataURL = canvas.toDataURL('image/jpeg', 0.7);
             setCameraPhotoData(currentCameraType, dataURL);
             closeCameraModal();
         }
@@ -1009,7 +1037,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showBigModal("Mengirim...", "Mengirim data pendaftaran akun ke server Google Sheets...", true);
+            showBigModal("Mengirim...", "Mengompres foto, mengunggah ke Google Drive, dan menyimpan data pendaftaran...", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1020,7 +1048,7 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showBigModal("Pendaftaran Berhasil!", res.message + "<br><br>Email verifikasi telah dikirimkan ke PIC Perusahaan.", true);
+                    showBigModal("Pendaftaran Berhasil!", res.message, true);
                     document.getElementById('formRegister').reset();
                     setTimeout(() => {
                         switchPage('status');
