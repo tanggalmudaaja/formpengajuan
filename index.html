@@ -148,13 +148,19 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <div id="globalAlert" class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4 transition-all duration-300">
-            <div id="globalAlertBox" class="p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm">
-                <div class="flex items-center space-x-2">
-                    <span id="globalAlertText"></span>
-                    <span id="alertTimerBadge" class="text-[10px] bg-black/10 px-1.5 py-0.5 rounded font-mono">6s</span>
+        <!-- MODAL BALON BESAR TENGAH LAYAR -->
+        <div id="bigModalAlert" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
+            <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center space-y-4 border border-slate-100 transform scale-100 animate-in">
+                <div id="bigModalIconContainer" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                    <i id="bigModalIcon" class="fa-solid fa-circle-check"></i>
                 </div>
-                <button onclick="closeGlobalAlert()" class="opacity-70 hover:opacity-100 font-bold ml-3 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                <div class="space-y-1.5">
+                    <h3 id="bigModalTitle" class="font-heading font-bold text-lg text-slate-900">Pemberitahuan Sistem</h3>
+                    <p id="bigModalText" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
+                </div>
+                <div id="bigModalActionContainer" class="pt-2">
+                    <button type="button" onclick="closeBigModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md transition cursor-pointer">OK / Mengerti</button>
+                </div>
             </div>
         </div>
 
@@ -473,26 +479,25 @@
 
     <!-- OTP Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl text-center">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi Keamanan Akses Gaji</h3>
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi OTP EWA</h3>
                 <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
+            <div class="bg-brand-50 p-3 rounded-2xl border border-brand-200 text-xs text-brand-900 space-y-1 text-left">
                 <p>Email Pemohon: <b id="verifyMemberEmail"></b></p>
                 <p>Dana Diterima Bersih (Full): <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
                 <p>Biaya Layanan (Ditagih Repayment): <b id="verifyFee" class="text-rose-600"></b></p>
                 <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
-            <p class="text-xs text-slate-600">Kode OTP 6-digit telah dikirim ke email Anda. Masukkan kode tersebut di bawah ini (berlaku 5 menit):</p>
+            <p class="text-xs text-slate-600 text-left">Kode OTP 6-digit telah dikirim ke email Anda. Masukkan kode tersebut di bawah ini (berlaku 5 menit):</p>
             <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Kode OTP</label>
                     <input type="text" id="verifyOtp" required placeholder="Cth: 123456" maxlength="6" pattern="\d{6}" class="w-full px-4 py-3 rounded-xl custom-input text-lg tracking-[0.5em] text-center font-mono font-bold sm:text-xl">
                 </div>
                 <div class="flex space-x-3 pt-1">
-                    <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
-                    <button type="submit" id="btnFinalEwa" class="w-full py-3 bg-brand-600 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md cursor-pointer">Kirim Konfirmasi Email</button>
+                    <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-2xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
+                    <button type="submit" id="btnFinalEwa" class="w-full py-3 bg-brand-600 text-white font-semibold rounded-2xl text-xs sm:text-sm shadow-md cursor-pointer">Kirim Konfirmasi</button>
                 </div>
             </form>
         </div>
@@ -504,52 +509,47 @@
 
     <!-- Camera Modal -->
     <div id="cameraModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl text-center">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-slate-900 font-heading text-sm"><i class="fa-solid fa-camera text-brand-600 mr-2"></i> Kamera HP</h3>
                 <button type="button" onclick="closeCameraModal()" class="text-slate-400 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="relative bg-black rounded-xl overflow-hidden aspect-video flex items-center justify-center">
+            <div class="relative bg-black rounded-2xl overflow-hidden aspect-video flex items-center justify-center">
                 <video id="cameraVideo" autoplay playsinline class="w-full h-full object-cover"></video>
                 <canvas id="cameraCanvas" class="hidden"></canvas>
             </div>
             <div class="flex space-x-3 pt-1">
-                <button type="button" onclick="closeCameraModal()" class="w-1/2 bg-slate-100 py-2.5 rounded-xl font-semibold text-xs cursor-pointer">Batal</button>
-                <button type="button" onclick="captureCameraPhoto()" class="w-1/2 bg-brand-600 text-white py-2.5 rounded-xl font-semibold text-xs cursor-pointer">Ambil Foto</button>
+                <button type="button" onclick="closeCameraModal()" class="w-1/2 bg-slate-100 py-2.5 rounded-2xl font-semibold text-xs cursor-pointer">Batal</button>
+                <button type="button" onclick="captureCameraPhoto()" class="w-1/2 bg-brand-600 text-white py-2.5 rounded-2xl font-semibold text-xs cursor-pointer">Ambil Foto</button>
             </div>
         </div>
     </div>
 
     <!-- Confirmation Modal -->
     <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl">
-            <div class="text-center space-y-1">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl text-center">
+            <div class="space-y-1">
                 <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
                     <i class="fa-solid fa-circle-question"></i>
                 </div>
                 <h3 class="font-bold text-slate-900 font-heading text-base">Pastikan Data Sudah Benar</h3>
             </div>
-            <div id="confirmDataSummary" class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2 text-xs text-slate-700 max-h-72 overflow-y-auto"></div>
+            <div id="confirmDataSummary" class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2 text-xs text-slate-700 max-h-72 overflow-y-auto text-left"></div>
             <div class="flex space-x-3 pt-2">
-                <button type="button" onclick="closeConfirmModal()" class="w-1/2 bg-slate-100 py-3 rounded-xl font-semibold text-xs cursor-pointer">Periksa Lagi</button>
-                <button type="button" onclick="executeFinalRegister()" class="w-1/2 bg-brand-600 text-white py-3 rounded-xl font-semibold text-xs shadow-md cursor-pointer">Ok Lanjutkan</button>
+                <button type="button" onclick="closeConfirmModal()" class="w-1/2 bg-slate-100 py-3 rounded-2xl font-semibold text-xs cursor-pointer">Periksa Lagi</button>
+                <button type="button" onclick="executeFinalRegister()" class="w-1/2 bg-brand-600 text-white py-3 rounded-2xl font-semibold text-xs shadow-md cursor-pointer">Ok Lanjutkan</button>
             </div>
         </div>
     </div>
 
     <script>
-        // PENTING: nilai ini HARUS selalu sama persis dengan CONFIG.WEB_URL di Code.gs.
-        // Kalau Apps Script di-deploy ulang sebagai Deployment BARU (URL /exec berubah),
-        // update kedua tempat ini bersamaan, atau halaman ini tidak akan bisa terhubung.
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzWt9uCOGYqo9jU32blaDk9BXOKrCUAtFIWF-NLl2W6T1OggOP9zpJ9Gszv0yuD7AUI/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxWMhTV0DkhIUeiumxqOi8EkHqpK50Ng_suKqGG0iWEFCAaGFxDc-K2A1FsIcRlk-JL/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
-        let alertTimeoutTimer = null;
-        let alertCountdownInterval = null;
 
         window.onload = function() {
             initDatabaseConnectionCheck();
@@ -619,10 +619,7 @@
 
             let waLink = "https://wa.me/6287790994652?text=Halo%20Admin%20TanggalMuda,%20saya%20mengalami%20kendala%20koneksi%20gagal%20ke%20database%20saat%20membuka%20website.";
             
-            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
-            
-            let select = document.getElementById('regCompanySelect');
-            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh) --</option>';
+            showBigModal("Koneksi Gagal!", `Silakan refresh halaman atau hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp Admin 0877-9099-4652</a>`, false);
         }
 
         function populateCompanyDropdown() {
@@ -665,7 +662,6 @@
                     el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
                 }
             });
-            closeGlobalAlert();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -679,36 +675,29 @@
             }
         }
 
-        function showGlobalAlert(message, isSuccess = true, durationSeconds = 6) {
-            let container = document.getElementById('globalAlert');
-            let box = document.getElementById('globalAlertBox');
-            let text = document.getElementById('globalAlertText');
-            let timerBadge = document.getElementById('alertTimerBadge');
-            
-            text.innerHTML = message;
-            box.className = `p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm font-medium ${isSuccess ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`;
-            
-            container.classList.remove('hidden');
+        function showBigModal(title, message, isSuccess = true) {
+            let modal = document.getElementById('bigModalAlert');
+            let iconContainer = document.getElementById('bigModalIconContainer');
+            let icon = document.getElementById('bigModalIcon');
+            let titleEl = document.getElementById('bigModalTitle');
+            let textEl = document.getElementById('bigModalText');
 
-            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
-            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+            titleEl.innerText = title;
+            textEl.innerHTML = message;
 
-            let timeLeft = durationSeconds;
-            timerBadge.innerText = timeLeft + 's';
+            if (isSuccess) {
+                iconContainer.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
+                icon.className = "fa-solid fa-circle-check";
+            } else {
+                iconContainer.className = "w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner";
+                icon.className = "fa-solid fa-triangle-exclamation";
+            }
 
-            alertCountdownInterval = setInterval(() => {
-                timeLeft--;
-                if (timeLeft > 0) timerBadge.innerText = timeLeft + 's';
-                else clearInterval(alertCountdownInterval);
-            }, 1000);
-
-            alertTimeoutTimer = setTimeout(() => closeGlobalAlert(), durationSeconds * 1000);
+            modal.classList.remove('hidden');
         }
 
-        function closeGlobalAlert() {
-            document.getElementById('globalAlert').classList.add('hidden');
-            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
-            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
+        function closeBigModal() {
+            document.getElementById('bigModalAlert').classList.add('hidden');
         }
 
         function checkEmailRegistered(emailVal) {
@@ -783,16 +772,16 @@
                 btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
                 
                 if (res.success) {
-                    showGlobalAlert('Kode OTP berhasil dikirim ke ' + email, true, 5);
+                    showBigModal("OTP Terkirim", 'Kode OTP verifikasi berhasil dikirim ke email ' + email, true);
                     document.getElementById('ewaVerifyModal').classList.remove('hidden');
                 } else {
-                    showGlobalAlert(res.message, false, 8);
+                    showBigModal("Gagal Pengajuan", res.message, false);
                 }
             })
             .catch(err => {
                 btn.disabled = false;
                 btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                showGlobalAlert('Gagal mengirim permintaan OTP: ' + err.message, false, 8);
+                showBigModal("Kesalahan Koneksi", 'Gagal mengirim permintaan OTP: ' + err.message, false);
             });
         }
 
@@ -811,7 +800,7 @@
                 otp: otpCode
             };
 
-            showGlobalAlert('Memverifikasi OTP dan memproses EWA...', true, 4);
+            showBigModal("Memproses...", "Memverifikasi OTP dan mencatat pengajuan EWA Anda di sistem...", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -822,17 +811,17 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showGlobalAlert(res.message, true, 8);
+                    showBigModal("Berhasil!", res.message, true);
                     switchPage('status');
                     document.getElementById('searchEmail').value = pendingEwaData.email;
                     document.getElementById('checkType').value = 'ewa';
                     checkStatus();
                 } else {
-                    showGlobalAlert(res.message, false, 8);
+                    showBigModal("Verifikasi Gagal", res.message, false);
                 }
             })
             .catch(err => {
-                showGlobalAlert('Gagal menghubungi server: ' + err.message, false, 8);
+                showBigModal("Kesalahan Server", 'Gagal menghubungi server: ' + err.message, false);
             });
         }
 
@@ -893,7 +882,7 @@
                     video.play();
                 })
                 .catch(err => {
-                    showGlobalAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", false, 8);
+                    showBigModal("Kamera Tidak Tersedia", "Kamera diblokir atau tidak tersedia pada browser ini. Silakan gunakan tombol Galeri.", false);
                     closeCameraModal();
                 });
         }
@@ -1020,7 +1009,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showGlobalAlert('Mengirim data pendaftaran ke Google Sheets...', true, 5);
+            showBigModal("Mengirim...", "Mengirim data pendaftaran akun ke server Google Sheets...", true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1031,20 +1020,20 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    showGlobalAlert(res.message, true, 8);
+                    showBigModal("Pendaftaran Berhasil!", res.message + "<br><br>Email verifikasi telah dikirimkan ke PIC Perusahaan.", true);
                     document.getElementById('formRegister').reset();
                     setTimeout(() => {
                         switchPage('status');
                         document.getElementById('searchEmail').value = payload.email;
                         document.getElementById('checkType').value = 'registration';
                         checkStatus();
-                    }, 1500);
+                    }, 2000);
                 } else {
-                    showGlobalAlert(res.message, false, 8);
+                    showBigModal("Pendaftaran Gagal", res.message, false);
                 }
             })
             .catch(err => {
-                showGlobalAlert('Gagal mengirim ke server: ' + err.message, false, 8);
+                showBigModal("Kesalahan Koneksi", 'Gagal mengirim ke server: ' + err.message, false);
             });
         }
 
@@ -1055,15 +1044,16 @@
             let emptyNotice = document.getElementById('statusEmptyNotice');
 
             if (!emailInput) {
-                showGlobalAlert('Masukkan alamat email terlebih dahulu!', false, 5);
+                showBigModal("Perhatian", "Masukkan alamat email terlebih dahulu!", false);
                 return;
             }
 
-            showGlobalAlert('Memeriksa status ke Google Sheets...', true, 3);
+            showBigModal("Memeriksa...", "Mencari data status di Google Sheets...", true);
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
                 .then(res => res.json())
                 .then(res => {
+                    closeBigModal();
                     if (res.success && res.data) {
                         let data = res.data;
                         document.getElementById('resRef').innerText = data.refId;
@@ -1078,11 +1068,11 @@
                     } else {
                         resultBox.classList.add('hidden');
                         emptyNotice.classList.remove('hidden');
-                        showGlobalAlert(res.message || 'Data tidak ditemukan.', false, 6);
+                        showBigModal("Data Tidak Ditemukan", res.message || 'Tidak ada riwayat data untuk email tersebut.', false);
                     }
                 })
                 .catch(err => {
-                    showGlobalAlert('Gagal memeriksa status: ' + err.message, false, 6);
+                    showBigModal("Kesalahan", 'Gagal memeriksa status: ' + err.message, false);
                 });
         }
     </script>
