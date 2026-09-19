@@ -88,20 +88,26 @@
             display: inline-block;
             animation: bounceHand 0.8s infinite ease-in-out;
         }
-        @keyframes colorShiftRed {
+        @keyframes colorShiftGreen {
             0%, 100% { color: #14532d; }
             50% { color: #16a34a; }
         }
         .animate-color-shift-green {
-            animation: colorShiftRed 2s infinite ease-in-out;
+            animation: colorShiftGreen 2s infinite ease-in-out;
         }
-        /* Rule 1: Input font size 10pt/text-xs */
+        @keyframes colorShiftOrangeWhite {
+            0%, 100% { color: #ea580c; }
+            50% { color: #16a34a; }
+        }
+        .animate-color-shift-orange-white {
+            animation: colorShiftOrangeWhite 1.5s infinite ease-in-out;
+        }
         .custom-input {
             background-color: #f1f5f9;
             border: 1.5px solid #cbd5e1;
             transition: all 0.2s ease;
             width: 100%;
-            font-size: 11px !important;
+            font-size: 10pt !important;
         }
         .custom-input:focus {
             outline: none;
@@ -115,12 +121,12 @@
 
     <div id="startupSplash" class="fixed inset-0 z-50 bg-[#f0fdf4] backdrop-blur-md flex flex-col items-center justify-center p-4 transition-opacity duration-500">
         <div class="mb-4 flex items-center justify-center">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjImFhvw11nUnkCHoSffXS2iU4EmdzOv_r9ZDPjECXQ0yDfSsCeSVjyFMNTRCKF4BPzf2hpqZ2soEGINKKwxfHiRXP49ZKV3CiKN0YM3YYuz_TR0f_98ETF2uji6F4hKzIPpsEPqJzAfbkT2MIydPD0un6Osf3bA6nQU0AKDU4kLHwpJqFnObhEJRVuYoo/s320/Logo%201%20(2).png" alt="Loading Logo" class="w-auto h-auto object-contain animate-pulse">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjImFhvw11nUnkCHoSffXS2iU4EmdzOv_r9ZDPjECXQ0yDfSsCeSVjyFMNTRCKF4BPzf2hpqZ2soEGINKKwxfHiRXP49ZKV3CiKN0YM3YYuz_TR0f_98ETF2uji6F4hKzIPpsEPqJzAfbkT2MIydPD0un6Osf3bA6nQU0AKDU4kLHwpJqFnObhEJRVuYoo/s320/Logo%201%20(2).png" alt="Loading Logo" class="object-contain animate-pulse">
         </div>
         <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-4 border border-emerald-100">
             <div class="space-y-1">
                 <h3 class="font-heading font-bold text-base text-slate-900">Menghubungkan ke Database...</h3>
-                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Sheets & Apps Script</p>
+                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Apps Script</p>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div id="splashProgressBar" class="bg-brand-600 h-full w-1/3 animate-pulse transition-all duration-300"></div>
@@ -152,6 +158,7 @@
             </div>
         </div>
 
+        <!-- LANDING PAGE VIEW -->
         <section id="view-landing" class="block w-full flex-grow flex items-center">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center w-full">
@@ -159,8 +166,7 @@
                     <div class="lg:col-span-7 flex flex-col items-start text-left space-y-3 sm:space-y-4 w-full">
                         <div class="space-y-3 w-full">
                             <h1 class="font-bold font-heading tracking-tight leading-snug space-y-1">
-                                <!-- Rule 4: "Dibayar Sekarang" text color changed to dark green -->
-                                <span class="text-navy-800 block text-base sm:text-lg lg:text-xl">Saat Ada yang Harus <span class="text-brand-700 animate-color-shift-green">Dibayar Sekarang</span></span> 
+                                <span class="text-navy-800 block text-base sm:text-lg lg:text-xl">Saat Ada yang Harus <span class="text-[#14532d] font-bold animate-color-shift-green">Dibayar Sekarang</span></span> 
                             </h1>
                             <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center w-full pt-1 pb-1">
                                 <div class="sm:col-span-5 relative flex flex-col items-center justify-center w-full">
@@ -169,12 +175,12 @@
                                 </div>
                                 <div class="sm:col-span-7 flex flex-col justify-center space-y-2.5">
                                     <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed font-medium">
-                                        Berobat, sekolah, servis kendaraan, tagihan listrik & air, hingga kebutuhan lainnya. Akses sebagian gaji yang sudah kamu peroleh saat kamu membutuhkannya — tanpa harus menunggu tanggal gajian.
+                                        Cairkan sebagian gajimu saat kamu membutuhkannya — tanpa harus menunggu tanggal gajian. Dengan tanggalmuda.com, gaji bulanan terasa lebih fleksibel seperti gaji harian. Akses sebagian gaji yang sudah kamu peroleh sesuai dengan hari kerja yang telah kamu jalani.
                                     </p>
                                     <div class="flex flex-wrap gap-1.5 font-bold text-[10px] sm:text-[11px]">
                                         <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-md shadow-sm"><i class="fa-solid fa-check text-emerald-500 mr-1"></i> Praktis</span>
                                         <span class="bg-sky-50 text-sky-700 border border-sky-200 px-2 py-1 rounded-md shadow-sm"><i class="fa-solid fa-check text-sky-500 mr-1"></i> Transparan</span>
-                                        <span class="bg-brand-50 text-brand-700 border border-brand-200 px-2 py-1 rounded-md shadow-sm"><i class="fa-solid fa-check text-brand-600 mr-1"></i> Tanpa Bunga (0%)</span>
+                                        <span class="px-2.5 py-1 rounded-md animate-color-shift-orange-white"><i class="fa-solid fa-check mr-1"></i> Tanpa Bunga (0%)</span>
                                     </div>
                                 </div>
                             </div>
@@ -232,9 +238,9 @@
                                     <i class="fa-solid fa-arrow-right text-xs"></i>
                                 </button>
                                 
-                                <div class="flex flex-col space-y-1.5 pt-2 border-t border-slate-100 text-[11px]">
-                                    <button type="button" onclick="switchPage('register')" class="text-emerald-700 font-semibold hover:underline text-left cursor-pointer"><i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun Baru</button>
-                                    <button type="button" onclick="switchPage('status')" class="text-emerald-700 font-semibold hover:underline text-left cursor-pointer"><i class="fa-solid fa-magnifying-glass mr-1"></i> Cek Status</button>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px]">
+                                    <button type="button" onclick="switchPage('register')" class="text-emerald-700 font-bold hover:underline text-left cursor-pointer text-sm"><i class="fa-solid fa-user-plus mr-1"></i> Pendaftaran Akun Baru</button>
+                                    <button type="button" onclick="switchPage('status')" class="text-emerald-700 font-semibold hover:underline text-right cursor-pointer"><i class="fa-solid fa-magnifying-glass mr-1"></i> Cek Status</button>
                                 </div>
                             </form>
                         </div>
@@ -244,6 +250,7 @@
             </div>
         </section>
 
+        <!-- REGISTRATION PAGE VIEW -->
         <section id="view-register" class="hidden w-full bg-slate-50 py-4">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -251,8 +258,7 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                     <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
-                        <!-- Rule 3: Enlarged Akun Baru / Pendaftaran Akun Baru title -->
-                        <h2 class="text-lg sm:text-xl font-bold font-heading text-slate-900 mt-1">Pendaftaran Akun Baru</h2>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900 mt-1">Pendaftaran Akun Baru</h2>
                         <p class="text-xs text-slate-500">Seluruh isian di bawah ini wajib diisi dengan lengkap.</p>
                     </div>
 
@@ -272,7 +278,7 @@
                             </div>
                             <div>
                                 <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Sesuai KTP (16 Digit) *</label>
-                                <input type="number" id="regNikKtp" required placeholder="16 digit KTP" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                <input type="text" id="regNikKtp" inputmode="numeric" pattern="[0-9]{16}" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 16);" title="Masukkan tepat 16 digit angka NIK sesuai KTP" required placeholder="16 digit KTP" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -304,7 +310,6 @@
                             <textarea id="regAddress" rows="2" required placeholder="Alamat tinggal saat ini..." class="w-full px-3.5 py-2.5 rounded-xl custom-input"></textarea>
                         </div>
                         <div>
-                            <!-- Rule 2: Fixed dynamic real-time company linking -->
                             <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Perusahaan Tempat Bekerja *</label>
                             <select id="regCompanySelect" onchange="displayCompanyDetails()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                                 <option value="">-- Memuat Perusahaan dari Google Sheets... --</option>
@@ -417,6 +422,7 @@
             </div>
         </section>
 
+        <!-- STATUS PAGE VIEW -->
         <section id="view-status" class="hidden w-full bg-slate-50 py-6">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -424,21 +430,20 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                     <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
-                        <!-- Rule 3: Shortened title to "Cek Status" keeping layout aligned -->
                         <h2 class="text-base sm:text-lg font-bold font-heading text-slate-900 mt-1">Cek Status</h2>
                         <p class="text-xs text-slate-500">Masukkan Alamat Email Terdaftar.</p>
                     </div>
                     <div class="space-y-3.5 mb-5">
                         <div>
                             <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Pilih Jenis Pengecekan</label>
-                            <select id="checkType" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
+                            <select id="checkType" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500 custom-input">
                                 <option value="registration">Status Pendaftaran Akun</option>
                                 <option value="ewa">Progress Pengajuan Akses Gaji</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email</label>
-                            <input type="email" id="searchEmail" placeholder="nama@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
+                            <input type="email" id="searchEmail" placeholder="nama@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-brand-500 custom-input">
                         </div>
                         <button type="button" onclick="checkStatus()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-sm cursor-pointer">
                             <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Cek Status Sekarang
@@ -466,6 +471,7 @@
 
     </main>
 
+    <!-- OTP Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -496,6 +502,7 @@
         <p>© 2026 TanggalMuda.com</p>
     </footer>
 
+    <!-- Camera Modal -->
     <div id="cameraModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -513,6 +520,7 @@
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
     <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl">
             <div class="text-center space-y-1">
@@ -530,6 +538,9 @@
     </div>
 
     <script>
+        // PENTING: nilai ini HARUS selalu sama persis dengan CONFIG.WEB_URL di Code.gs.
+        // Kalau Apps Script di-deploy ulang sebagai Deployment BARU (URL /exec berubah),
+        // update kedua tempat ini bersamaan, atau halaman ini tidak akan bisa terhubung.
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
         
         let listPerusahaanData = [];
@@ -571,9 +582,12 @@
                 statusBadge.className = "flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all";
                 badgeText.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Terhubung ke Database';
                 
-                if (data && data.length > 0) {
+                if (data && Array.isArray(data) && data.length > 0) {
                     listPerusahaanData = data;
                     populateCompanyDropdown();
+                } else {
+                    let select = document.getElementById('regCompanySelect');
+                    if(select) select.innerHTML = '<option value="">-- Belum ada data perusahaan --</option>';
                 }
 
                 setTimeout(() => {
@@ -605,10 +619,10 @@
 
             let waLink = "https://wa.me/6287790994652?text=Halo%20Admin%20TanggalMuda,%20saya%20mengalami%20kendala%20koneksi%20gagal%20ke%20database%20saat%20membuka%20website.";
             
-            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Jika tetap gagal, silakan hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
+            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
             
             let select = document.getElementById('regCompanySelect');
-            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh / Hubungi WA) --</option>';
+            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh) --</option>';
         }
 
         function populateCompanyDropdown() {
