@@ -359,7 +359,7 @@
                             </div>
                         </div>
                         <div class="pt-2 border-t border-slate-100 space-y-3">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib)</p>
+                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib, Otomatis Kompres)</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div id="boxKtp" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
                                     <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli *</label>
@@ -1031,7 +1031,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            openBigModal('Memproses Pendaftaran', 'Mengirim data dan foto ke Google Drive & Sheets...', 'info');
+            openBigModal('Memproses Pendaftaran', 'Mengunggah foto ke Google Drive & mencatat ke Google Sheets...', 'info');
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
