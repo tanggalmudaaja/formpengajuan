@@ -2,7 +2,7 @@
 <html lang="id" class="scroll-smooth h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TanggalMuda - Platform Keuangan & Pembiayaan EWA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -55,7 +55,6 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            touch-action: manipulation;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
@@ -108,7 +107,7 @@
             border: 1.5px solid #cbd5e1;
             transition: all 0.2s ease;
             width: 100%;
-            font-size: 16px !important; /* Mencegah auto-zoom iOS saat focus input */
+            font-size: 10pt !important;
         }
         .custom-input:focus {
             outline: none;
@@ -149,19 +148,13 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <!-- MODAL BALON BESAR TENGAH LAYAR -->
-        <div id="bigModalAlert" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
-            <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center space-y-4 border border-slate-100 transform scale-100">
-                <div id="bigModalIconContainer" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
-                    <i id="bigModalIcon" class="fa-solid fa-circle-check"></i>
+        <div id="globalAlert" class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4 transition-all duration-300">
+            <div id="globalAlertBox" class="p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm">
+                <div class="flex items-center space-x-2">
+                    <span id="globalAlertText"></span>
+                    <span id="alertTimerBadge" class="text-[10px] bg-black/10 px-1.5 py-0.5 rounded font-mono">6s</span>
                 </div>
-                <div class="space-y-1.5">
-                    <h3 id="bigModalTitle" class="font-heading font-bold text-lg text-slate-900">Pemberitahuan Sistem</h3>
-                    <p id="bigModalText" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
-                </div>
-                <div id="bigModalActionContainer" class="pt-2">
-                    <button type="button" onclick="closeBigModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md transition cursor-pointer">OK / Mengerti</button>
-                </div>
+                <button onclick="closeGlobalAlert()" class="opacity-70 hover:opacity-100 font-bold ml-3 text-base cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
 
@@ -285,7 +278,7 @@
                             </div>
                             <div>
                                 <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Sesuai KTP (16 Digit) *</label>
-                                <input type="text" id="regNikKtp" inputmode="numeric" pattern="[0-9]{16}" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 16);" title="Masukkan tepat 16 digit angka NIK sesuai KTP" required placeholder="16 digit KTP" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                <input type="number" id="regNikKtp" required placeholder="16 digit KTP" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -359,7 +352,7 @@
                             </div>
                         </div>
                         <div class="pt-2 border-t border-slate-100 space-y-3">
-                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib, Otomatis Kompres)</p>
+                            <p class="font-bold text-slate-700 uppercase tracking-wider text-xs"><i class="fa-solid fa-camera text-brand-600 mr-1"></i> Verifikasi Foto KTP & Selfie (Wajib)</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div id="boxKtp" class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 relative overflow-hidden">
                                     <label class="block font-semibold text-slate-700 mb-1.5 text-xs">Foto KTP Asli *</label>
@@ -367,7 +360,7 @@
                                         <button type="button" onclick="document.getElementById('fileKtp').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('ktp')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
-                                    <input type="file" id="fileKtp" accept="image/*" onchange="compressAndPreviewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
+                                    <input type="file" id="fileKtp" accept="image/*" onchange="previewFile('fileKtp', 'previewKtp', 'imgKtp')" class="hidden">
                                     <div id="previewKtp" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file KTP</div>
                                     <div id="containerImgKtp" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgKtp" src="" alt="Preview KTP" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
@@ -380,7 +373,7 @@
                                         <button type="button" onclick="document.getElementById('fileSelfie').click()" class="bg-white border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Galeri</button>
                                         <button type="button" onclick="openCameraModal('selfie')" class="bg-brand-50 text-brand-700 border px-3 py-1 rounded-lg text-xs font-semibold shadow-sm cursor-pointer">Kamera</button>
                                     </div>
-                                    <input type="file" id="fileSelfie" accept="image/*" onchange="compressAndPreviewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
+                                    <input type="file" id="fileSelfie" accept="image/*" onchange="previewFile('fileSelfie', 'previewSelfie', 'imgSelfie')" class="hidden">
                                     <div id="previewSelfie" class="mt-1 text-xs text-rose-500 font-medium" data-base64="">Belum ada file Selfie</div>
                                     <div id="containerImgSelfie" class="hidden mt-2 relative inline-block w-full">
                                         <img id="imgSelfie" src="" alt="Preview Selfie" class="max-h-32 mx-auto rounded-lg shadow border object-contain">
@@ -545,13 +538,15 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw5umWbuEkvUdtMA7vPNDm-Sp4MdZqwLq-0InuXQfeXtz0JQlkXTRrInYURGBKhiC9-/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
+        let alertTimeoutTimer = null;
+        let alertCountdownInterval = null;
 
         window.onload = function() {
             initDatabaseConnectionCheck();
@@ -568,8 +563,9 @@
             progressBar.style.width = "70%";
 
             let callbackName = 'jsonp_startup_cb_' + Math.round(100000 * Math.random());
+            
             let connectionTimeout = setTimeout(() => {
-                handleConnectionFailure("Koneksi ke database timeout.");
+                handleConnectionFailure("Koneksi ke database timeout (terlalu lama).");
             }, 10000);
 
             window[callbackName] = function(data) {
@@ -579,12 +575,16 @@
                 if (scriptTag) scriptTag.remove();
 
                 progressBar.style.width = "100%";
+                
                 statusBadge.className = "flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all";
                 badgeText.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Terhubung ke Database';
                 
                 if (data && Array.isArray(data) && data.length > 0) {
                     listPerusahaanData = data;
                     populateCompanyDropdown();
+                } else {
+                    let select = document.getElementById('regCompanySelect');
+                    if(select) select.innerHTML = '<option value="">-- Belum ada data perusahaan --</option>';
                 }
 
                 setTimeout(() => {
@@ -611,9 +611,15 @@
             splash.style.opacity = '0';
             setTimeout(() => splash.remove(), 500);
 
-            statusBadge.className = "flex items-center space-x-2 bg-rose-50 border border-rose-200 text-rose-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all";
+            statusBadge.className = "flex items-center space-x-2 bg-rose-50 border border-rose-200 text-rose-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all animate-pulse";
             badgeText.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Koneksi Gagal';
-            openBigModal('Koneksi Gagal', 'Gagal terhubung ke server database. Silakan muat ulang halaman.', 'error');
+
+            let waLink = "https://wa.me/6287790994652?text=Halo%20Admin%20TanggalMuda,%20saya%20mengalami%20kendala%20koneksi%20gagal%20ke%20database%20saat%20membuka%20website.";
+            
+            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
+            
+            let select = document.getElementById('regCompanySelect');
+            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh) --</option>';
         }
 
         function populateCompanyDropdown() {
@@ -656,6 +662,7 @@
                     el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
                 }
             });
+            closeGlobalAlert();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -664,44 +671,41 @@
             let formSec = document.getElementById('ewaFormContainer');
             if (formSec) {
                 formSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                document.getElementById('ewaEmail').focus();
+                let emailInput = document.getElementById('ewaEmail');
+                if (emailInput) emailInput.focus();
             }
         }
 
-        function openBigModal(title, text, type = 'success', actionCallback = null) {
-            document.getElementById('bigModalTitle').innerText = title;
-            document.getElementById('bigModalText').innerHTML = text;
+        function showGlobalAlert(message, isSuccess = true, durationSeconds = 6) {
+            let container = document.getElementById('globalAlert');
+            let box = document.getElementById('globalAlertBox');
+            let text = document.getElementById('globalAlertText');
+            let timerBadge = document.getElementById('alertTimerBadge');
             
-            let iconContainer = document.getElementById('bigModalIconContainer');
-            let icon = document.getElementById('bigModalIcon');
-            let actionContainer = document.getElementById('bigModalActionContainer');
+            text.innerHTML = message;
+            box.className = `p-3.5 rounded-2xl flex items-center justify-between shadow-lg text-xs sm:text-sm font-medium ${isSuccess ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`;
+            
+            container.classList.remove('hidden');
 
-            if (type === 'success') {
-                iconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl bg-emerald-100 text-emerald-600 shadow-inner";
-                icon.className = "fa-solid fa-circle-check";
-            } else if (type === 'error') {
-                iconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl bg-rose-100 text-rose-600 shadow-inner";
-                icon.className = "fa-solid fa-triangle-exclamation";
-            } else {
-                iconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl bg-amber-100 text-amber-600 shadow-inner";
-                icon.className = "fa-solid fa-circle-info";
-            }
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
 
-            if (actionCallback) {
-                actionContainer.innerHTML = `<button type="button" id="bigModalCustomBtn" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md transition cursor-pointer">OK / Lanjutkan</button>`;
-                document.getElementById('bigModalCustomBtn').onclick = function() {
-                    closeBigModal();
-                    actionCallback();
-                };
-            } else {
-                actionContainer.innerHTML = `<button type="button" onclick="closeBigModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md transition cursor-pointer">OK / Mengerti</button>`;
-            }
+            let timeLeft = durationSeconds;
+            timerBadge.innerText = timeLeft + 's';
 
-            document.getElementById('bigModalAlert').classList.remove('hidden');
+            alertCountdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) timerBadge.innerText = timeLeft + 's';
+                else clearInterval(alertCountdownInterval);
+            }, 1000);
+
+            alertTimeoutTimer = setTimeout(() => closeGlobalAlert(), durationSeconds * 1000);
         }
 
-        function closeBigModal() {
-            document.getElementById('bigModalAlert').classList.add('hidden');
+        function closeGlobalAlert() {
+            document.getElementById('globalAlert').classList.add('hidden');
+            if (alertTimeoutTimer) clearTimeout(alertTimeoutTimer);
+            if (alertCountdownInterval) clearInterval(alertCountdownInterval);
         }
 
         function checkEmailRegistered(emailVal) {
@@ -715,7 +719,8 @@
         }
 
         function calculateEwaFeePreview() {
-            let amount = parseRawNumber(document.getElementById('ewaAmount').value);
+            let rawAmount = document.getElementById('ewaAmount').value;
+            let amount = parseRawNumber(rawAmount);
             let previewBox = document.getElementById('ewaFeePreviewBox');
 
             if (amount <= 0) {
@@ -723,22 +728,26 @@
                 return;
             }
 
-            let numTrx = Math.ceil(amount / 750000);
-            let totalFee = numTrx * 50000;
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
             let totalRepayment = amount + totalFee;
 
             document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Maks Rp 750k/trx)`;
             document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
             document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
             document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
             previewBox.classList.remove('hidden');
         }
 
         function handleInitialEwaSubmit(e) {
             e.preventDefault();
             let email = document.getElementById('ewaEmail').value.trim();
-            let amount = parseRawNumber(document.getElementById('ewaAmount').value);
+            let rawAmount = document.getElementById('ewaAmount').value.trim();
             let pinAkses = document.getElementById('ewaPin').value.trim();
+            let amount = parseRawNumber(rawAmount);
             
             let btn = document.getElementById('btnEwaSubmit');
             btn.disabled = true;
@@ -747,13 +756,16 @@
             pendingEwaData = { email: email, amount: amount, pin: pinAkses };
             document.getElementById('verifyMemberEmail').innerText = email;
             
-            let numTrx = Math.ceil(amount / 750000);
-            let totalFee = numTrx * 50000;
+            let maxPerTrx = 750000;
+            let feePerTrx = 50000;
+            let numTrx = Math.ceil(amount / maxPerTrx);
+            let totalFee = numTrx * feePerTrx;
             let totalRepayment = amount + totalFee;
 
             document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
             document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
             document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
             document.getElementById('verifyOtp').value = '';
             
             fetch(GOOGLE_SCRIPT_URL, {
@@ -768,16 +780,16 @@
                 btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
                 
                 if (res.success) {
-                    openBigModal('OTP Terkirim', 'Kode OTP berhasil dikirim ke email ' + email, 'success');
+                    showGlobalAlert('Kode OTP berhasil dikirim ke ' + email, true, 5);
                     document.getElementById('ewaVerifyModal').classList.remove('hidden');
                 } else {
-                    openBigModal('Gagal Mengirim OTP', res.message, 'error');
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
                 btn.disabled = false;
                 btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
-                openBigModal('Kesalahan Jaringan', err.message, 'error');
+                showGlobalAlert('Gagal mengirim permintaan OTP: ' + err.message, false, 8);
             });
         }
 
@@ -790,9 +802,13 @@
             closeEwaVerifyModal();
             
             let otpCode = document.getElementById('verifyOtp').value.trim();
-            let payload = { email: pendingEwaData.email, amount: pendingEwaData.amount, otp: otpCode };
+            let payload = {
+                email: pendingEwaData.email,
+                amount: pendingEwaData.amount,
+                otp: otpCode
+            };
 
-            openBigModal('Memproses EWA', 'Memverifikasi kode OTP...', 'info');
+            showGlobalAlert('Memverifikasi OTP dan memproses EWA...', true, 4);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -803,69 +819,36 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    openBigModal('Pengajuan Berhasil', res.message, 'success', () => {
-                        switchPage('status');
-                        document.getElementById('searchEmail').value = pendingEwaData.email;
-                        document.getElementById('checkType').value = 'ewa';
-                        checkStatus();
-                    });
+                    showGlobalAlert(res.message, true, 8);
+                    switchPage('status');
+                    document.getElementById('searchEmail').value = pendingEwaData.email;
+                    document.getElementById('checkType').value = 'ewa';
+                    checkStatus();
                 } else {
-                    openBigModal('Gagal Verifikasi', res.message, 'error');
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
-                openBigModal('Kesalahan Jaringan', err.message, 'error');
+                showGlobalAlert('Gagal menghubungi server: ' + err.message, false, 8);
             });
         }
 
-        function compressAndPreviewFile(inputId, previewId, imgId) {
+        function previewFile(inputId, previewId, imgId) {
             let fileInput = document.getElementById(inputId);
-            if (!fileInput.files || !fileInput.files[0]) return;
+            let previewDiv = document.getElementById(previewId);
+            let imgElement = document.getElementById(imgId);
+            let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
 
-            let file = fileInput.files[0];
-            let reader = new FileReader();
-            
-            reader.onload = function(e) {
-                let img = new Image();
-                img.src = e.target.result;
-                img.onload = function() {
-                    let canvas = document.createElement('canvas');
-                    let ctx = canvas.getContext('2d');
-                    
-                    let MAX_WIDTH = 800;
-                    let MAX_HEIGHT = 800;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    let compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    
-                    let previewDiv = document.getElementById(previewId);
-                    let imgElement = document.getElementById(imgId);
-                    let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
-
-                    imgElement.src = compressedDataUrl;
+            if (fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    imgElement.src = e.target.result;
                     previewDiv.classList.add('hidden');
                     containerImg.classList.remove('hidden');
-                    previewDiv.dataset.base64 = compressedDataUrl;
+                    previewDiv.dataset.base64 = e.target.result;
                 }
+                reader.readAsDataURL(fileInput.files[0]);
             }
-            reader.readAsDataURL(file);
         }
 
         function setCameraPhotoData(type, dataURL) {
@@ -886,10 +869,13 @@
             let imgId = type === 'ktp' ? 'imgKtp' : 'imgSelfie';
             let fileInputId = type === 'ktp' ? 'fileKtp' : 'fileSelfie';
             
+            let previewDiv = document.getElementById(previewId);
+            let containerImg = document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1));
+            
             document.getElementById(fileInputId).value = '';
-            document.getElementById(previewId).classList.remove('hidden');
-            document.getElementById('container' + imgId.charAt(0).toUpperCase() + imgId.slice(1)).classList.add('hidden');
-            document.getElementById(previewId).dataset.base64 = '';
+            previewDiv.classList.remove('hidden');
+            containerImg.classList.add('hidden');
+            previewDiv.dataset.base64 = '';
         }
 
         function openCameraModal(type) {
@@ -904,7 +890,7 @@
                     video.play();
                 })
                 .catch(err => {
-                    openBigModal('Kamera Error', 'Akses kamera ditolak atau tidak tersedia. Gunakan tombol Galeri.', 'error');
+                    showGlobalAlert("Kamera diblokir atau tidak tersedia. Silakan gunakan tombol Galeri.", false, 8);
                     closeCameraModal();
                 });
         }
@@ -916,7 +902,7 @@
             canvas.height = video.videoHeight || 480;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             
-            let dataURL = canvas.toDataURL('image/jpeg', 0.8);
+            let dataURL = canvas.toDataURL('image/jpeg');
             setCameraPhotoData(currentCameraType, dataURL);
             closeCameraModal();
         }
@@ -1031,7 +1017,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            openBigModal('Memproses Pendaftaran', 'Mengunggah foto ke Google Drive & mencatat ke Google Sheets...', 'info');
+            showGlobalAlert('Mengirim data pendaftaran ke Google Sheets...', true, 5);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1042,19 +1028,20 @@
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    openBigModal('Pendaftaran Berhasil', res.message, 'success', () => {
-                        document.getElementById('formRegister').reset();
+                    showGlobalAlert(res.message, true, 8);
+                    document.getElementById('formRegister').reset();
+                    setTimeout(() => {
                         switchPage('status');
                         document.getElementById('searchEmail').value = payload.email;
                         document.getElementById('checkType').value = 'registration';
                         checkStatus();
-                    });
+                    }, 1500);
                 } else {
-                    openBigModal('Pendaftaran Gagal', res.message, 'error');
+                    showGlobalAlert(res.message, false, 8);
                 }
             })
             .catch(err => {
-                openBigModal('Kesalahan Jaringan', err.message, 'error');
+                showGlobalAlert('Gagal mengirim ke server: ' + err.message, false, 8);
             });
         }
 
@@ -1065,16 +1052,15 @@
             let emptyNotice = document.getElementById('statusEmptyNotice');
 
             if (!emailInput) {
-                openBigModal('Perhatian', 'Masukkan alamat email terlebih dahulu!', 'error');
+                showGlobalAlert('Masukkan alamat email terlebih dahulu!', false, 5);
                 return;
             }
 
-            openBigModal('Memeriksa Status', 'Menghubungkan ke database...', 'info');
+            showGlobalAlert('Memeriksa status ke Google Sheets...', true, 3);
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
                 .then(res => res.json())
                 .then(res => {
-                    closeBigModal();
                     if (res.success && res.data) {
                         let data = res.data;
                         document.getElementById('resRef').innerText = data.refId;
@@ -1089,12 +1075,11 @@
                     } else {
                         resultBox.classList.add('hidden');
                         emptyNotice.classList.remove('hidden');
-                        openBigModal('Data Tidak Ditemukan', res.message || 'Data tidak ditemukan untuk email tersebut.', 'error');
+                        showGlobalAlert(res.message || 'Data tidak ditemukan.', false, 6);
                     }
                 })
                 .catch(err => {
-                    closeBigModal();
-                    openBigModal('Kesalahan Jaringan', err.message, 'error');
+                    showGlobalAlert('Gagal memeriksa status: ' + err.message, false, 6);
                 });
         }
     </script>
