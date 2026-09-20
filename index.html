@@ -125,7 +125,7 @@
         <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-4 border border-emerald-100">
             <div class="space-y-1">
                 <h3 class="font-heading font-bold text-base text-slate-900">Menghubungkan ke Database...</h3>
-                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Sheets</p>
+                <p id="splashStatusText" class="text-xs text-slate-500">Memuat data perusahaan dari Google Sheets</p>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div id="splashProgressBar" class="bg-brand-600 h-full w-1/3 animate-pulse transition-all duration-300"></div>
@@ -147,7 +147,6 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <!-- Animated Processing / Alert Modal -->
         <div id="customAlertModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-[32px] max-w-sm w-full p-6 sm:p-8 shadow-2xl text-center space-y-5 animate-scale-up border border-slate-100">
                 <div id="alertIconWrapper" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-rose-50 border border-rose-100 p-3">
@@ -162,7 +161,6 @@
             </div>
         </div>
 
-        <!-- Landing View -->
         <section id="view-landing" class="block w-full flex-grow flex items-center">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center w-full">
@@ -231,7 +229,6 @@
             </div>
         </section>
 
-        <!-- EWA Action Form View -->
         <section id="view-ewa-action" class="hidden w-full bg-slate-50 py-6">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -276,7 +273,6 @@
             </div>
         </section>
 
-        <!-- Registration View -->
         <section id="view-register" class="hidden w-full bg-slate-50 py-4">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -448,7 +444,6 @@
             </div>
         </section>
 
-        <!-- Status View -->
         <section id="view-status" class="hidden w-full bg-slate-50 py-6">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -497,7 +492,6 @@
 
     </main>
 
-    <!-- EWA PIN Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -522,7 +516,6 @@
         <p>© 2026 TanggalMuda.com</p>
     </footer>
 
-    <!-- Camera Modal -->
     <div id="cameraModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -540,7 +533,6 @@
         </div>
     </div>
 
-    <!-- Registration Confirmation Modal -->
     <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl">
             <div class="text-center space-y-1">
@@ -558,7 +550,7 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSbidBM8-8GbESSo_3rKYIuKbQSlVAoL_YaJk6HlZ9WVHZkl0aisJtvDfnp_j76pfe/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbztKLW3rUKiSz16kmT6Xt4Rz2jRLHnAN7Burwkxz9TQLdB4PrRQ34nGdtW5lYQlbZZR/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -578,13 +570,13 @@
             let splashText = document.getElementById('splashStatusText');
             let progressBar = document.getElementById('splashProgressBar');
 
-            splashText.innerText = "Menghubungkan ke Google Sheets (Real-Time)...";
+            splashText.innerText = "Memuat data perusahaan dari Google Sheets...";
             progressBar.style.width = "70%";
 
             let callbackName = 'jsonp_startup_cb_' + Math.round(100000 * Math.random());
             
             let connectionTimeout = setTimeout(() => {
-                handleConnectionFailure("Koneksi ke database timeout (terlalu lama).");
+                handleConnectionFailure("Koneksi ke database timeout.");
             }, 10000);
 
             window[callbackName] = function(data) {
@@ -633,7 +625,7 @@
             statusBadge.className = "flex items-center space-x-2 bg-rose-50 border border-rose-200 text-rose-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all animate-pulse";
             badgeText.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> Koneksi Gagal';
 
-            showCustomAlert('Koneksi Gagal', `Gagal terhubung ke server database. Silakan muat ulang halaman.`, false);
+            showCustomAlert('Koneksi Gagal', `Gagal memuat data perusahaan dari Google Sheets. Silakan muat ulang halaman.`, false);
         }
 
         function populateCompanyDropdown() {
@@ -775,11 +767,11 @@
 
         function handleInitialEmailCheck(e) {
             e.preventDefault();
-            let email = document.getElementById('landingEmail').value.trim();
+            let email = document.getElementById('landingEmail').value.trim().toLowerCase();
             
             let btn = document.getElementById('btnLandingSubmit');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Google Sheets...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Google Sheets Real-Time...';
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=ewa")
             .then(res => res.json())
@@ -790,7 +782,7 @@
                 if (res.success && res.data) {
                     let memberStatus = res.data.status ? res.data.status.toLowerCase().trim() : "";
                     
-                    if (memberStatus === "aktif" || memberStatus === "active") {
+                    if (memberStatus === "aktif") {
                         pendingEwaData = { email: email };
                         document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
                         document.getElementById('ewaAmount').value = '';
