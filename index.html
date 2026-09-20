@@ -126,7 +126,7 @@
         <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-4 border border-emerald-100">
             <div class="space-y-1">
                 <h3 class="font-heading font-bold text-base text-slate-900">Menghubungkan ke Database...</h3>
-                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Apps Script</p>
+                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Sheets & Apps Script</p>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div id="splashProgressBar" class="bg-brand-600 h-full w-1/3 animate-pulse transition-all duration-300"></div>
@@ -538,7 +538,7 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxppmo76tpb6RVO1S2Zg_nL68rIXZ0FYB6nIxzaxSEEi6PqXw0QIVmL_LX1ArOx2JP30Q/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSmCYQ1K2BGitrd-BeBY9XBD8BhzGAtS53t_FWQbzGd7wRmRJgf2r6Et5_VgtdMjDf/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -579,12 +579,12 @@
                 statusBadge.className = "flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all";
                 badgeText.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Terhubung ke Database';
                 
-                if (data && Array.isArray(data) && data.length > 0) {
+                if (data && data.length > 0) {
                     listPerusahaanData = data;
                     populateCompanyDropdown();
                 } else {
                     let select = document.getElementById('regCompanySelect');
-                    if(select) select.innerHTML = '<option value="">-- Belum ada data perusahaan --</option>';
+                    if(select) select.innerHTML = '<option value="">-- Belum ada data perusahaan di Google Sheets --</option>';
                 }
 
                 setTimeout(() => {
@@ -616,10 +616,10 @@
 
             let waLink = "https://wa.me/6287790994652?text=Halo%20Admin%20TanggalMuda,%20saya%20mengalami%20kendala%20koneksi%20gagal%20ke%20database%20saat%20membuka%20website.";
             
-            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
+            showGlobalAlert(`Koneksi Gagal! Silakan refresh halaman. Jika tetap gagal, silakan hubungi <a href="${waLink}" target="_blank" class="underline font-bold text-emerald-700">WhatsApp 0877-9099-4652</a>`, false, 15);
             
             let select = document.getElementById('regCompanySelect');
-            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh) --</option>';
+            if(select) select.innerHTML = '<option value="">-- Gagal memuat database (Silakan Refresh / Hubungi WA) --</option>';
         }
 
         function populateCompanyDropdown() {
