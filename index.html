@@ -125,7 +125,7 @@
         <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-4 border border-emerald-100">
             <div class="space-y-1">
                 <h3 class="font-heading font-bold text-base text-slate-900">Menghubungkan ke Database...</h3>
-                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server </p>
+                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server Google Sheets</p>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div id="splashProgressBar" class="bg-brand-600 h-full w-1/3 animate-pulse transition-all duration-300"></div>
@@ -138,30 +138,31 @@
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('landing')">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJ0tuAPBwjNxYCCMYVRGId0IgWZaH26Y_UVfqi3t2EmrwOU5jkBxfNBHuBPAXRAEizTMmEEco4beAUBI_CPHZWq5h-wZ-CrpEcEVJjE6J29K4GIyA-CJv4QKvz68HB4MEitCxR9ktTmjtxTeJtn86hgWr2t-i-HIAsLgjL_k35Kv195lEX5QWSMLG1Rcw/s546/Logo4.png" alt="TanggalMuda Logo" style="height: 140%; max-height: 52px;" class="w-auto object-contain">
             </div>
-            <div id="connectionStatusBadge" class="flex items-center space-x-2 bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></span>
-                <span id="connectionBadgeText">Menghubungkan...</span>
+            <div id="connectionStatusBadge" class="flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span id="connectionBadgeText">Terhubung Real-Time</span>
             </div>
         </div>
     </header>
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
+        <!-- Animated Processing / Alert Modal -->
         <div id="customAlertModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-[32px] max-w-sm w-full p-6 sm:p-8 shadow-2xl text-center space-y-5 animate-scale-up border border-slate-100">
                 <div id="alertIconWrapper" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-rose-50 border border-rose-100 p-3">
+                    <div id="alertSpinner" class="hidden"><i class="fa-solid fa-spinner fa-spin text-3xl text-brand-600"></i></div>
                     <img id="alertLogoImg" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjImFhvw11nUnkCHoSffXS2iU4EmdzOv_r9ZDPjECXQ0yDfSsCeSVjyFMNTRCKF4BPzf2hpqZ2soEGINKKwxfHiRXP49ZKV3CiKN0YM3YYuz_TR0f_98ETF2uji6F4hKzIPpsEPqJzAfbkT2MIydPD0un6Osf3bA6nQU0AKDU4kLHwpJqFnObhEJRVuYoo/s320/Logo%201%20(2).png" alt="Logo" class="w-full h-full object-contain">
                 </div>
                 <div class="space-y-2">
                     <h3 id="alertTitle" class="font-heading font-extrabold text-xl text-slate-900 leading-tight">Pemberitahuan</h3>
-                    <p id="alertMessage" class="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium px-1"></p>
+                    <p id="alertMessage" class="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium px-1">Mohon tunggu sebentar...</p>
                 </div>
-                <div id="alertActionButtons" class="pt-2">
-                    <button type="button" onclick="closeCustomAlert()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/30 text-sm transition cursor-pointer">OK / Mengerti</button>
-                </div>
+                <div id="alertActionButtons" class="pt-2"></div>
             </div>
         </div>
 
+        <!-- Landing View -->
         <section id="view-landing" class="block w-full flex-grow flex items-center">
             <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center w-full">
@@ -201,42 +202,20 @@
                         <div id="ewaFormContainer" class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4 transition-all duration-300 relative w-full">
                             
                             <div class="text-center space-y-0.5">
-                                <h3 class="font-heading font-bold text-base sm:text-lg text-slate-900 leading-tight">FORMULIR PENGAJUAN AKSES GAJI</h3>
-                                <p class="text-xs text-slate-500 pt-1">Jika anda sudah terdaftar, silahkan masukan alamat email dan PIN Akses</p>
+                                <h3 class="font-heading font-bold text-base sm:text-lg text-slate-900 leading-tight">MASUKKAN EMAIL TERDAFTAR</h3>
+                                <p class="text-xs text-slate-500 pt-1">Masukkan alamat email Anda untuk mulai mengajukan pencairan atau mendaftarkan akun baru</p>
                             </div>
 
-                            <form onsubmit="handleInitialEwaSubmit(event)" class="space-y-3.5 text-xs sm:text-sm">
+                            <form onsubmit="handleInitialEmailCheck(event)" class="space-y-3.5 text-xs sm:text-sm">
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email Terdaftar</label>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Email</label>
                                     <div class="relative">
-                                        <input type="email" id="ewaEmail" required placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
+                                        <input type="email" id="landingEmail" required placeholder="nama@email.com" class="w-full px-3.5 py-3 rounded-xl custom-input text-sm">
                                     </div>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <div>
-                                        <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pencairan</label>
-                                        <div class="relative flex items-center">
-                                            <input type="text" id="ewaAmount" oninput="formatCurrencyInput(this); calculateEwaFeePreview();" required placeholder="" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-base font-bold font-mono tracking-wide text-slate-900 placeholder:text-slate-400">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses (Dari Email)</label>
-                                        <div class="relative flex items-center">
-                                            <input type="password" id="ewaPin" required placeholder="6-Digit PIN" maxlength="6" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-base tracking-widest text-center font-bold font-mono text-slate-900">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
-                                    <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
-                                    <p class="flex justify-between"><span>Dana Diterima Bersih (Full):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
-                                    <p class="flex justify-between"><span>Biaya Layanan (Ditagih Repayment):</span> <span id="prevTotalFee">Rp 50.000</span></p>
-                                    <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA + Fee):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
-                                    <p class="text-[10px] text-slate-500 italic mt-0.5">*Maks Rp 750k/trx. Fee Rp 50k/trx ditagihkan saat repayment.</p>
                                 </div>
 
-                                <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
-                                    <span>Ajukan</span>
+                                <button type="submit" id="btnLandingSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
+                                    <span>Lanjutkan</span>
                                     <i class="fa-solid fa-arrow-right text-xs"></i>
                                 </button>
                                 
@@ -252,6 +231,52 @@
             </div>
         </section>
 
+        <!-- EWA Action Form View -->
+        <section id="view-ewa-action" class="hidden w-full bg-slate-50 py-6">
+            <div class="max-w-xl mx-auto px-4 w-full">
+                <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
+                    <button type="button" onclick="switchPage('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition cursor-pointer" title="Kembali ke Beranda">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="text-center mb-5 pb-3 border-b border-slate-100 pr-8">
+                        <h2 class="text-xl font-extrabold font-heading text-slate-900 mt-1">Formulir Pengajuan Akses Gaji (EWA)</h2>
+                        <p id="verifiedEmailDisplay" class="text-xs text-brand-700 font-semibold mt-1">-</p>
+                    </div>
+
+                    <form onsubmit="handleInitialEwaSubmit(event)" class="space-y-3.5 text-xs sm:text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pencairan</label>
+                                <div class="relative flex items-center">
+                                    <input type="text" id="ewaAmount" oninput="formatCurrencyInput(this); calculateEwaFeePreview();" required placeholder="" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-base font-bold font-mono tracking-wide text-slate-900 placeholder:text-slate-400">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses (Permanen)</label>
+                                <div class="relative flex items-center">
+                                    <input type="password" id="ewaPin" required placeholder="6-Digit PIN" maxlength="6" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-base tracking-widest text-center font-bold font-mono text-slate-900">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
+                            <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
+                            <p class="flex justify-between"><span>Dana Diterima Bersih (Full):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
+                            <p class="flex justify-between"><span>Biaya Layanan (Ditagih Repayment):</span> <span id="prevTotalFee">Rp 50.000</span></p>
+                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA + Fee):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                            <p class="text-[10px] text-slate-500 italic mt-0.5">*Fee Rp 50k/trx kalkulasi dinamis.</p>
+                        </div>
+
+                        <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
+                            <span>Ajukan Pencairan</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration View -->
         <section id="view-register" class="hidden w-full bg-slate-50 py-4">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -407,7 +432,7 @@
                             </label>
                             <label class="flex items-start space-x-2.5 cursor-pointer">
                                 <input type="checkbox" id="regTerm6" required class="mt-0.5 rounded text-brand-600 shrink-0">
-                                <span class="text-[11px] text-slate-700">Saya memahami bahwa PIN Akses dikirimkan ke email terdaftar setelah pengajuan disetujui.</span>
+                                <span class="text-[11px] text-slate-700">Saya memahami bahwa PIN Akses dikirimkan ke email terdaftar setelah pendaftaran disetujui.</span>
                             </label>
                             <label class="flex items-start space-x-2.5 cursor-pointer">
                                 <input type="checkbox" id="regTerm7" required class="mt-0.5 rounded text-brand-600 shrink-0">
@@ -423,6 +448,7 @@
             </div>
         </section>
 
+        <!-- Status View -->
         <section id="view-status" class="hidden w-full bg-slate-50 py-6">
             <div class="max-w-xl mx-auto px-4 w-full">
                 <div class="bg-white rounded-2xl p-5 sm:p-8 shadow-xl border border-slate-200 relative">
@@ -471,10 +497,11 @@
 
     </main>
 
+    <!-- EWA PIN Verification Modal -->
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Verifikasi Keamanan Akses Gaji</h3>
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Konfirmasi Pencairan Gaji</h3>
                 <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
@@ -483,17 +510,11 @@
                 <p>Biaya Layanan (Ditagih Repayment): <b id="verifyFee" class="text-rose-600"></b></p>
                 <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
-            <p class="text-xs text-slate-600">Kode OTP 6-digit telah dikirim ke email Anda. Masukkan kode tersebut di bawah ini (berlaku 5 menit):</p>
-            <form onsubmit="handleFinalEwaSubmit(event)" class="space-y-3">
-                <div>
-                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Kode OTP</label>
-                    <input type="text" id="verifyOtp" required placeholder="Cth: 123456" maxlength="6" pattern="\d{6}" class="w-full px-4 py-3 rounded-xl custom-input text-lg tracking-[0.5em] text-center font-mono font-bold sm:text-xl">
-                </div>
-                <div class="flex space-x-3 pt-1">
-                    <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
-                    <button type="submit" id="btnFinalEwa" class="w-full py-3 bg-brand-600 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md cursor-pointer">Kirim Konfirmasi Email</button>
-                </div>
-            </form>
+            <p class="text-xs text-slate-600">PIN Akses permanen Anda valid. Klik tombol di bawah untuk melanjutkan pencairan:</p>
+            <div class="flex space-x-3 pt-1">
+                <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
+                <button type="button" onclick="handleFinalEwaSubmit(event)" id="btnFinalEwa" class="w-1/2 bg-brand-600 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md cursor-pointer">Proses Pencairan</button>
+            </div>
         </div>
     </div>
 
@@ -501,6 +522,7 @@
         <p>© 2026 TanggalMuda.com</p>
     </footer>
 
+    <!-- Camera Modal -->
     <div id="cameraModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -518,6 +540,7 @@
         </div>
     </div>
 
+    <!-- Registration Confirmation Modal -->
     <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl">
             <div class="text-center space-y-1">
@@ -535,13 +558,14 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqSECSL-GgmQQ6HfZOAEIMGBWJPGLM0Jwcku86htASGSkUm_QsJv1mAS0ejMeV-BI/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSbidBM8-8GbESSo_3rKYIuKbQSlVAoL_YaJk6HlZ9WVHZkl0aisJtvDfnp_j76pfe/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
         let videoStreamInstance = null;
         let pendingRegistrationPayload = null;
         let pendingEwaData = null;
+        let isSubmittingEwa = false;
 
         window.onload = function() {
             initDatabaseConnectionCheck();
@@ -554,7 +578,7 @@
             let splashText = document.getElementById('splashStatusText');
             let progressBar = document.getElementById('splashProgressBar');
 
-            splashText.innerText = "Menghubungkan ke Google Sheets...";
+            splashText.innerText = "Menghubungkan ke Google Sheets (Real-Time)...";
             progressBar.style.width = "70%";
 
             let callbackName = 'jsonp_startup_cb_' + Math.round(100000 * Math.random());
@@ -572,7 +596,7 @@
                 progressBar.style.width = "100%";
                 
                 statusBadge.className = "flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs transition-all";
-                badgeText.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Terhubung ke Database';
+                badgeText.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Terhubung Real-Time';
                 
                 if (data && data.length > 0) {
                     listPerusahaanData = data;
@@ -627,44 +651,52 @@
         function formatFriendlyErrorMessage(rawMessage) {
             if (!rawMessage) return "Terjadi kendala pada sistem. Silakan coba beberapa saat lagi.";
             let msg = rawMessage.toLowerCase();
-            if (msg.includes('karakter') || msg.includes('cell') || msg.includes('sheet') || msg.includes('exception') || msg.includes('50000')) {
+            if (msg.includes('karakter') || msg.includes('cell') || msg.includes('sheet') || msg.includes('exception')) {
                 return "Ukuran foto atau dokumen terlalu besar untuk disimpan ke dalam sistem. Harap gunakan foto dengan ukuran file yang lebih kecil.";
             }
             if (msg.includes('tidak terdaftar') || msg.includes('not found')) {
                 return "Alamat email ini belum terdaftar di sistem kami. Silakan daftarkan akun Anda terlebih dahulu.";
             }
+            if (msg.includes('belum aktif') || msg.includes('menunggu')) {
+                return "Akun Anda belum aktif karena status pendaftaran masih menunggu verifikasi atau aktivasi oleh Admin. Silakan periksa email Anda.";
+            }
             if (msg.includes('pin') || msg.includes('salah')) {
-                return "PIN Akses yang Anda masukkan tidak sesuai. Silakan periksa kembali email Anda.";
-            }
-            if (msg.includes('otp') || msg.includes('kedaluwarsa')) {
-                return "Kode OTP yang Anda masukkan salah atau sudah kedaluwarsa. Silakan ulangi pengajuan untuk mendapatkan kode baru.";
-            }
-            if (msg.includes('timeout') || msg.includes('network')) {
-                return "Koneksi internet Anda terputus atau server sedang sibuk. Silakan coba kembali.";
+                return "PIN Akses permanen yang Anda masukkan tidak sesuai. Silakan periksa kembali email pendaftaran Anda.";
             }
             return rawMessage.replace(/^exception:\s*/i, '');
         }
 
-        function showCustomAlert(title, message, isSuccess = true, customButtonsHtml = null) {
+        function showCustomAlert(title, message, isSuccess = true, isLoading = false, customButtonsHtml = null) {
             let modal = document.getElementById('customAlertModal');
             let titleEl = document.getElementById('alertTitle');
             let msgEl = document.getElementById('alertMessage');
             let wrapper = document.getElementById('alertIconWrapper');
+            let spinner = document.getElementById('alertSpinner');
+            let logoImg = document.getElementById('alertLogoImg');
             let buttonsContainer = document.getElementById('alertActionButtons');
             
             titleEl.innerText = title;
             msgEl.innerHTML = formatFriendlyErrorMessage(message);
             
-            if (isSuccess) {
-                wrapper.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-emerald-50 border border-emerald-100 p-3";
+            if (isLoading) {
+                spinner.classList.remove('hidden');
+                logoImg.classList.add('hidden');
+                wrapper.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-brand-50 border border-brand-100 p-3";
+                buttonsContainer.innerHTML = ''; 
             } else {
-                wrapper.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-rose-50 border border-rose-100 p-3";
-            }
+                spinner.classList.add('hidden');
+                logoImg.classList.remove('hidden');
+                if (isSuccess) {
+                    wrapper.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-emerald-50 border border-emerald-100 p-3";
+                } else {
+                    wrapper.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-rose-50 border border-rose-100 p-3";
+                }
 
-            if (customButtonsHtml) {
-                buttonsContainer.innerHTML = customButtonsHtml;
-            } else {
-                buttonsContainer.innerHTML = `<button type="button" onclick="closeCustomAlert()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/30 text-sm transition cursor-pointer">OK / Mengerti</button>`;
+                if (customButtonsHtml) {
+                    buttonsContainer.innerHTML = customButtonsHtml;
+                } else {
+                    buttonsContainer.innerHTML = `<button type="button" onclick="closeCustomAlert()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/30 text-sm transition cursor-pointer">OK / Mengerti</button>`;
+                }
             }
 
             modal.classList.remove('hidden');
@@ -697,7 +729,7 @@
         }
 
         function switchPage(pageId) {
-            ['landing', 'register', 'status'].forEach(p => {
+            ['landing', 'ewa-action', 'register', 'status'].forEach(p => {
                 let el = document.getElementById('view-' + p);
                 if (el) {
                     el.className = (p === pageId) ? 'block w-full flex-grow' : 'hidden w-full';
@@ -712,7 +744,7 @@
             let formSec = document.getElementById('ewaFormContainer');
             if (formSec) {
                 formSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                let emailInput = document.getElementById('ewaEmail');
+                let emailInput = document.getElementById('landingEmail');
                 if (emailInput) emailInput.focus();
             }
         }
@@ -733,7 +765,7 @@
             let totalFee = numTrx * feePerTrx;
             let totalRepayment = amount + totalFee;
 
-            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Maks Rp 750k/trx)`;
+            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Kalkulasi Otomatis)`;
             document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
             document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
             document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
@@ -741,32 +773,96 @@
             previewBox.classList.remove('hidden');
         }
 
+        function handleInitialEmailCheck(e) {
+            e.preventDefault();
+            let email = document.getElementById('landingEmail').value.trim();
+            
+            let btn = document.getElementById('btnLandingSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Google Sheets...';
+
+            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=ewa")
+            .then(res => res.json())
+            .then(res => {
+                btn.disabled = false;
+                btn.innerHTML = '<span>Lanjutkan</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                
+                if (res.success && res.data) {
+                    let memberStatus = res.data.status ? res.data.status.toLowerCase().trim() : "";
+                    
+                    if (memberStatus === "aktif" || memberStatus === "active") {
+                        pendingEwaData = { email: email };
+                        document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
+                        document.getElementById('ewaAmount').value = '';
+                        document.getElementById('ewaPin').value = '';
+                        document.getElementById('ewaFeePreviewBox').classList.add('hidden');
+                        switchPage('ewa-action');
+                    } else if (memberStatus.includes("menunggu") || memberStatus.includes("pending")) {
+                        showCustomAlert('Akun Belum Aktif', `Alamat email <b>${email}</b> sudah terdaftar namun status pendaftaran Anda masih <b>Menunggu Aktivasi Admin</b>. Silakan tunggu hingga admin mengaktifkannya.`, false);
+                    } else {
+                        pendingEwaData = { email: email };
+                        document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
+                        document.getElementById('ewaAmount').value = '';
+                        document.getElementById('ewaPin').value = '';
+                        document.getElementById('ewaFeePreviewBox').classList.add('hidden');
+                        switchPage('ewa-action');
+                    }
+                } else {
+                    let modal = document.getElementById('customAlertModal');
+                    let titleEl = document.getElementById('alertTitle');
+                    let msgEl = document.getElementById('alertMessage');
+                    let wrapper = document.getElementById('alertIconWrapper');
+                    let spinner = document.getElementById('alertSpinner');
+                    let logoImg = document.getElementById('alertLogoImg');
+                    let buttonsContainer = document.getElementById('alertActionButtons');
+                    
+                    spinner.classList.add('hidden');
+                    logoImg.classList.remove('hidden');
+                    wrapper.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-rose-50 border border-rose-100 p-3";
+                    titleEl.innerText = "Email Belum Terdaftar";
+                    msgEl.innerHTML = `Alamat email <b>${email}</b> belum terdaftar dalam sistem fasilitas EWA. Silakan daftarkan akun Anda terlebih dahulu.`;
+                    let buttonsHtml = `
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" onclick="closeCustomAlert()" class="py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl text-sm transition cursor-pointer">Tidak</button>
+                            <button type="button" onclick="goToRegistrationFromAlert('${email}')" class="py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-lg shadow-brand-600/30 text-sm transition cursor-pointer">Daftar Akun Baru</button>
+                        </div>
+                    `;
+                    showCustomAlert('Email Belum Terdaftar', `Alamat email <b>${email}</b> belum terdaftar dalam sistem fasilitas EWA. Silakan daftarkan akun Anda terlebih dahulu.`, false, false, buttonsHtml);
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = '<span>Lanjutkan</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                showCustomAlert('Koneksi Gagal', 'Gagal terhubung ke server. Periksa koneksi internet Anda.', false);
+            });
+        }
+
         function handleInitialEwaSubmit(e) {
             e.preventDefault();
-            let email = document.getElementById('ewaEmail').value.trim();
+            let email = pendingEwaData.email;
             let rawAmount = document.getElementById('ewaAmount').value.trim();
             let pinAkses = document.getElementById('ewaPin').value.trim();
             let amount = parseRawNumber(rawAmount);
             
             let btn = document.getElementById('btnEwaSubmit');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Akun...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memvalidasi PIN...';
 
-            pendingEwaData = { email: email, amount: amount, pin: pinAkses };
+            pendingEwaData.amount = amount;
+            pendingEwaData.pin = pinAkses;
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 redirect: 'follow', 
-                body: JSON.stringify({ action: 'requestOtpEwa', payload: { email: email, amount: amount, pin: pinAkses } })
+                body: JSON.stringify({ action: 'verifyPinOnly', payload: { email: email, amount: amount, pin: pinAkses } })
             })
             .then(res => res.json())
             .then(res => {
                 btn.disabled = false;
-                btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                btn.innerHTML = '<span>Ajukan Pencairan</span><i class="fa-solid fa-arrow-right text-xs"></i>';
                 
                 if (res.success) {
-                    showCustomAlert('Berhasil', 'Kode OTP verifikasi telah dikirim ke alamat email Anda.', true);
                     document.getElementById('verifyMemberEmail').innerText = email;
                     
                     let maxPerTrx = 750000;
@@ -778,26 +874,15 @@
                     document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
                     document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
                     document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
-                    document.getElementById('verifyOtp').value = '';
                     
                     document.getElementById('ewaVerifyModal').classList.remove('hidden');
                 } else {
-                    if (res.message && (res.message.toLowerCase().includes('tidak terdaftar') || res.message.toLowerCase().includes('tidak ditemukan'))) {
-                        let buttonsHtml = `
-                            <div class="grid grid-cols-2 gap-3">
-                                <button type="button" onclick="closeCustomAlert()" class="py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl text-sm transition cursor-pointer">Tidak</button>
-                                <button type="button" onclick="goToRegistrationFromAlert('${email}')" class="py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-lg shadow-brand-600/30 text-sm transition cursor-pointer">Daftar Akun Baru</button>
-                            </div>
-                        `;
-                        showCustomAlert('Email Belum Terdaftar', `Alamat email <b>${email}</b> belum terdaftar dalam sistem fasilitas EWA. Silakan daftarkan akun Anda terlebih dahulu.`, false, buttonsHtml);
-                    } else {
-                        showCustomAlert('Pengajuan Gagal', res.message, false);
-                    }
+                    showCustomAlert('PIN Akses Salah', res.message, false);
                 }
             })
             .catch(err => {
                 btn.disabled = false;
-                btn.innerHTML = 'Ajukan <i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
+                btn.innerHTML = '<span>Ajukan Pencairan</span><i class="fa-solid fa-arrow-right text-xs"></i>';
                 showCustomAlert('Koneksi Gagal', 'Gagal terhubung ke server. Periksa koneksi internet Anda.', false);
             });
         }
@@ -816,25 +901,39 @@
 
         function handleFinalEwaSubmit(e) {
             e.preventDefault();
+            if (isSubmittingEwa) return;
+            isSubmittingEwa = true;
+
+            let finalBtn = document.getElementById('btnFinalEwa');
+            if (finalBtn) {
+                finalBtn.disabled = true;
+                finalBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memproses...';
+            }
+
             closeEwaVerifyModal();
             
-            let otpCode = document.getElementById('verifyOtp').value.trim();
             let payload = {
                 email: pendingEwaData.email,
                 amount: pendingEwaData.amount,
-                otp: otpCode
+                pin: pendingEwaData.pin
             };
 
-            showCustomAlert('Memproses', 'Sedang memverifikasi kode OTP Anda.', true);
+            showCustomAlert('Memproses Pencairan', 'Menyimpan data pengajuan pencairan ke Google Sheets...', true, true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 redirect: 'follow', 
-                body: JSON.stringify({ action: 'verifyAndInitEwa', payload: payload })
+                body: JSON.stringify({ action: 'processEwaWithdrawal', payload: payload })
             })
             .then(res => res.json())
             .then(res => {
+                isSubmittingEwa = false;
+                if (finalBtn) {
+                    finalBtn.disabled = false;
+                    finalBtn.innerHTML = 'Proses Pencairan';
+                }
+
                 if (res.success) {
                     showCustomAlert('Pengajuan Berhasil', res.message, true);
                     switchPage('status');
@@ -842,10 +941,15 @@
                     document.getElementById('checkType').value = 'ewa';
                     checkStatus();
                 } else {
-                    showCustomAlert('Verifikasi Gagal', res.message, false);
+                    showCustomAlert('Pengajuan Gagal', res.message, false);
                 }
             })
             .catch(err => {
+                isSubmittingEwa = false;
+                if (finalBtn) {
+                    finalBtn.disabled = false;
+                    finalBtn.innerHTML = 'Proses Pencairan';
+                }
                 showCustomAlert('Koneksi Gagal', 'Gagal terhubung ke server. Silakan coba lagi.', false);
             });
         }
@@ -1034,7 +1138,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showCustomAlert('Memproses Pendaftaran', 'Mengunggah foto KTP & Selfie ke Google Drive serta mengirim data pendaftaran...', true);
+            showCustomAlert('Memproses Pendaftaran', 'Mengunggah foto KTP & Selfie ke Google Drive serta mengirim data pendaftaran...', true, true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1073,7 +1177,7 @@
                 return;
             }
 
-            showCustomAlert('Memeriksa', 'Sedang memeriksa status ke database...', true);
+            showCustomAlert('Memeriksa Real-Time', 'Mengambil data langsung dari Google Sheets...', true, true);
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
                 .then(res => res.json())
