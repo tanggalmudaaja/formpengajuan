@@ -147,7 +147,7 @@
 
     <main class="flex-grow w-full flex flex-col justify-center py-4 sm:py-6 lg:py-8">
         
-        <!-- Custom Modal Popup matching reference image with Splash Logo and Human-readable text -->
+        <!-- Custom Modal Popup matching attached reference image with Splash Logo and Human-readable text -->
         <div id="customAlertModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-[32px] max-w-sm w-full p-6 sm:p-8 shadow-2xl text-center space-y-5 animate-scale-up border border-slate-100">
                 <div id="alertIconWrapper" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-sm bg-rose-50 border border-rose-100 p-3">
@@ -542,7 +542,7 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpT6xqzS-TizJ7yXu0vpHEoN24AJkwM8j6E3Du8yRkwmNrTzEtSWWakPCMb65pvAAL/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqSECSL-GgmQQ6HfZOAEIMGBWJPGLM0Jwcku86htASGSkUm_QsJv1mAS0ejMeV-BI/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -631,7 +631,7 @@
             });
         }
 
-        // Translate technical error messages into clear, friendly human language
+        // Format technical error messages into human-friendly language
         function formatFriendlyErrorMessage(rawMessage) {
             if (!rawMessage) return "Terjadi kendala pada sistem. Silakan coba beberapa saat lagi.";
             let msg = rawMessage.toLowerCase();
@@ -653,7 +653,7 @@
             return rawMessage.replace(/^exception:\s*/i, '');
         }
 
-        // Custom alert modal matching the requested design with Splash Logo icon and friendly messages
+        // Custom alert modal matching the reference image style
         function showCustomAlert(title, message, isSuccess = true, customButtonsHtml = null) {
             let modal = document.getElementById('customAlertModal');
             let titleEl = document.getElementById('alertTitle');
@@ -1043,7 +1043,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showCustomAlert('Memproses Pendaftaran', 'Mengirim data pendaftaran ke server...', true);
+            showCustomAlert('Memproses Pendaftaran', 'Mengunggah foto KTP & Selfie ke Google Drive serta mengirim data pendaftaran...', true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
