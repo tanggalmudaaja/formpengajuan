@@ -272,10 +272,10 @@
                                         Cairkan sebagian gajimu saat kamu membutuhkannya — tanpa harus menunggu tanggal gajian. Dengan tanggalmuda.com, gaji bulanan terasa lebih fleksibel seperti gaji harian. Akses sebagian gaji yang sudah kamu peroleh sesuai dengan hari kerja yang telah kamu jalani.
                                     </p>
                                     <p class="text-slate-200 text-xs font-medium leading-relaxed">
-                                        * Earned Wage Access (EWA) bukan fasilitas kredit atau pinjaman perorangan, melainkan akses lebih awal terhadap gaji yang telah diperoleh karyawan melalui hubungan kerja dengan perusahaan.
+                                        * Earned Wage Access (EWA) bukan fasilitas kredit atau pinjaman perorangan, melainkan akses lebih awal terhadap gaji yang telah diperoleh karyawan melalui hubungan kerja dengan perusahaan.[cite: 2]
                                     </p>
                                     <p class="text-slate-200 text-xs font-medium leading-relaxed">
-                                        * Syarat & Ketentuan Berlaku
+                                        * Syarat & Ketentuan Berlaku[cite: 2]
                                     </p>
                                     <div class="flex flex-wrap gap-1.5 text-xs">
                                         <span class="font-bold font-heading text-white"><span class="animate-yellow-bg-pulse"><i class="fa-solid fa-check mr-1 text-amber-300"></i> Tanpa Bunga (0%)</span></span>
@@ -433,6 +433,11 @@
                             <select id="regCompanySelect" onchange="displayCompanyDetails()" required class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                                 <option value="">-- Memuat Perusahaan dari Google Sheets... --</option>
                             </select>
+                        </div>
+                        <!-- Kolom Input Manual Nama Perusahaan (Muncul jika pilih Lainnya) -->
+                        <div id="containerManualCompany" class="hidden">
+                            <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Masukkan Nama Perusahaan Secara Manual *</label>
+                            <input type="text" id="regManualCompanyInput" placeholder="Ketik nama perusahaan Anda di sini" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
                         </div>
                         <div id="companyDetailCard" class="hidden bg-brand-50 border border-brand-200 rounded-xl p-3.5 space-y-1 text-brand-900">
                             <p class="font-bold text-brand-950 text-xs sm:text-sm"><i class="fa-solid fa-building text-brand-600 mr-1"></i> <span id="compNameDisplay">-</span></p>
@@ -699,7 +704,9 @@
                     populateCompanyDropdown();
                 } else {
                     let select = document.getElementById('regCompanySelect');
-                    if(select) select.innerHTML = '<option value="">-- Belum ada data perusahaan di Google Sheets --</option>';
+                    if(select) {
+                        select.innerHTML = '<option value="">-- Belum ada data perusahaan di Google Sheets --</option><option value="Lainnya">Lainnya (Input Manual)</option>';
+                    }
                 }
 
                 setTimeout(() => {
@@ -742,6 +749,11 @@
                 opt.textContent = comp.nama_perusahaan + " (" + comp.id_perusahaan + ")";
                 select.appendChild(opt);
             });
+            // Menambahkan opsi Lainnya secara dinamis
+            let optLainnya = document.createElement('option');
+            optLainnya.value = "Lainnya";
+            optLainnya.textContent = "Lainnya (Input Manual)";
+            select.appendChild(optLainnya);
         }
 
         function formatFriendlyErrorMessage(rawMessage) {
@@ -1135,19 +1147,34 @@
         function displayCompanyDetails() {
             let selectedName = document.getElementById('regCompanySelect').value;
             let detailCard = document.getElementById('companyDetailCard');
+            let containerManual = document.getElementById('containerManualCompany');
+            let manualInput = document.getElementById('regManualCompanyInput');
             
             if (!selectedName) {
                 detailCard.classList.add('hidden');
+                containerManual.classList.add('hidden');
+                manualInput.required = false;
                 return;
             }
 
-            let found = listPerusahaanData.find(c => c.nama_perusahaan === selectedName);
-            if (found) {
-                document.getElementById('compNameDisplay').innerText = found.nama_perusahaan;
-                document.getElementById('compIDDisplay').innerText = found.id_perusahaan;
-                document.getElementById('compPicDisplay').innerText = found.pic_perusahaan;
-                document.getElementById('compEmailDisplay').innerText = found.email_pic;
-                detailCard.classList.remove('hidden');
+            if (selectedName === "Lainnya") {
+                detailCard.classList.add('hidden');
+                containerManual.classList.remove('hidden');
+                manualInput.required = true;
+                manualInput.focus();
+            } else {
+                containerManual.classList.add('hidden');
+                manualInput.required = false;
+                manualInput.value = "";
+
+                let found = listPerusahaanData.find(c => c.nama_perusahaan === selectedName);
+                if (found) {
+                    document.getElementById('compNameDisplay').innerText = found.nama_perusahaan;
+                    document.getElementById('compIDDisplay').innerText = found.id_perusahaan;
+                    document.getElementById('compPicDisplay').innerText = found.pic_perusahaan;
+                    document.getElementById('compEmailDisplay').innerText = found.email_pic;
+                    detailCard.classList.remove('hidden');
+                }
             }
         }
 
@@ -1172,6 +1199,11 @@
             let selfieBase64 = document.getElementById('previewSelfie').dataset.base64 || '';
             let rawSalary = document.getElementById('regSalary').value;
 
+            let selectedCompanyVal = document.getElementById('regCompanySelect').value;
+            let finalCompanyName = selectedCompanyVal === "Lainnya" 
+                ? (document.getElementById('regManualCompanyInput').value.trim() || "Lainnya") 
+                : selectedCompanyVal;
+
             pendingRegistrationPayload = {
                 nama_karyawan: document.getElementById('regName').value,
                 email: document.getElementById('regEmail').value,
@@ -1183,7 +1215,7 @@
                 departemen: document.getElementById('regDepartment').value,
                 jabatan: document.getElementById('regPosition').value,
                 alamat: document.getElementById('regAddress').value,
-                nama_perusahaan: document.getElementById('regCompanySelect').value,
+                nama_perusahaan: finalCompanyName,
                 status_kepegawaian: document.getElementById('regEmploymentStatus').value,
                 gaji_pokok: parseRawNumber(rawSalary),
                 tanggal_mulai_kerja: document.getElementById('regStartDate').value,
