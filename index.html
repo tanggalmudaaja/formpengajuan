@@ -357,7 +357,7 @@
                             <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
                             <p class="flex justify-between"><span>Dana Diterima Bersih (Setelah Dipotong Biaya Layanan):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
                             <p class="flex justify-between"><span>Biaya Layanan (Dipotong dari pencairan):</span> <span id="prevTotalFee">Rp 50.000</span></p>
-                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total yang Harus Dikembalikan:</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
                             <p class="text-[10px] text-slate-500 italic mt-0.5">*Fee Rp 50k/trx kalkulasi dinamis.</p>
                         </div>
 
@@ -981,7 +981,7 @@
                     let totalRepayment = amount;
 
                     document.getElementById('verifyNet').innerText = 'Rp ' + netReceived.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Dipotong di muka)';
+                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Dipotong dari pencairan)';
                     document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
                     document.getElementById('ewaVerifyModal').classList.remove('hidden');
                 } else {
