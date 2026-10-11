@@ -869,7 +869,7 @@
             }
 
             let maxPerTrx = 750000;
-            let feePerTrx = 50000;
+            let feePerTrx = 60000;
             let numTrx = Math.ceil(amount / maxPerTrx);
             let totalFee = numTrx * feePerTrx;
             let netReceived = amount - totalFee;
@@ -898,7 +898,7 @@
                 if (res.success && res.data) {
                     let memberStatus = res.data.status ? res.data.status.toLowerCase().trim() : "";
                     
-                    if (memberStatus === "aktif") {
+                    if (memberStatus === "Aktif") {
                         pendingEwaData = { email: email };
                         document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
                         document.getElementById('ewaAmount').value = '';
