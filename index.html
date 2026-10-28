@@ -355,10 +355,10 @@
                         
                         <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
                             <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
-                            <p class="flex justify-between"><span>Dana Diterima Bersih (Setelah Dipotong Biaya Layanan):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
-                            <p class="flex justify-between"><span>Biaya Layanan (Dipotong dari pencairan):</span> <span id="prevTotalFee">Rp 60.000</span></p>
-                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total yang Harus Dikembalikan:</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
-                            <p class="text-[10px] text-slate-500 italic mt-0.5">*Fee Rp 60.000/trx kalkulasi dinamis.</p>
+                            <p class="flex justify-between"><span>Dana Diterima Bersih (Full):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
+                            <p class="flex justify-between"><span>Biaya Layanan (Ditagih Repayment):</span> <span id="prevTotalFee">Rp 50.000</span></p>
+                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA + Fee):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                            <p class="text-[10px] text-slate-500 italic mt-0.5">*Fee Rp 50k/trx kalkulasi dinamis.</p>
                         </div>
 
                         <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
@@ -600,12 +600,11 @@
                 <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Konfirmasi Pencairan Gaji</h3>
                 <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
             <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
-                 <p>Email Pemohon: <b id="verifyMemberEmail"></b></p>
-                 <p>Dana Diterima Bersih: <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
-                 <p>Biaya Layanan: <b id="verifyFee" class="text-rose-600"></b></p>
-                 <p>Total yang Harus Dikembalikan: <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
+                <p>Email Pemohon: <b id="verifyMemberEmail"></b></p>
+                <p>Dana Diterima Bersih (Full): <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
+                <p>Biaya Layanan (Ditagih Repayment): <b id="verifyFee" class="text-rose-600"></b></p>
+                <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
             <p class="text-xs text-slate-600">PIN Akses permanen Anda valid. Klik tombol di bawah untuk melanjutkan pencairan:</p>
             <div class="flex space-x-3 pt-1">
@@ -660,7 +659,7 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJIEzkxvP9EmG__ykSDzPYcC7Iwsg5-mH61o_PAfZs8TEDN7WtvxWhD9UVtsaCINtM/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwo3M99hMpIaJKUthG56B9tlzfYey9gpzZyxfsWTiRqHezOSceX1Rpr_2Ns2xNOb7Vq/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -869,15 +868,16 @@
             }
 
             let maxPerTrx = 750000;
-            let feePerTrx = 60000;
+            let feePerTrx = 50000;
             let numTrx = Math.ceil(amount / maxPerTrx);
             let totalFee = numTrx * feePerTrx;
-            let netReceived = amount - totalFee;
-            let totalRepayment = amount;
+            let totalRepayment = amount + totalFee;
+
             document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Kalkulasi Otomatis)`;
-            document.getElementById('prevNetReceived').innerText = 'Rp ' + netReceived.toLocaleString('id-ID');
+            document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
             document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
             document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+            
             previewBox.classList.remove('hidden');
         }
 
@@ -887,7 +887,7 @@
             
             let btn = document.getElementById('btnLandingSubmit');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Database Real-Time...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Google Sheets Real-Time...';
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=ewa&t=" + new Date().getTime())
             .then(res => res.json())
@@ -896,24 +896,16 @@
                 btn.innerHTML = '<span>Lanjutkan</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
                 
                 if (res.success && res.data) {
-                    let memberStatus = res.data.status ? res.data.status.toLowerCase().trim() : "";
                     
-                    if (memberStatus === "Aktif") {
+                    if (res.data.isActive === true) {
                         pendingEwaData = { email: email };
                         document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
                         document.getElementById('ewaAmount').value = '';
                         document.getElementById('ewaPin').value = '';
                         document.getElementById('ewaFeePreviewBox').classList.add('hidden');
                         switchPage('ewa-action');
-                    } else if (memberStatus.includes("menunggu") || memberStatus.includes("pending")) {
-                        showCustomAlert('Akun Belum Aktif', `Alamat email <b>${email}</b> sudah terdaftar namun status pendaftaran Anda masih <b>Menunggu Aktivasi Admin</b>. Silakan tunggu hingga admin mengaktifkannya.`, false);
                     } else {
-                        pendingEwaData = { email: email };
-                        document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
-                        document.getElementById('ewaAmount').value = '';
-                        document.getElementById('ewaPin').value = '';
-                        document.getElementById('ewaFeePreviewBox').classList.add('hidden');
-                        switchPage('ewa-action');
+                        showCustomAlert('Akun Belum Aktif', `Alamat email <b>${email}</b> sudah terdaftar namun status pendaftaran Anda masih <b>Menunggu Aktivasi Admin</b>. Silakan tunggu hingga admin mengaktifkannya.`, false);
                     }
                 } else {
                     let modal = document.getElementById('customAlertModal');
@@ -974,15 +966,15 @@
                     document.getElementById('verifyMemberEmail').innerText = email;
                     
                     let maxPerTrx = 750000;
-                    let feePerTrx = 60000;
+                    let feePerTrx = 50000;
                     let numTrx = Math.ceil(amount / maxPerTrx);
                     let totalFee = numTrx * feePerTrx;
-                    let netReceived = amount - totalFee;
-                    let totalRepayment = amount;
+                    let totalRepayment = amount + totalFee;
 
-                    document.getElementById('verifyNet').innerText = 'Rp ' + netReceived.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Dipotong dari pencairan)';
+                    document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
+                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
                     document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
+                    
                     document.getElementById('ewaVerifyModal').classList.remove('hidden');
                 } else {
                     showCustomAlert('PIN Akses Salah', res.message, false);
@@ -1307,7 +1299,7 @@
 
             showCustomAlert('Memeriksa Real-Time', 'Mengambil data langsung dari Google Sheets...', true, true);
 
-            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType))
+            fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType) + "&t=" + new Date().getTime())
                 .then(res => res.json())
                 .then(res => {
                     closeCustomAlert();
