@@ -211,7 +211,7 @@
 
     <div id="startupSplash" class="fixed inset-0 z-50 bg-[#f0fdf4] backdrop-blur-md flex flex-col items-center justify-center p-4 transition-opacity duration-500">
         <div class="mb-4 flex items-center justify-center">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjImFhvw11nUnkCHoSffXS2iU4EmdzOv_r9ZDPjECXQ0yDfSsCeSVjyFMNTRCKF4BPzf2hpqZ2soEGINKKwxfHiRXP49ZKV3CiKN0YM3YYuz_TR0f_98ETF2uji6F4hKzIPpsEPqJzAfbkT2MIydPD0un6Osf3bA6nQU0AKDU4kLHwpJqFnObhEJRVuYoo/s320/Logo%201%20(2).png" alt="Loading Logo" class="object-contain animate-pulse w-Auto h-Auto">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiULW20qcOdwteU00XuxwL9tmuqzzhxqKomILNCp1PQjjOnMMErlQX-9-saZVfE92M-Frpk-wy45PF6TkdhTI3Z0NMmT1EkaA34IAF0MpboiTQMBaUfVYc9uJM5cuc2G0IHXTre7EJAnLTR9ZiVRFWFF7t4P5Fopz9Rjih_FRqBAeH7nYEXobGr-rj7rN4/w314-h400/Cheerful%20Blue%20Cat%20Mascot%20with%20Phone.png" alt="Loading Logo" class="object-contain animate-pulse w-Auto h-Auto">
         </div>
         <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-4 border border-emerald-100">
             <div class="space-y-1">
@@ -265,7 +265,7 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center w-full pt-1 pb-1">
                                 <div class="sm:col-span-5 relative flex flex-col items-center justify-center w-full">
                                     <div class="absolute inset-0 bg-brand-500/10 rounded-full blur-2xl"></div>
-                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimrasN21gRxRoGfec7ujju5N54JJ41hcxlHEXKw5jeUNyv1-i0a_CTeryDuPDeNwdcLxUFQuOCUzgaEW2IkoWEnJ6MGasButJ-rnMN-pdmgqt7IyNAT3lzxZQdsBmMy7SPQz46TUpEiUBwC3Tb1Vb21SeQleF7CDVXg6YkTF1HwQ56cfhWQTA0k_zqj_g/s1254/ChatGPT%20Image%20Sep%2019,%202026,%2002_16_43%20PM.png" alt="Professional Woman holding phone" class="relative z-10 w-full max-w-[280px] sm:max-w-[360px] h-auto object-contain filter drop-shadow-md">
+                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivWMw29T9neQ5tPm1mfoErVepIyb8fVmoAAJBKgV_I4MiA5pW2gKa8STZVmsVtxTLJJmMaAcY1gwYNNEXzhKmsDppyZNBep-XCaNHxlMgLwmHN-GJaVQWi1C4SDLpeYmSEbzrqPxrcNldH7x0egZh1gQ-LiYolInodb5z3QPmlmZxr9E9yEmwwxcnxZ40/s1408/Blue%20Cat%20Mascot%20with%20Smartphone%20and%20Icons.png" alt="Professional Woman holding phone" class="relative z-10 w-full max-w-[280px] sm:max-w-[360px] h-auto object-contain filter drop-shadow-md">
                                 </div>
                                 <div class="sm:col-span-7 flex flex-col justify-center space-y-2.5">
                                     <p class="text-slate-200 text-xs font-medium leading-relaxed">
@@ -340,7 +340,7 @@
                     <form onsubmit="handleInitialEwaSubmit(event)" class="space-y-3.5 text-xs sm:text-sm">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pencairan</label>
+                                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Nominal Pengajuan</label>
                                 <div class="relative flex items-center">
                                     <input type="text" id="ewaAmount" oninput="formatCurrencyInput(this); calculateEwaFeePreview();" required placeholder="" class="w-full px-3.5 py-2.5 rounded-xl custom-input text-base font-bold font-mono tracking-wide text-slate-900 placeholder:text-slate-400">
                                 </div>
@@ -356,9 +356,9 @@
                         <div id="ewaFeePreviewBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-900 space-y-1">
                             <p class="font-bold flex justify-between"><span>Jumlah Transaksi:</span> <span id="prevNumTrx">1 Trx</span></p>
                             <p class="flex justify-between"><span>Dana Diterima Bersih (Full):</span> <span id="prevNetReceived" class="text-emerald-700 font-bold">Rp 0</span></p>
-                            <p class="flex justify-between"><span>Biaya Layanan (Ditagih Repayment):</span> <span id="prevTotalFee">Rp 50.000</span></p>
-                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA + Fee):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
-                            <p class="text-[10px] text-slate-500 italic mt-0.5">*Fee Rp 50k/trx kalkulasi dinamis.</p>
+                            <p class="flex justify-between"><span>Biaya Layanan (Dipotong Dimuka):</span> <span id="prevTotalFee">Rp 0</span></p>
+                            <p class="font-bold flex justify-between border-t border-emerald-200 pt-1 text-brand-950"><span>Total Repayment (EWA):</span> <span id="prevTotalRepayment" class="text-brand-700">Rp 0</span></p>
+                            <p class="text-[10px] text-slate-500 italic mt-0.5">*Biaya Layanan 10% kalkulasi dinamis.</p>
                         </div>
 
                         <button type="submit" id="btnEwaSubmit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-500/25 transition flex items-center justify-center space-x-2 cursor-pointer">
@@ -434,7 +434,7 @@
                                 <option value="">-- Memuat Perusahaan dari Google Sheets... --</option>
                             </select>
                         </div>
-                        <!-- Kolom Input Manual Nama Perusahaan (Muncul jika pilih Lainnya) -->
+                        <!-- Kolom Input Manual Nama Perusahaan -->
                         <div id="containerManualCompany" class="hidden">
                             <label class="block font-semibold uppercase tracking-wider text-slate-600 mb-1">Masukkan Nama Perusahaan Secara Manual *</label>
                             <input type="text" id="regManualCompanyInput" placeholder="Ketik nama perusahaan Anda di sini" class="w-full px-3.5 py-2.5 rounded-xl custom-input">
@@ -602,9 +602,9 @@
             </div>
             <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
                 <p>Email Pemohon: <b id="verifyMemberEmail"></b></p>
-                <p>Dana Diterima Bersih (Full): <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
-                <p>Biaya Layanan (Ditagih Repayment): <b id="verifyFee" class="text-rose-600"></b></p>
-                <p>Total Repayment (EWA + Fee): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
+                <p>Dana Diterima Bersih (Dipotong Fee): <b id="verifyNet" class="text-emerald-700 font-bold"></b></p>
+                <p>Biaya Layanan (Dipotong Dimuka): <b id="verifyFee" class="text-rose-600"></b></p>
+                <p>Total Repayment (EWA): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
             <p class="text-xs text-slate-600">PIN Akses permanen Anda valid. Klik tombol di bawah untuk melanjutkan pencairan:</p>
             <div class="flex space-x-3 pt-1">
@@ -617,10 +617,8 @@
     <footer class="bg-emerald-900 text-emerald-100 border-t border-emerald-800 shadow-inner shrink-0 w-full overflow-hidden text-xs">
         <div class="py-2.5 px-4 flex items-center overflow-hidden">
             <span class="bg-emerald-800 text-emerald-200 px-2 py-0.5 rounded font-bold mr-3 uppercase tracking-wider text-[10px] shrink-0 z-10 shadow">Info</span>
-                    <div class="animate-marquee font-medium inline-block">
-                        📅  Gaji bulanan serasa gaji harian — akses sesuai hari kerja yang sudah kamu jalani.
-                    </div>
-                </div>
+            <div class="animate-marquee font-medium inline-block">
+                📅  Gaji bulanan serasa gaji harian — akses sesuai hari kerja yang sudah kamu jalani.
             </div>
         </div>
     </footer>
@@ -749,7 +747,6 @@
                 opt.textContent = comp.nama_perusahaan + " (" + comp.id_perusahaan + ")";
                 select.appendChild(opt);
             });
-            // Menambahkan opsi Lainnya secara dinamis
             let optLainnya = document.createElement('option');
             optLainnya.value = "Lainnya";
             optLainnya.textContent = "Lainnya (Input Manual)";
@@ -765,8 +762,8 @@
             if (msg.includes('tidak terdaftar') || msg.includes('not found')) {
                 return "Alamat email ini belum terdaftar di sistem kami. Silakan daftarkan akun Anda terlebih dahulu.";
             }
-            if (msg.includes('belum aktif') || msg.includes('menunggu')) {
-                return "Akun Anda belum aktif karena status pendaftaran masih menunggu verifikasi atau aktivasi oleh Admin. Silakan periksa email Anda.";
+            if (msg.includes('belum aktif') || msg.includes('menunggu') || msg.includes('validasi email')) {
+                return "Akun Anda belum aktif karena status pendaftaran saat ini adalah <b>Validasi Email Karyawan</b>. Silakan periksa email Anda dan klik tombol konfirmasi.";
             }
             if (msg.includes('pin') || msg.includes('salah')) {
                 return "PIN Akses permanen yang Anda masukkan tidak sesuai. Silakan periksa kembali email pendaftaran Anda.";
@@ -867,14 +864,12 @@
                 return;
             }
 
-            let maxPerTrx = 750000;
-            let feePerTrx = 50000;
-            let numTrx = Math.ceil(amount / maxPerTrx);
-            let totalFee = numTrx * feePerTrx;
-            let totalRepayment = amount + totalFee;
+            let totalFee = amount * 0.10; 
+            let netReceived = amount - totalFee;
+            let totalRepayment = amount;
 
-            document.getElementById('prevNumTrx').innerText = numTrx + ` Trx (Kalkulasi Otomatis)`;
-            document.getElementById('prevNetReceived').innerText = 'Rp ' + amount.toLocaleString('id-ID');
+            document.getElementById('prevNumTrx').innerText = '1 Trx';
+            document.getElementById('prevNetReceived').innerText = 'Rp ' + netReceived.toLocaleString('id-ID');
             document.getElementById('prevTotalFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID');
             document.getElementById('prevTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
             
@@ -896,7 +891,6 @@
                 btn.innerHTML = '<span>Lanjutkan</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>';
                 
                 if (res.success && res.data) {
-                    
                     if (res.data.isActive === true) {
                         pendingEwaData = { email: email };
                         document.getElementById('verifiedEmailDisplay').innerText = "Email: " + email;
@@ -905,7 +899,7 @@
                         document.getElementById('ewaFeePreviewBox').classList.add('hidden');
                         switchPage('ewa-action');
                     } else {
-                        showCustomAlert('Akun Belum Aktif', `Alamat email <b>${email}</b> sudah terdaftar namun status pendaftaran Anda masih <b>Menunggu Aktivasi Admin</b>. Silakan tunggu hingga admin mengaktifkannya.`, false);
+                        showCustomAlert('Akun Belum Aktif', `Alamat email <b>${email}</b> sudah terdaftar namun status pendaftaran Anda saat ini adalah <b>Validasi Email Karyawan</b>. Silakan periksa email Anda dan klik tombol konfirmasi.`, false);
                     }
                 } else {
                     let modal = document.getElementById('customAlertModal');
@@ -965,14 +959,12 @@
                 if (res.success) {
                     document.getElementById('verifyMemberEmail').innerText = email;
                     
-                    let maxPerTrx = 750000;
-                    let feePerTrx = 50000;
-                    let numTrx = Math.ceil(amount / maxPerTrx);
-                    let totalFee = numTrx * feePerTrx;
-                    let totalRepayment = amount + totalFee;
+                    let totalFee = amount * 0.10; 
+                    let netReceived = amount - totalFee;
+                    let totalRepayment = amount;
 
-                    document.getElementById('verifyNet').innerText = 'Rp ' + amount.toLocaleString('id-ID') + ` (${numTrx} Trx)`;
-                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Ditagih saat repayment)';
+                    document.getElementById('verifyNet').innerText = 'Rp ' + netReceived.toLocaleString('id-ID');
+                    document.getElementById('verifyFee').innerText = 'Rp ' + totalFee.toLocaleString('id-ID') + ' (Dipotong dimuka)';
                     document.getElementById('verifyTotalRepayment').innerText = 'Rp ' + totalRepayment.toLocaleString('id-ID');
                     
                     document.getElementById('ewaVerifyModal').classList.remove('hidden');
@@ -1012,10 +1004,18 @@
 
             closeEwaVerifyModal();
             
+            let amount = pendingEwaData.amount;
+            let fee = amount * 0.10;
+            let netAmount = amount - fee;
+
             let payload = {
                 email: pendingEwaData.email,
-                amount: pendingEwaData.amount,
-                pin: pendingEwaData.pin
+                amount: amount,
+                pin: pendingEwaData.pin,
+                jumlah_trx: 1,
+                biaya_layanan: fee,
+                dana_diterima: netAmount,
+                total_repayment: amount
             };
 
             showCustomAlert('Memproses Pencairan', 'Menyimpan data pengajuan pencairan ke Google Sheets...', true, true);
