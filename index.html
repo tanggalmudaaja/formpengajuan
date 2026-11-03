@@ -215,8 +215,8 @@
         </div>
         <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full text-center space-y-4 border border-emerald-100">
             <div class="space-y-1">
-                <h3 class="font-heading font-bold text-base text-slate-900">Menghubungkan ke Database...</h3>
-                <p id="splashStatusText" class="text-xs text-slate-500">Memeriksa koneksi server</p>
+                <h3 class="font-heading font-bold text-base text-slate-900">Mohon Tunggu Sebentar</h3>
+                <p id="splashStatusText" class="text-xs text-slate-500">Sedang Menghubungkan ke Database..</p>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div id="splashProgressBar" class="bg-brand-600 h-full w-1/3 animate-pulse transition-all duration-300"></div>
@@ -597,7 +597,7 @@
     <div id="ewaVerifyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Konfirmasi Pencairan Gaji</h3>
+                <h3 class="font-bold text-slate-900 font-heading text-sm sm:text-base"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> Konfirmasi Pengajuan</h3>
                 <button type="button" onclick="closeEwaVerifyModal()" class="text-slate-400 hover:text-slate-700 text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="bg-brand-50 p-3 rounded-xl border border-brand-200 text-xs text-brand-900 space-y-1">
@@ -606,7 +606,7 @@
                 <p>Biaya Layanan (Dipotong Dimuka): <b id="verifyFee" class="text-rose-600"></b></p>
                 <p>Total Repayment (EWA): <b id="verifyTotalRepayment" class="text-brand-700 font-bold"></b></p>
             </div>
-            <p class="text-xs text-slate-600">PIN Akses permanen Anda valid. Klik tombol di bawah untuk melanjutkan pencairan:</p>
+            <p class="text-xs text-slate-600">PIN Akses permanen Anda valid. Klik tombol di bawah untuk melanjutkan pengajuan:</p>
             <div class="flex space-x-3 pt-1">
                 <button type="button" onclick="closeEwaVerifyModal()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl font-semibold text-xs sm:text-sm cursor-pointer">Batal</button>
                 <button type="button" onclick="handleFinalEwaSubmit(event)" id="btnFinalEwa" class="w-1/2 bg-brand-600 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md cursor-pointer">Proses Pencairan</button>
@@ -657,7 +657,7 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydWScpPbJ-kWvrWxkhFo_u1yGF8K34q4Dta3Ni70R-aVdzJyY84YyHW-i9M5xUw90z/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0ymPvPyn5xk25CS_p-p773_4Nagsz0drNW3U11K8u-JjzQvil32EzF-CshFKWciLG/exec";
         
         let listPerusahaanData = [];
         let currentCameraType = null;
@@ -677,7 +677,7 @@
             let splashText = document.getElementById('splashStatusText');
             let progressBar = document.getElementById('splashProgressBar');
 
-            splashText.innerText = "Menghubungkan ke Google Sheets (Real-Time)...";
+            splashText.innerText = "Menghubungkan ke Server (Real-Time)...";
             progressBar.style.width = "70%";
 
             let callbackName = 'jsonp_startup_cb_' + Math.round(100000 * Math.random());
@@ -703,7 +703,7 @@
                 } else {
                     let select = document.getElementById('regCompanySelect');
                     if(select) {
-                        select.innerHTML = '<option value="">-- Belum ada data perusahaan di Google Sheets --</option><option value="Lainnya">Lainnya (Input Manual)</option>';
+                        select.innerHTML = '<option value="">-- Belum ada data perusahaan di Database --</option><option value="Lainnya">Lainnya (Input Manual)</option>';
                     }
                 }
 
@@ -1018,7 +1018,7 @@
                 total_repayment: amount
             };
 
-            showCustomAlert('Memproses Pencairan', 'Menyimpan data pengajuan pencairan ke Google Sheets...', true, true);
+            showCustomAlert('Memproses Pencairan', 'Menyimpan data pengajuan ke Database...', true, true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1258,7 +1258,7 @@
             closeConfirmModal();
             let payload = pendingRegistrationPayload;
             
-            showCustomAlert('Memproses Pendaftaran', 'Mengunggah foto KTP & Selfie ke Google Drive serta mengirim data pendaftaran...', true, true);
+            showCustomAlert('Memproses Pendaftaran', 'Mengunggah foto KTP & Selfie ke Database serta mengirim data pendaftaran...', true, true);
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1297,7 +1297,7 @@
                 return;
             }
 
-            showCustomAlert('Memeriksa Real-Time', 'Mengambil data langsung dari Google Sheets...', true, true);
+            showCustomAlert('Memeriksa Real-Time', 'Mengambil data langsung dari Server...', true, true);
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(emailInput) + "&type=" + encodeURIComponent(checkType) + "&t=" + new Date().getTime())
                 .then(res => res.json())
