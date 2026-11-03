@@ -909,7 +909,7 @@
             
             let btn = document.getElementById('btnLandingSubmit');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Google Sheets Real-Time...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa Database...';
 
             fetch(GOOGLE_SCRIPT_URL + "?action=checkStatus&email=" + encodeURIComponent(email) + "&type=ewa&t=" + new Date().getTime())
             .then(res => res.json())
